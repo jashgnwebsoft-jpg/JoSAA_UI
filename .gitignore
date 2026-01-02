@@ -1,0 +1,46 @@
+# Logs
+logs
+.vs
+.vs/*
+.vscode/*
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vs
+.vs/*
+.vscode/*
+
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# testing
+coverage
+
+# production
+.next
+.swc
+_static
+out
+dist
+build
+
+# environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# misc
+.DS_Store
+.vercel
+.netlify
+.vscode
+tsconfig.tsbuildinfo
+.ncurc.js
+/.vs/slnx.sqlite
+*.vsidx
+/.vs

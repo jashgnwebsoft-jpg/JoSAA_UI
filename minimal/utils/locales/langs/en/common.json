@@ -1,0 +1,2527 @@
+{
+  "demo": {
+    "lang": "English",
+    "description": "The starting point for your next project is based on MUI. Easy customization helps you build apps faster and better."
+  },
+  "common": {
+    "sequence": "Sequence",
+    "sequencePlaceholder": "Enter Sequence",
+    "loading": "Loading...",
+    "userInfo": "User Information",
+    "user": "User",
+    "created": "Created",
+    "modified": "Modified",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter Description",
+    "create": "Create",
+    "edit": "Edit",
+    "list": "List",
+    "email": "Email",
+    "emailPlaceHolder": "Enter Email",
+    "website": "Website",
+    "websitePlaceHolder": "Enter Website",
+    "mobileNo": "Mobile No.",
+    "mobileNoPlaceHolder": "Enter Mobile No.",
+    "contact": "Contact No.",
+    "contactPlaceHolder": "Enter Contact No.",
+    "contact1": "Contact 1",
+    "contact1PlaceHolder": "Enter Contact 1",
+    "contact2": "Contact 2",
+    "contact2PlaceHolder": "Enter Contact 2",
+    "country": "Country",
+    "countryRequired": "Country *",
+    "selectCountry": "Select Country",
+    "state": "State",
+    "stateRequired": "State *",
+    "selectState": "Select State",
+    "city": "City",
+    "selectCity": "Select City",
+    "address": "Address",
+    "addressPlaceHolder": "Enter Address",
+    "pincode": "Pincode",
+    "pincodePlaceHolder": "Enter Pincode",
+    "status": "Status",
+    "selectStatus": "Select Status",
+    "active": "Active?",
+    "activePlaceholder": "Active?",
+    "activeRequired": "Active? *",
+    "activePlaceholderRequired": "Active? *",
+    "inactive": "Inactive",
+    "district": "District",
+    "selectDistrict": "Select District",
+    "compulsary": "Compulsary?",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "date": "Date",
+    "location": "Location"
+  },
+  "auth": {
+    "logInToYourAccount": "Log in to your account",
+    "forgotPassword": "Forgot Password?",
+    "logIn": "Log in",
+    "email": "Enter Email / Mobile No.",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "submit": "Submit",
+    "backToLogin": "Back to Login?",
+    "poweredBy": "© Powered By GNWebSoft Pvt. Ltd.",
+    "useGoogleChrome": "Please use Google Chrome for better experience."
+  },
+  "INS_University": {
+    "Required": {
+      "UniversityName": {
+        "Label": "Enter University Name*",
+        "Placeholder": "Enter University Name*"
+      },
+      "UniversityShortName": {
+        "Label": "Enter University Short Name*",
+        "Placeholder": "Enter University Short Name*"
+      }
+    },
+    "RequiredDropDown": {
+      "UniversityName": {
+        "Label": "Select University*",
+        "Placeholder": "Select University*"
+      }
+    },
+    "DropDown": {
+      "UniversityName": {
+        "Label": "Select University",
+        "Placeholder": "Select University"
+      }
+    },
+    "UniversityPK": {
+      "Label": "Select University",
+      "Placeholder": "Select University"
+    },
+    "UniversityName": {
+      "Label": "Enter University Name",
+      "Placeholder": "Enter University Name"
+    },
+    "UniversityType": {
+      "Label": "Enter University Type",
+      "Placeholder": "Enter University type"
+    },
+    "UniversityShortName": {
+      "Label": "Enter University Short name",
+      "Placeholder": "Enter University Short name"
+    },
+    "EstdYear": {
+      "Label": "Enter Establish Year",
+      "Placeholder": "Enter Establish Year"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+
+    "Create": {
+      "Title": "University"
+    },
+    "Edit": {
+      "Title": "University"
+    },
+    "List": {
+      "Title": "University"
+    }
+  },
+  "INS_Faculty": {
+    "Required": {
+      "FacultyName": {
+        "Label": "Enter Faculty Name*",
+        "Placeholder": "Enter Faculty Name*"
+      },
+
+      "FacultyShortName": {
+        "Label": "Enter Faculty Short Name*",
+        "Placeholder": "Enter Faculty Short Name*"
+      }
+    },
+    "RequiredDropDown": {
+      "FacultyName": {
+        "Label": "Select Faculty*",
+        "Placeholder": "Select Faculty*"
+      }
+    },
+    "DropDown": {
+      "FacultyName": {
+        "Label": "Select Faculty",
+        "Placeholder": "Select Faculty"
+      }
+    },
+    "FacultyPK": {
+      "Label": "Select Faculty",
+      "Placeholder": "Select Faculty"
+    },
+    "FacultyName": {
+      "Label": "Faculty Name",
+      "Placeholder": "Enter Faculty Name"
+    },
+    "FacultyShortName": {
+      "Label": "Faculty Short Name",
+      "Placeholder": "Enter Faculty Short Name"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Faculty"
+    },
+    "Edit": {
+      "Title": "Faculty"
+    },
+    "List": {
+      "Title": "Faculty"
+    }
+  },
+  "INS_Department": {
+    "Required": {
+      "DepartmentName": {
+        "Label": "Enter Department Name*",
+        "Placeholder": "Enter Department Name*"
+      },
+      "DepartmentCode": {
+        "Label": "Enter Department Code*",
+        "Placeholder": "Enter Department Code*"
+      }
+    },
+    "RequiredDropDown": {
+      "DepartmentName": {
+        "Label": "Select Department*",
+        "Placeholder": "Select Department*"
+      }
+    },
+    "DropDown": {
+      "DepartmentName": {
+        "Label": "Select Department",
+        "Placeholder": "Select Department"
+      }
+    },
+    "DepartmentPK": {
+      "Label": "Select Department",
+      "Placeholder": "Select Department"
+    },
+    "DepartmentName": {
+      "Label": "Department Name",
+      "Placeholder": "Enter Department Name"
+    },
+    "DepartmentShortName": {
+      "Label": "Department Short Name",
+      "Placeholder": "Enter Department Short Name"
+    },
+    "DepartmentCode": {
+      "Label": "Department Code",
+      "Placeholder": "Enter Department Code"
+    },
+    "IsAcademicDepartment": {
+      "Label": "Academic Department",
+      "Placeholder": "Academic Department"
+    },
+    "Vision": {
+      "Label": "Department Vision",
+      "Placeholder": "Enter Department Vision"
+    },
+    "Mission": {
+      "Label": "Department Mission",
+      "Placeholder": "Enter Department Mission"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Enter Description"
+    },
+    "Sequence": {
+      "Label": "Sequence",
+      "Placeholder": "Enter Sequence"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Department"
+    },
+    "Edit": {
+      "Title": "Department"
+    },
+    "List": {
+      "Title": "Department"
+    }
+  },
+  "INS_Specialization": {
+    "Required": {
+      "SpecializationName": {
+        "Label": "Specialization Name*",
+        "Placeholder": "Enter Specialization Name*"
+      },
+      "SpecializationShortName": {
+        "Label": "Specialization Short Name*",
+        "Placeholder": "Enter Specialization Short Name*"
+      },
+      "SpecializationCode": {
+        "Label": "Specialization Code*",
+        "Placeholder": "Enter Specialization Code*"
+      }
+    },
+    "RequiredDropDown": {
+      "SpecializationName": {
+        "Label": "Select Specialization*",
+        "Placeholder": "Select Specialization*"
+      }
+    },
+    "DropDown": {
+      "SpecializationName": {
+        "Label": "Select Specialization",
+        "Placeholder": "Select Specialization"
+      }
+    },
+    "SpecializationPK": {
+      "Label": "Select Specialization",
+      "Placeholder": "Select Specialization"
+    },
+    "SpecializationName": {
+      "Label": "Specialization Name",
+      "Placeholder": "Enter Specialization Name"
+    },
+    "SpecializationShortName": {
+      "Label": "Specialization Short Name",
+      "Placeholder": "Enter Specialization Short Name"
+    },
+    "SpecializationCode": {
+      "Label": "Specialization Code",
+      "Placeholder": "Enter Specialization Code"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Specialization"
+    },
+    "Edit": {
+      "Title": "Specialization"
+    },
+    "List": {
+      "Title": "Specialization"
+    }
+  },
+  "INS_Institute": {
+    "Required": {
+      "InstituteName": {
+        "Label": "Enter Institute Name*",
+        "Placeholder": "Enter Institute Name*"
+      },
+      "InstituteShortName": {
+        "Label": "Enter Institute Short Name*",
+        "Placeholder": "Enter Institute Short Name*"
+      }
+    },
+    "RequiredDropDown": {
+      "InstituteName": {
+        "Label": "Select Institute*",
+        "Placeholder": "Enter Institute*"
+      }
+    },
+    "DropDown": {
+      "InstituteName": {
+        "Label": "Select Institute",
+        "Placeholder": "Select Institute"
+      }
+    },
+    "InstitutePK": {
+      "Label": "Select Institute",
+      "Placeholder": "Select Institute"
+    },
+    "InstituteName": {
+      "Label": "Institute Name",
+      "Placeholder": "Enter Institute Name"
+    },
+    "InstituteShortName": {
+      "Label": "Institute Short Name",
+      "Placeholder": "Enter Institute Short Name"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Institute"
+    },
+    "Edit": {
+      "Title": "Institute"
+    },
+    "List": {
+      "Title": "Institute"
+    }
+  },
+  "INS_Program": {
+    "Required": {
+      "ProgramName": {
+        "Label": "Enter Program Name*",
+        "Placeholder": "Enter Program Name*"
+      },
+      "ProgramCode": {
+        "Label": "Enter Program Code*",
+        "Placeholder": "Enter Program Code*"
+      }
+    },
+    "RequiredDropDown": {
+      "ProgramName": {
+        "Label": "Select Program*",
+        "Placeholder": "Select Program*"
+      }
+    },
+    "DropDown": {
+      "ProgramName": {
+        "Label": "Select Program",
+        "Placeholder": "Select Program"
+      }
+    },
+    "ProgramPK": {
+      "Label": "Select Program",
+      "Placeholder": "Select Program"
+    },
+    "ProgramName": {
+      "Label": "Enter Program Name",
+      "Placeholder": "Enter Program Name"
+    },
+    "ProgramShortName": {
+      "Label": "Enter Program Short Name",
+      "Placeholder": "Enter Program Short Name"
+    },
+    "ProgramCode": {
+      "Label": "Enter Program Code",
+      "Placeholder": "Enter Program Code"
+    },
+    "ProgramLevel": {
+      "Label": "Enter Program Level",
+      "Placeholder": "Enter Program Level"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Program"
+    },
+    "Edit": {
+      "Title": "Program"
+    },
+    "List": {
+      "Title": "Program"
+    }
+  },
+  "INS_Course": {
+    "Required": {
+      "CourseName": {
+        "Label": "Enter Course Name*",
+        "Placeholder": "Enter Course Name*"
+      },
+
+      "CourseCode": {
+        "Label": "Enter Course Code*",
+        "Placeholder": "Enter Course Code*"
+      }
+    },
+    "RequiredDropDown": {
+      "CourseName": {
+        "Label": "Select Course*",
+        "Placeholder": "Select Course*"
+      }
+    },
+    "DropDown": {
+      "CourseName": {
+        "Label": "Select Course",
+        "Placeholder": "Select Course"
+      }
+    },
+    "CoursePK": {
+      "Label": "Select Course",
+      "Placeholder": "Select Course"
+    },
+    "CourseName": {
+      "Label": "Enter Course Name",
+      "Placeholder": "Enter Course Name"
+    },
+    "CouncilName": {
+      "Label": "Enter Council Name",
+      "Placeholder": "Enter Council Name"
+    },
+    "IsUG": {
+      "Label": "UG"
+    },
+    "IsPG": {
+      "Label": "PG"
+    },
+    "IsPhD": {
+      "Label": "PhD"
+    },
+    "IsLateralAdmission": {
+      "Label": "Lateral Admission"
+    },
+    "NoOfYears": {
+      "Label": "No Of Years",
+      "Placeholder": "Enter No Of Years"
+    },
+    "NoOfSemesters": {
+      "Label": "Enter No Of Semesters",
+      "Placeholder": "Enter No Of Semesters"
+    },
+    "SessionType": {
+      "Label": "Enter Session Type",
+      "Placeholder": "Enter Session Type"
+    },
+    "CourseShortName": {
+      "Label": "Enter Course Short Name",
+      "Placeholder": "Enter Course Short Name"
+    },
+    "CourseCode": {
+      "Label": "Enter Course Code",
+      "Placeholder": "Enter Course Code"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Course"
+    },
+    "Edit": {
+      "Title": "Course"
+    },
+    "List": {
+      "Title": "Course"
+    }
+  },
+  "INS_AcademicYearWiseStaffIntake": {
+    "TeachingLevel": {
+      "Label": "Teaching Level",
+      "Placeholder": "Teaching Level"
+    },
+    "ProfessorRequired": {
+      "Label": "Professor Required",
+      "Placeholder": "Professor Required"
+    },
+    "ProfessorSanctioned": {
+      "Label": "Professor Sanctioned",
+      "Placeholder": "Professor Sanctioned"
+    },
+    "ProfessorFilled": {
+      "Label": "Professor Filled",
+      "Placeholder": "Professor Filled"
+    },
+    "AssociateProfessorRequired": {
+      "Label": "Associate Professor Required",
+      "Placeholder": "Associate Professor Required"
+    },
+    "AssociateProfessorSanctioned": {
+      "Label": "Associate Professor Sanctioned",
+      "Placeholder": "Associate Professor Sanctioned"
+    },
+    "AssociateProfessorFilled": {
+      "Label": "Associate Professor Filled",
+      "Placeholder": "Associate Professor Filled"
+    },
+    "AssistantProfessorRequired": {
+      "Label": "Assistant Professor Required",
+      "Placeholder": "Assistant Professor Required"
+    },
+    "AssistantProfessorSanctioned": {
+      "Label": "Assistant Professor Sanctioned",
+      "Placeholder": "Assistant Professor Sanctioned"
+    },
+    "AssistantProfessorFilled": {
+      "Label": "Assistant Professor Filled",
+      "Placeholder": "Assistant Professor Filled"
+    },
+    "POPRequired": {
+      "Label": "POP Required",
+      "Placeholder": "POP Required"
+    },
+    "POPSanctioned": {
+      "Label": "POP Sanctioned",
+      "Placeholder": "POP Sanctioned"
+    },
+    "POPFilled": {
+      "Label": "POP Filled",
+      "Placeholder": "POP Filled"
+    },
+
+    "LecturerRequired": {
+      "Label": "Lecturer Required",
+      "Placeholder": "Lecturer Required"
+    },
+    "LecturerSanctioned": {
+      "Label": "Lecturer Sanctioned",
+      "Placeholder": "Lecturer Sanctioned"
+    },
+    "LecturerFilled": {
+      "Label": "Lecturer Filled",
+      "Placeholder": "Lecturer Filled"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Academic Year Wise Staff Intake"
+    },
+    "Edit": {
+      "Title": "Academic Year Wise Staff Intake"
+    },
+    "List": {
+      "Title": "Academic Year Wise Staff Intake"
+    }
+  },
+
+  "MST_VerificationStatus": {
+    "Required": {
+      "VerificationStatusName": {
+        "Label": "Enter Verification Status Name*",
+        "Placeholder": "Enter Verification Status Name*"
+      },
+      "VerificationStatusSystemName": {
+        "Label": "Enter Verification Status System Name*",
+        "Placeholder": "Enter Verification Status System Name*"
+      }
+    },
+    "VerificationStatusPK": {
+      "Label": "Select Verification Status",
+      "Placeholder": "Select Verification Status"
+    },
+    "ColorCodeCSSClass": {
+      "Label": "Enter ColorCodeCSSClass",
+      "Placeholder": "Enter ColorCodeCSSClass"
+    },
+
+    "IsConsiderInReport": {
+      "Label": "Consider In Report",
+      "Placeholder": "Consider In Report"
+    },
+    "IsDefault": {
+      "Label": "Default",
+      "Placeholder": "Default"
+    },
+    "IsEmployability": {
+      "Label": "Employability",
+      "Placeholder": "Employability"
+    },
+
+    "IsEditable": {
+      "Label": "Editable",
+      "Placeholder": "Editable"
+    },
+
+    "IsVerified": {
+      "Label": "Verified",
+      "Placeholder": "Verified"
+    },
+
+    "Remarks": {
+      "Label": "Enter Remarks",
+      "Placeholder": "Enter Remarks"
+    },
+    "Create": {
+      "Title": "Verification Status"
+    },
+    "Edit": {
+      "Title": "Verification Status"
+    },
+    "List": {
+      "Title": "Verification Status"
+    }
+  },
+  "MST_AcademicYear": {
+    "Required": {
+      "AcademicYearName": {
+        "Label": "Enter Academic Year Name*",
+        "Placeholder": "Enter Academic Year Name*"
+      }
+    },
+    "RequiredDropDown": {
+      "AcademicYearName": {
+        "Label": "Select Academic Year*",
+        "Placeholder": "Select  Academic Year*"
+      },
+      "AdmissionYearName": {
+        "Label": "Select Admission Year*",
+        "Placeholder": "Select  Admission Year*"
+      }
+    },
+
+    "DropDown": {
+      "AcademicYearName": {
+        "Label": "Select Academic Year",
+        "Placeholder": "Select Academic Year"
+      }
+    },
+    "AcademicYearPK": {
+      "Label": "Select Academic Year",
+      "Placeholder": "Select Academic Year"
+    },
+    "AcademicYearName": {
+      "Label": "Academic Year Name",
+      "Placeholder": "Enter Academic Year Name"
+    },
+    "AcademicYear": {
+      "Label": "Academic Year",
+      "Placeholder": "Enter Academic Year"
+    },
+    "AcademicYearFromDate": {
+      "Label": "Academic Year From Date",
+      "Placeholder": "Enter Academic Year From Date"
+    },
+    "AcademicYearToDate": {
+      "Label": "Academic Year To Date",
+      "Placeholder": "Enter Academic Year To Date"
+    },
+    "FinancialYearFromDate": {
+      "Label": "Financial Year From Date",
+      "Placeholder": "Enter Financial Year From Date"
+    },
+    "FinancialYearToDate": {
+      "Label": "Financial Year To Date",
+      "Placeholder": "Enter Financial Year To Date"
+    },
+    "CalendarYearFromDate": {
+      "Label": "Calendar Year From Date",
+      "Placeholder": "Enter Calendar Year From Date"
+    },
+    "CalendarYearToDate": {
+      "Label": "Calendar Year To Date",
+      "Placeholder": "Enter Calendar Year To Date"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Enter Description"
+    },
+    "Created": {
+      "Label": "Created",
+      "Placeholder": "Enter Created"
+    },
+    "Modified": {
+      "Label": "Modified",
+      "Placeholder": "Enter Modified"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Academic Year"
+    },
+    "Edit": {
+      "Title": "Academic Year"
+    },
+    "List": {
+      "Title": "Academic Year"
+    }
+  },
+  "MST_AchievementType": {
+    "Required": {
+      "AchievementTypeName": {
+        "Label": "Enter Achievement Type Name*",
+        "Placeholder": "Enter Achievement Type Name*"
+      }
+    },
+    "RequiredDropDown": {
+      "AchievementTypeName": {
+        "Label": "Select Achievement Type Name*",
+        "Placeholder": "Select Achievement Type Name*"
+      }
+    },
+    "AchievementTypePK": {
+      "Label": "Select Achievement Type",
+      "Placeholder": "Select Achievement Type"
+    },
+    "AchievementTypeName": {
+      "Label": "Achievement Type Name",
+      "Placeholder": "Enter Achievement Type Name"
+    },
+    "IsForStaff": {
+      "Label": "For Staff",
+      "Placeholder": "For Staff"
+    },
+    "IsForStudents": {
+      "Label": "For Students",
+      "Placeholder": "For Students"
+    },
+    "IsForInstitute": {
+      "Label": "For Institute",
+      "Placeholder": "For Institute"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Achievement Type"
+    },
+    "Edit": {
+      "Title": "Achievement Type"
+    },
+    "List": {
+      "Title": "Achievement Type"
+    }
+  },
+  "MST_ActivityClub": {
+    "Required": {
+      "ActivityClubName": {
+        "Label": "Enter Activity Club Name*",
+        "Placeholder": "Enter Activity Club Name*"
+      }
+    },
+    "RequiredDropDown": {
+      "ActivityClubName": {
+        "Label": "Select Activity Club*",
+        "Placeholder": "Select Activity Club*"
+      }
+    },
+    "DropDown": {
+      "ActivityClubName": {
+        "Label": "Select Activity Club",
+        "Placeholder": "Select Activity Club"
+      }
+    },
+    "ActivityClubPK": {
+      "Label": "Select Activity Club",
+      "Placeholder": "Select Activity Club"
+    },
+    "ActivityClubName": {
+      "Label": "Activity Club Name",
+      "Placeholder": "Enter Activity Club Name"
+    },
+    "IsDomain": {
+      "Label": "Domain",
+      "Placeholder": "Domain"
+    },
+    "IsCultural": {
+      "Label": "Cultural",
+      "Placeholder": "Cultural"
+    },
+    "IsSports": {
+      "Label": "Sports",
+      "Placeholder": "Sports"
+    },
+    "IsMentalWellness": {
+      "Label": "Mental Wellness",
+      "Placeholder": "Mental Wellness"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Activity Club"
+    },
+    "Edit": {
+      "Title": "Activity Club"
+    },
+    "List": {
+      "Title": "Activity Club"
+    }
+  },
+  "MST_Designation": {
+    "Form": {
+      "DesignationName": {
+        "Label": "Enter Designation*",
+        "Placeholder": "Enter Designation*"
+      }
+    },
+    "RequiredDropDown": {
+      "DesignationName": {
+        "Label": "Select Designation*",
+        "Placeholder": "Select Designation*"
+      }
+    },
+    "DropDown": {
+      "DesignationName": {
+        "Label": "Select Designation",
+        "Placeholder": "Select Designation"
+      }
+    },
+    "DesignationPK": {
+      "Label": "Select Designation",
+      "Placeholder": "Select Designation"
+    },
+    "DesignationName": {
+      "Label": "Enter Designation Name",
+      "Placeholder": "Enter Designation Name"
+    },
+    "IsTeaching": {
+      "Label": "Teaching",
+      "Placeholder": "Teaching"
+    },
+    "IsPoP": {
+      "Label": "Pop",
+      "Placeholder": "Pop"
+    },
+    "DesignationClass": {
+      "Label": "Enter Designation Class",
+      "Placeholder": "Enter Designation Class"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Designation"
+    },
+    "Edit": {
+      "Title": "Designation"
+    },
+    "List": {
+      "Title": "Designation"
+    }
+  },
+  "MST_EventType": {
+    "EventTypePK": {
+      "Label": "Select Event Type",
+      "Placeholder": "Select Event Type"
+    },
+    "IsOther": {
+      "Label": "Other",
+      "Placeholder": "Other"
+    },
+    "EventTypeName": {
+      "Label": "Event Type Name",
+      "Placeholder": "Enter Event Type Name"
+    },
+    "IsEmployability": {
+      "Label": "Employability",
+      "Placeholder": "Employability"
+    },
+    "IsCourse": {
+      "Label": "Course",
+      "Placeholder": "Course"
+    },
+    "IsConference": {
+      "Label": "Conference",
+      "Placeholder": "Is Conference"
+    },
+    "IsFieldVisit": {
+      "Label": "Field Visit",
+      "Placeholder": "Field Visit"
+    },
+    "IsExpertTalk": {
+      "Label": "Expert Talk",
+      "Placeholder": "Expert Talk"
+    },
+    "IsSeminar": {
+      "Label": "Seminar",
+      "Placeholder": "Seminar"
+    },
+    "IsWorkshop": {
+      "Label": "Workshop",
+      "Placeholder": "Workshop"
+    },
+    "IsHackathon": {
+      "Label": "Hackathon",
+      "Placeholder": "Hackathon"
+    },
+    "IsCommunity": {
+      "Label": "Community",
+      "Placeholder": "Community"
+    },
+    "IsExpense": {
+      "Label": "Expense",
+      "Placeholder": "Expense"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Event Type"
+    },
+    "Edit": {
+      "Title": "Event Type"
+    },
+    "List": {
+      "Title": "Event Type"
+    }
+  },
+  "MST_HardcodeCombo": {
+    "Form": {
+      "ComboName": {
+        "Label": "Enter Combo Name*",
+        "Placeholder": "Enter Combo Name*"
+      },
+      "DisplayName": {
+        "Label": "Enter Display Name*",
+        "Placeholder": "Enter Display Name*"
+      },
+      "Value": {
+        "Label": "Value*",
+        "Placeholder": "Enter Value*"
+      }
+    },
+    "ComboName": {
+      "Label": "Enter Combo Name",
+      "Placeholder": "Enter Combo Name"
+    },
+    "DisplayName": {
+      "Label": "Enter Display Name",
+      "Placeholder": "Enter Display Name"
+    },
+    "Value": {
+      "Label": "Enter Value",
+      "Placeholder": "Enter Value"
+    },
+    "Sequence": {
+      "Label": "Enter Sequence",
+      "Placeholder": "Enter Sequence"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Hardcode Combo"
+    },
+    "Edit": {
+      "Title": "Hardcode Combo"
+    },
+    "List": {
+      "Title": "Hardcode Combo"
+    }
+  },
+  "MST_PayScale": {
+    "Form": {
+      "PayCommission": {
+        "Label": "Enter Pay Commission*",
+        "Placeholder": "Enter Pay Commission*"
+      },
+      "PayScaleName": {
+        "Label": "Enter Pay Scale Name*",
+        "Placeholder": "Enter Pay Scale Name*"
+      }
+    },
+    "PayCommission": {
+      "Label": "Enter Pay Commission",
+      "Placeholder": "Enter Pay Commission"
+    },
+    "PayScaleName": {
+      "Label": "Enter Pay Scale Name",
+      "Placeholder": "Enter Pay Scale Name"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Pay Scale"
+    },
+    "Edit": {
+      "Title": "Pay Scale"
+    },
+    "List": {
+      "Title": "Pay Scale"
+    }
+  },
+  "MST_PublicationIndexDatabase": {
+    "Required": {
+      "PublicationIndexDatabaseName": {
+        "Label": "Enter Publication Index Database Name*",
+        "Placeholder": "Enter Publication Index Database Name*"
+      },
+      "DatabaseNameSystemName": {
+        "Label": "Enter Database Name System Name*",
+        "Placeholder": "Enter Database Name System Name*"
+      }
+    },
+    "DropDown": {
+      "PublicationIndexDatabaseName": {
+        "Label": "Select Publication Index Database Name",
+        "Placeholder": "Select Publication Index Database Name"
+      }
+    },
+    "PublicationIndexDatabasePK": {
+      "Label": "Select Publication Index Database",
+      "Placeholder": "Select Publication Index Database"
+    },
+    "PublicationIndexDatabaseName": {
+      "Label": "Enter Publication Index Database name",
+      "Placeholder": "Enter Publication Index Database name"
+    },
+    "DatabaseNameSystemName": {
+      "Label": "Enter Database Name System Name",
+      "Placeholder": "Enter Database Name System Name"
+    },
+    "IsUGCCare": {
+      "Label": "UGC Care",
+      "Placeholder": "UGC Care"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "Created": {
+      "Label": "Enter Created",
+      "Placeholder": "Enter Created"
+    },
+    "Modified": {
+      "Label": "Enter Modified",
+      "Placeholder": "Enter Modified"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Publication Index Database"
+    },
+    "Edit": {
+      "Title": "Publication Index Database"
+    },
+    "List": {
+      "Title": "Publication Index Database"
+    }
+  },
+  "MST_PublicationType": {
+    "Form": {
+      "PublicationTypeName": {
+        "Label": "Enter Publication Type Name*",
+        "Placeholder": "Enter Publication Type Name*"
+      },
+      "PublicationTypeSystemName": {
+        "Label": "Enter Publication Type System Name*",
+        "Placeholder": "Enter Publication Type System Name*"
+      }
+    },
+    "DropDown": {
+      "PublicationTypeName": {
+        "Label": "Select Publication Type Name",
+        "Placeholder": "Select Publication Type Name"
+      }
+    },
+    "RequiredDropDown": {
+      "PublicationTypeName": {
+        "Label": "Select Publication Type Name*",
+        "Placeholder": "Select Publication Type Name*"
+      }
+    },
+    "PublicationTypePK": {
+      "Label": "Select Publication Type",
+      "Placeholder": "Select Publication Type"
+    },
+    "PublicationTypeName": {
+      "Label": "Enter Publication Type Name",
+      "Placeholder": "Enter Publication Type Name"
+    },
+    "PublicationTypeSystemName": {
+      "Label": "Enter Publication Type System Name",
+      "Placeholder": "Enter Publication Type System Name"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+
+    "Create": {
+      "Title": "Publication Type"
+    },
+
+    "Edit": {
+      "Title": "Publication Type"
+    },
+    "List": {
+      "Title": "Publication Type"
+    }
+  },
+  "MST_Qualification": {
+    "Form": {
+      "QualificationName": {
+        "Label": "Enter Qualification Name*",
+        "Placeholder": "Enter Qualification Name*"
+      },
+      "QualificationLevel": {
+        "Label": "Enter Qualification Level*",
+        "Placeholder": "Enter Qualification Level*"
+      },
+      "QualificationLevelName": {
+        "Label": "Enter Qualification Level Name*",
+        "Placeholder": "Enter Qualification Level Name*"
+      }
+    },
+    "QualificationName": {
+      "Label": "Enter Qualification Name",
+      "Placeholder": "Enter Qualification Name"
+    },
+    "QualificationLevel": {
+      "Label": "Enter Qualification Level",
+      "Placeholder": "Enter Qualification Level"
+    },
+    "QualificationLevelName": {
+      "Label": "Enter Qualification Level Name",
+      "Placeholder": "Enter Qualification Level Name"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Qualification"
+    },
+
+    "Edit": {
+      "Title": "Qualification"
+    },
+    "List": {
+      "Title": "Qualification"
+    }
+  },
+  "FIN_IncomeExpense": {
+    "Required": {
+      "FinancialYearName": {
+        "Label": "Enter Financial Year Name*",
+        "Placeholder": "Enter Financial Year Name*"
+      },
+      "Amount": {
+        "Label": "Enter Amount*",
+        "Placeholder": "Enter Amount*"
+      }
+    },
+    "RequiredDropDown": {
+      "FinancialYearName": {
+        "Label": "Select Financial Year Name*",
+        "Placeholder": "Select Enter Financial Year Name*"
+      }
+    },
+    "FinancialYearPK": {
+      "Label": "Select Financial Year",
+      "Placeholder": "Select Financial Year"
+    },
+    "IsIncome": {
+      "Label": "Income",
+      "Placeholder": "Income"
+    },
+    "FinancialYearName": {
+      "Label": "Enter Financial Year Name",
+      "Placeholder": "Enter Financial Year Name"
+    },
+    "Amount": {
+      "Label": "Enter Amount",
+      "Placeholder": "Enter Amount"
+    },
+    "ProofPath": {
+      "Label": "Enter Proof Path",
+      "Placeholder": "Enter Proof Path"
+    },
+    "IncomeExpenseDetail": {
+      "Label": "Enter Income Expense Detail",
+      "Placeholder": "Enter Income Expense Detail"
+    },
+    "VerificationStatus": {
+      "Label": "Enter Verification Status",
+      "Placeholder": "Enter Verification Status"
+    },
+    "VerificationRemarks": {
+      "Label": "Enter Verification Remarks",
+      "Placeholder": "Enter Verification Remarks"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Income Expense"
+    },
+
+    "Edit": {
+      "Title": "Income Expense"
+    },
+    "List": {
+      "Title": "Income Expense"
+    }
+  },
+  "FIN_IncomeExpenseType": {
+    "Required": {
+      "IncomeExpenseTypeName": {
+        "Label": "Enter Income Expense Type Name*",
+        "Placeholder": "Enter Income Expense Type Name*"
+      },
+      "IncomeExpenseTypeCategory": {
+        "Label": "Enter Income Expense Type Category*",
+        "Placeholder": "Enter Income Expense Type Category*"
+      },
+      "IncomeExpenseTypeSystemName": {
+        "Label": "Enter Income Expense Type System Name*",
+        "Placeholder": "Enter Income Expense Type System Name*"
+      }
+    },
+    "RequiredDropDown": {
+      "IncomeExpenseTypeName": {
+        "Label": "Select Income Expense Type Name*",
+        "Placeholder": "Select Income Expense Type Name*"
+      },
+      "IncomeExpenseTypeCategory": {
+        "Label": "Select Income Expense Type Category*",
+        "Placeholder": "Select Income Expense Type Category*"
+      }
+    },
+    "IncomeExpenseTypePK": {
+      "Label": "Select Income Expense Type",
+      "Placeholder": "Select Income Expense Type"
+    },
+    "IncomeExpenseTypeName": {
+      "Label": "Enter Income Expense Type Name",
+      "Placeholder": "Enter Income Expense Type Name"
+    },
+    "IncomeExpenseTypeCategory": {
+      "Label": "Enter Income Expense Type Category",
+      "Placeholder": "Enter Income Expense Type Category"
+    },
+    "IncomeExpenseTypeSystemName": {
+      "Label": "Enter Income Expense Type System Name",
+      "Placeholder": "Enter Income Expense Type System Name"
+    },
+    "CommonGroupName": {
+      "Label": "Enter Common Group Name",
+      "Placeholder": "Enter Common Group Name"
+    },
+    "IsIncome": {
+      "Label": "Income",
+      "Placeholder": "Income"
+    },
+    "Sequence": {
+      "Label": "Enter Sequence",
+      "Placeholder": "Enter Sequence"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+
+    "Create": {
+      "Title": "Income Expense Type"
+    },
+
+    "Edit": {
+      "Title": "Income Expense Type"
+    },
+    "List": {
+      "Title": "Income Expense Type"
+    }
+  },
+  "ACT_Achievement": {
+    "AchievementYearMonth": {
+      "Label": "Enter Achievement Year Month",
+      "Placeholder": "Enter Achievement Year Month"
+    },
+    "AchievementLevel": {
+      "Label": "Enter Achievement Level",
+      "Placeholder": "Enter Achievement Level"
+    },
+    "IsGovRecognized": {
+      "Label": "Gov Recognized",
+      "Placeholder": "Gov Recognized"
+    },
+    "AchievementTitle": {
+      "Label": "Enter Achievement Title",
+      "Placeholder": "Enter Achievement Title"
+    },
+    "AchievementDescription": {
+      "Label": "Enter Achievement Description",
+      "Placeholder": "Enter Achievement Description"
+    },
+    "OrganizationName": {
+      "Label": "Enter Organization Name",
+      "Placeholder": "Enter Organization Name"
+    },
+    "AchievementPhotoPath": {
+      "Label": "Enter Achievement Photo Path",
+      "Placeholder": "Enter Achievement Photo Path"
+    },
+    "AchievementProofPath": {
+      "Label": "Enter Achievement Proof Path",
+      "Placeholder": "Enter Achievement Proof Path"
+    },
+    "StaffNameCSV": {
+      "Label": "Enter Staff Name CSV",
+      "Placeholder": "Enter Staff Name CSV"
+    },
+    "StudentNameCSV": {
+      "Label": "Enter Student Name CSV",
+      "Placeholder": "Enter Student Name CSV"
+    },
+    "VerificationStatus": {
+      "Label": "Enter Verification Status",
+      "Placeholder": "Enter Verification Status"
+    },
+    "VerificationRemarks": {
+      "Label": "Enter Verification Remarks",
+      "Placeholder": "Enter Verification Remarks"
+    },
+    "VerificationDate": {
+      "Label": "Verification Date",
+      "Placeholder": "Enter Verification Date"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Achievement"
+    },
+
+    "Edit": {
+      "Title": "Achievement"
+    },
+    "List": {
+      "Title": "Achievement"
+    }
+  },
+  "ACT_ConsultancyProject": {
+    "ConsultancyCellName": {
+      "Label": "Consultancy Cell Name",
+      "Placeholder": "Enter Consultancy Cell Name"
+    },
+    "ProjectYearMonth": {
+      "Label": "Project Year Month",
+      "Placeholder": "Enter Project Year Month"
+    },
+    "ProjectType": {
+      "Label": "Project Type",
+      "Placeholder": "Enter Project Type"
+    },
+    "ProjectTitle": {
+      "Label": "Project Title",
+      "Placeholder": "Enter Project Title"
+    },
+    "ProjectDescription": {
+      "Label": "Project Description",
+      "Placeholder": "Enter Project Description"
+    },
+    "ProjectDuration": {
+      "Label": "Project Duration",
+      "Placeholder": "Enter Project Duration"
+    },
+    "ClientName": {
+      "Label": "Client Name",
+      "Placeholder": "Enter Client Name"
+    },
+    "RevenueAmount": {
+      "Label": "Revenue Amount",
+      "Placeholder": "Enter Revenue Amount"
+    },
+    "StaffInvolvedCSV": {
+      "Label": "Staff Involved CSV",
+      "Placeholder": "Enter Staff Involved CSV"
+    },
+    "ProjectProofPath": {
+      "Label": "Project Proof Path",
+      "Placeholder": "Enter Project Proof Path"
+    },
+    "ProjectReportPath": {
+      "Label": "Project Report Path",
+      "Placeholder": "Enter Project Report Path"
+    },
+    "VerificationStatus": {
+      "Label": "Verification Status",
+      "Placeholder": "Enter Verification Status"
+    },
+    "VerificationRemarks": {
+      "Label": "Verification Remarks",
+      "Placeholder": "Enter Verification Remarks"
+    },
+    "VerificationByUserID": {
+      "Label": "Verification by user ID",
+      "Placeholder": "Enter Verification by user ID"
+    },
+    "VerificationDate": {
+      "Label": "Verification Date",
+      "Placeholder": "Enter Verification Date"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Enter Description"
+    },
+    "CreatedByUserID": {
+      "Label": "Created by user ID",
+      "Placeholder": "Enter Created by user ID"
+    },
+    "ModifiedByUserID": {
+      "Label": "Modified by user ID",
+      "Placeholder": "Enter Modified by user ID"
+    },
+    "Created": {
+      "Label": "Created",
+      "Placeholder": "Enter Created"
+    },
+    "Modified": {
+      "Label": "Modified",
+      "Placeholder": "Enter Modified"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Consultancy Project"
+    },
+
+    "Edit": {
+      "Title": "Consultancy Project"
+    },
+    "List": {
+      "Title": "Consultancy Project"
+    }
+  },
+  "ACT_Event": {
+    "Required": {
+      "EventTitle": {
+        "Label": "Enter Event Title*",
+        "Placeholder": "Enter Event Title*"
+      },
+      "EventDate": {
+        "Label": "Select Event Date*",
+        "Placeholder": "Select Event Date*"
+      }
+    },
+    "RequiredDropDown": {
+      "UniversityName": {
+        "Label": "Organized By University*",
+        "Placeholder": "Organized By University*"
+      }
+    },
+    "DropDown": {
+      "InstituteName": {
+        "Label": "Organized By Institute",
+        "Placeholder": "Organized By Institute"
+      },
+      "DepartmentName": {
+        "Label": "Organized By Department",
+        "Placeholder": "Organized By Department"
+      }
+    },
+
+    "EventPK": {
+      "Label": "Select Event Title",
+      "Placeholder": "Select Event Title"
+    },
+    "EventTitle": {
+      "Label": "Event Title",
+      "Placeholder": "Enter Event Title"
+    },
+    "EventDate": {
+      "Label": "Event Date",
+      "Placeholder": "Enter Event Date"
+    },
+    "EventDurationDays": {
+      "Label": "Event Duration Days",
+      "Placeholder": "Enter Event Duration Days"
+    },
+    "EventDescription": {
+      "Label": "Event Description",
+      "Placeholder": "Enter Event Description"
+    },
+    "IndustryBodiesInvolved": {
+      "Label": "Industry Bodies Involved",
+      "Placeholder": "Enter Industry Bodies Involved"
+    },
+    "ProfessionalBodiesInvolved": {
+      "Label": "Professional Bodies Involved",
+      "Placeholder": "Enter Professional Bodies Involved"
+    },
+    "StudentCount": {
+      "Label": "Student Count",
+      "Placeholder": "Enter Student Count"
+    },
+    "CircularPath": {
+      "Label": "Circular",
+      "Placeholder": "Enter Circular"
+    },
+    "ParticipantListPath": {
+      "Label": "Participant List",
+      "Placeholder": "Enter Participant List"
+    },
+    "AttendanceSheetPath": {
+      "Label": "Attendance Sheet",
+      "Placeholder": "Enter Attendance Sheet"
+    },
+    "SampleCertificatePath": {
+      "Label": "Sample Certificate",
+      "Placeholder": "Enter Sample Certificate"
+    },
+    "EventReportPath": {
+      "Label": "Event Report",
+      "Placeholder": "Enter Event Report"
+    },
+    "PhotoFolderPath": {
+      "Label": "Photo Folder",
+      "Placeholder": "Enter Photo Folder"
+    },
+    "CourseContentPath": {
+      "Label": "Course Content",
+      "Placeholder": "Enter Course Content"
+    },
+    "CourseTimetablePath": {
+      "Label": "Course Timetable",
+      "Placeholder": "Enter Course Timetable"
+    },
+    "IsValueEducation": {
+      "Label": "Value Education",
+      "Placeholder": "Value Education"
+    },
+    "IsIndustryLinkage": {
+      "Label": "Industry Linkage",
+      "Placeholder": "Industry Linkage"
+    },
+    "IsNCC": {
+      "Label": "NCC Event?",
+      "Placeholder": "NCC Event?"
+    },
+    "IsNSS": {
+      "Label": "NSS Event?",
+      "Placeholder": "NSS Event?"
+    },
+    "VerificationStatus": {
+      "Label": "Verification Status",
+      "Placeholder": "Enter Verification Status"
+    },
+    "VerificationRemarks": {
+      "Label": "Verification Remarks",
+      "Placeholder": "Enter Verification Remarks"
+    },
+    "VerificationByUserID": {
+      "Label": "Verification by user ID",
+      "Placeholder": "Enter Verification by user ID"
+    },
+    "VerificationDate": {
+      "Label": "Verification date",
+      "Placeholder": "Enter Verification date"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Event"
+    },
+
+    "Edit": {
+      "Title": "Event"
+    },
+    "List": {
+      "Title": "Event"
+    }
+  },
+  "ACT_MOU": {
+    "Required": {
+      "Title": {
+        "Label": "Enter Title*",
+        "Placeholder": "Enter Title*"
+      },
+
+      "FromDate": {
+        "Label": "From Date*",
+        "Placeholder": "From Date*"
+      }
+    },
+    "Title": {
+      "Label": "Enter Title",
+      "Placeholder": "Enter Title"
+    },
+    "FromDate": {
+      "Label": "From Date",
+      "Placeholder": "From Date"
+    },
+    "ToDate": {
+      "Label": "To Date",
+      "Placeholder": "To Date"
+    },
+    "IndustryName": {
+      "Label": "Enter Industry Name",
+      "Placeholder": "Enter Industry Name"
+    },
+    "UniversityContactPersonPK": {
+      "Label": "Select University Contact Person Name",
+      "Placeholder": "Select University Contact Person Name"
+    },
+    "IndustryContactPersonName": {
+      "Label": "Enter Industry Contact Person Name",
+      "Placeholder": "Enter Industry Contact Person Name"
+    },
+    "IndustryContactPersonMobile": {
+      "Label": "Enter Industry Contact Person Mobile",
+      "Placeholder": "Enter Industry Contact Person Mobile"
+    },
+    "IndustryContactPersonMail": {
+      "Label": "Enter Industry Contact Person Mail",
+      "Placeholder": "Enter Industry Contact Person Mail"
+    },
+    "IndustryAddress": {
+      "Label": "Enter Industry Address",
+      "Placeholder": "Enter Industry Address"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "MOU"
+    },
+
+    "Edit": {
+      "Title": "MOU"
+    },
+    "List": {
+      "Title": "MOU"
+    }
+  },
+  "ACT_FundedResearchProject": {
+    "Required": {
+      "ProjectAwardMonthYear": {
+        "Label": "Enter Project Award Month Year*",
+        "Placeholder": "Enter Project Award Month Year*"
+      },
+      "ProjectSchemeName": {
+        "Label": "Enter Project Scheme Name*",
+        "Placeholder": "Enter Project Scheme Name*"
+      }
+    },
+
+    "ProjectAwardMonthYear": {
+      "Label": "Project award month year",
+      "Placeholder": "Enter Project award month year"
+    },
+    "ProjectSchemeName": {
+      "Label": "Project scheme name",
+      "Placeholder": "Enter Project scheme name"
+    },
+    "PrincipalInvestigatorsCSV": {
+      "Label": "Principal investigators CSV",
+      "Placeholder": "Enter Principal investigators CSV"
+    },
+    "CoInvestigatorsCSV": {
+      "Label": "Co investigators CSV",
+      "Placeholder": "Enter Co investigators CSV"
+    },
+    "FundingAgency": {
+      "Label": "Funding agency",
+      "Placeholder": "Enter Funding agency"
+    },
+    "IsGovernment": {
+      "Label": "government",
+      "Placeholder": "government"
+    },
+    "FundsAmoutINR": {
+      "Label": "Funds amout INR",
+      "Placeholder": "Enter Funds amout INR"
+    },
+    "FundsAmoutCurrency": {
+      "Label": "Funds amout currency",
+      "Placeholder": "Enter Funds amout currency"
+    },
+    "Currency": {
+      "Label": "Currency",
+      "Placeholder": "Enter Currency"
+    },
+    "ProjectDuration": {
+      "Label": "Project duration",
+      "Placeholder": "Enter Project duration"
+    },
+    "ProjectProofPath": {
+      "Label": "Project proof path",
+      "Placeholder": "Enter Project proof path"
+    },
+    "VerificationStatus": {
+      "Label": "Verification status",
+      "Placeholder": "Enter Verification status"
+    },
+    "VerificationRemarks": {
+      "Label": "Verification remarks",
+      "Placeholder": "Enter Verification remarks"
+    },
+    "VerificationByUserID": {
+      "Label": "Verification by user ID",
+      "Placeholder": "Enter Verification by user ID"
+    },
+    "VerificationDate": {
+      "Label": "Verification date",
+      "Placeholder": "Enter Verification date"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Funded Research Project"
+    },
+    "Edit": {
+      "Title": "Funded Research Project"
+    },
+    "List": {
+      "Title": "Funded Research Project"
+    }
+  },
+  "ACT_Patent": {
+    "Form": {
+      "ApplicationNo": {
+        "Label": "Application No*",
+        "Placeholder": "Enter Application No*"
+      },
+      "InventionTitle": {
+        "Label": "Invention Title*",
+        "Placeholder": "Enter Invention Title*"
+      }
+    },
+
+    "PatentStatus": {
+      "Label": "Patent status",
+      "Placeholder": "Enter Patent status"
+    },
+    "InventionTitle": {
+      "Label": "Invention title",
+      "Placeholder": "Enter Invention title"
+    },
+    "ApplicationNo": {
+      "Label": "Application no",
+      "Placeholder": "Enter Application no"
+    },
+    "ApplicationDate": {
+      "Label": "Application date",
+      "Placeholder": "Enter Application date"
+    },
+    "PublicationNo": {
+      "Label": "Publication no",
+      "Placeholder": "Enter Publication no"
+    },
+    "PublicationDate": {
+      "Label": "Publication date",
+      "Placeholder": "Enter Publication date"
+    },
+    "FieldOfInvention": {
+      "Label": "Field of invention",
+      "Placeholder": "Enter Field of invention"
+    },
+    "ClassificationIPC": {
+      "Label": "Classification IPC",
+      "Placeholder": "Enter Classification IPC"
+    },
+    "InventorsNameCSV": {
+      "Label": "Inventors name CSV",
+      "Placeholder": "Enter Inventors name CSV"
+    },
+    "ApplicantNameCSV": {
+      "Label": "Applicant name CSV",
+      "Placeholder": "Enter Applicant name CSV"
+    },
+    "ApplicationStatusProofPath": {
+      "Label": "Application status proof path",
+      "Placeholder": "Enter Application status proof path"
+    },
+    "PatentCertificatePath": {
+      "Label": "Patent certificate path",
+      "Placeholder": "Enter Patent certificate path"
+    },
+    "IsPublished": {
+      "Label": "Published",
+      "Placeholder": "Published"
+    },
+    "IsGranted": {
+      "Label": "Granted",
+      "Placeholder": "Granted"
+    },
+    "VerificationStatus": {
+      "Label": "Verification status",
+      "Placeholder": "Enter Verification status"
+    },
+    "VerificationRemarks": {
+      "Label": "Verification remarks",
+      "Placeholder": "Enter Verification remarks"
+    },
+    "VerificationByUserID": {
+      "Label": "Verification by user ID",
+      "Placeholder": "Enter Verification by user ID"
+    },
+    "VerificationDate": {
+      "Label": "Verification date",
+      "Placeholder": "Enter Verification date"
+    },
+    "Description": {
+      "Label": "Description",
+      "Placeholder": "Enter Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Patent"
+    },
+
+    "Edit": {
+      "Title": "Patent"
+    },
+    "List": {
+      "Title": "Patent"
+    }
+  },
+  "SEC_User": {
+    "IsActive": {
+      "Label": "Active",
+      "Placeholder": "Active"
+    },
+    "IsDeleted": {
+      "Label": "Deleted",
+      "Placeholder": "Deleted"
+    },
+    "DisplayName": {
+      "Label": "Display Name",
+      "Placeholder": "Enter Display Name"
+    },
+    "UserName": {
+      "Label": "User Name",
+      "Placeholder": "Enter User Name"
+    },
+    "NormalizedUserName": {
+      "Label": "Normalized User Name",
+      "Placeholder": "Enter Normalized User Name"
+    },
+    "Email": {
+      "Label": "Email",
+      "Placeholder": "Enter Email"
+    },
+    "FirstName": {
+      "Label": "First Name",
+      "Placeholder": "Enter First Name"
+    },
+    "LastName": {
+      "Label": "Last Name",
+      "Placeholder": "Enter Last Name"
+    },
+    "DefaultUrl": {
+      "Label": "Default Url",
+      "Placeholder": "Enter Default Url"
+    },
+
+    "Designation": {
+      "Label": "Designation",
+      "Placeholder": "Enter Designation"
+    },
+    "PhoneNumber": {
+      "Label": "Phone Number",
+      "Placeholder": "Enter Phone Number"
+    },
+    "Remarks": {
+      "Label": "Remarks",
+      "Placeholder": "Enter Remarks"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "User"
+    },
+    "Edit": {
+      "Title": "User"
+    },
+    "List": {
+      "Title": "User"
+    },
+    "ChangePassword": {
+      "Label": "Change Password",
+      "Placeholder": "Change Password"
+    },
+    "OldPassword": {
+      "Label": "Old Password",
+      "Placeholder": "Old Password"
+    },
+    "NewPassword": {
+      "Label": "New Password",
+      "Placeholder": "New Password"
+    },
+    "ConfirmPassword": {
+      "Label": "Confirm Password",
+      "Placeholder": "Confirm Password"
+    }
+  },
+  "SEC_Role": {
+    "DisplayName": {
+      "Label": "Enter Display Name",
+      "Placeholder": "Display Name"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Description"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    }
+  },
+  "STU_Student": {
+    "Required": {
+      "DropDown": {
+        "AdmissionAcademicYear": {
+          "Label": "Select Admission Academic Year*",
+          "Placeholder": "Select Admission Academic Year*"
+        }
+      }
+    },
+    "Form": {
+      "StudentFullName": {
+        "Label": "Student Full Name*",
+        "Placeholder": "Student Full Name*"
+      },
+
+      "EnrollmentNo": {
+        "Label": "Enrollment No*",
+        "Placeholder": "Enrollment No*"
+      },
+
+      "IsEWS": {
+        "Label": "EWS*",
+        "Placeholder": "EWS*"
+      },
+
+      "IsMinority": {
+        "Label": "Minority*",
+        "Placeholder": "Minority*"
+      },
+
+      "IsMuslimMinority": {
+        "Label": "Muslim Minority*",
+        "Placeholder": "Muslim Minority*"
+      },
+
+      "IsPWD": {
+        "Label": "PWD*",
+        "Placeholder": "PWD*"
+      },
+
+      "AdmissionAcademicYear": {
+        "Label": "Admission Academic Year*",
+        "Placeholder": "Admission Academic Year*"
+      },
+      "AdmissionCancelled": {
+        "Label": "Admission Cancelled*",
+        "Placeholder": "Admission Cancelled*"
+      },
+      "IsNRI": {
+        "Label": "NRI Student*",
+        "Placeholder": "NRI Student*"
+      },
+
+      "IsOtherCountry": {
+        "Label": "From Other Country?*",
+        "Placeholder": "From Other Country?*"
+      },
+
+      "IsOtherState": {
+        "Label": "From Other State?*",
+        "Placeholder": "From Other State?*"
+      },
+
+      "IsPersonOfIndianOrigin": {
+        "Label": "Person Of Indian Origin*",
+        "Placeholder": "Person Of Indian Origin*"
+      },
+      "IsSelfEmployed": {
+        "Label": "Self Employed*",
+        "Placeholder": "Self Employed*"
+      },
+      "SelfEmployedOrganization": {
+        "Label": "Organization*",
+        "Placeholder": "Organization*"
+      },
+      "SelfEmployedDesignation": {
+        "Label": "Designation*",
+        "Placeholder": "Designation*"
+      },
+      "IsGraduatedInStipulatedDuration": {
+        "Label": "Graduated In Stipulated Duration*",
+        "Placeholder": "Graduated In Stipulated Duration*"
+      },
+      "GraduationAcademicYear": {
+        "Label": "Academic Year*",
+        "Placeholder": "Academic Year*"
+      },
+      "IsHigherEducation": {
+        "Label": "Higher Education*",
+        "Placeholder": "Higher Education*"
+      },
+      "HigherEducationAdmissionYear": {
+        "Label": "Admission Year*",
+        "Placeholder": "Admission Year*"
+      },
+      "HigherEducationDegree": {
+        "Label": "Degree*",
+        "Placeholder": "Degree*"
+      },
+      "HigherEducationInstitute": {
+        "Label": "Higher Education Institute*",
+        "Placeholder": "Higher Education Institute*"
+      },
+      "HigherEducationCountryName": {
+        "Label": "Country*",
+        "Placeholder": "Country*"
+      },
+      "HigherEducationStateName": {
+        "Label": "State*",
+        "Placeholder": "State*"
+      },
+
+      "IsPlaced": {
+        "Label": "Placed*",
+        "Placeholder": "Placed*"
+      },
+
+      "PlacementYear": {
+        "Label": "Placement Year*",
+        "Placeholder": "Placement Year*"
+      },
+
+      "PlacementCompany": {
+        "Label": "Placement Company*",
+        "Placeholder": "Placement Company*"
+      }
+    },
+    "MobileNo": {
+      "Label": "Mobile No",
+      "Placeholder": "Mobile No"
+    },
+
+    "AdmissionQuota": {
+      "Label": "Admission Quota*",
+      "Placeholder": "Admission Quota*"
+    },
+    "SelfEmployedProofType": {
+      "Label": "Proof Type",
+      "Placeholder": "Proof Type"
+    },
+    "AdmissionAcademicYear": {
+      "Label": "Admission Academic Year",
+      "Placeholder": "Admission Academic Year"
+    },
+    "AdmissionType": {
+      "Label": "Admission Type",
+      "Placeholder": "Admission Type"
+    },
+    "EnrollmentNo": {
+      "Label": "Enrollment No",
+      "Placeholder": "Enrollment No"
+    },
+    "StudentFullName": {
+      "Label": "Student Full Name",
+      "Placeholder": "Student Full Name"
+    },
+    "BirthDate": {
+      "Label": "Birth Date",
+      "Placeholder": "Birth Date"
+    },
+    "ABCID": {
+      "Label": "ABC ID",
+      "Placeholder": "ABC ID"
+    },
+
+    "LearningMode": {
+      "Label": "Learning Mode",
+      "Placeholder": "Learning Mode"
+    },
+
+    "CurrentYear": {
+      "Label": "Current Year",
+      "Placeholder": "Current Year"
+    },
+
+    "CurrentSemester": {
+      "Label": "Current Semester",
+      "Placeholder": "Current Semester"
+    },
+
+    "AdmittedCasteCategory": {
+      "Label": "Admitted Caste Category",
+      "Placeholder": "Admitted Caste Category"
+    },
+
+    "CancellationMonthYear": {
+      "Label": "Cancellation Month Year",
+      "Placeholder": "Cancellation Month Year"
+    },
+    "GraduationClass": {
+      "Label": "Graduation Class",
+      "Placeholder": "Graduation Class"
+    },
+    "EmailInstitute": {
+      "Label": "Email Institute",
+      "Placeholder": "Email Institute"
+    },
+
+    "EmailPersonal": {
+      "Label": "Email Personal",
+      "Placeholder": "Email Personal"
+    },
+
+    "AadharNo": {
+      "Label": "Aadhar No",
+      "Placeholder": "Aadhar No"
+    },
+
+    "PassportNo": {
+      "Label": "Passport No",
+      "Placeholder": "Passport No"
+    },
+    "CancellationReason": {
+      "Label": "Cancellation Reason",
+      "Placeholder": "Cancellation Reason"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Student"
+    },
+    "Edit": {
+      "Title": "Student"
+    },
+    "List": {
+      "Title": "Student"
+    }
+  },
+  "STF_Staff": {
+    "Form": {
+      "StaffFullName": {
+        "Label": "Staff Full Name*",
+        "Placeholder": "Staff Full Name*"
+      },
+      "IsMinority": {
+        "Label": "Minority*",
+        "Placeholder": "Minority*"
+      },
+      "IsMuslimMinority": {
+        "Label": "Muslim Minority*",
+        "Placeholder": "Muslim Minority*"
+      }
+    },
+    "StaffFullName": {
+      "Label": "Staff Full Name",
+      "Placeholder": "Staff Full Name"
+    },
+    "StaffCode": {
+      "Label": "Staff Code",
+      "Placeholder": "Staff Code"
+    },
+    "CasteCategory": {
+      "Label": "Staff Caste Category",
+      "Placeholder": "Staff Caste Category"
+    },
+    "BirthDate": {
+      "Label": "Birth Date",
+      "Placeholder": "Birth Date"
+    },
+    "IsPWD": {
+      "Label": "PWD",
+      "Placeholder": "PWD"
+    },
+    "IsRecognizedPGTeacher": {
+      "Label": "Recognized PG Teacher",
+      "Placeholder": "Recognized PG Teacher"
+    },
+    "IsRecognizedPhDSupervisor": {
+      "Label": "Recognized PhD Supervisor",
+      "Placeholder": "Recognized PhD Supervisor"
+    },
+    "AdditionalQualificationInformation": {
+      "Label": "Additional Qualification Information",
+      "Placeholder": "Additional Qualification Information"
+    },
+    "PayScale": {
+      "Label": "Pay Scale",
+      "Placeholder": "Pay Scale"
+    },
+    "SubDepartmentName": {
+      "Label": "Sub Department Name",
+      "Placeholder": "Sub Department Name"
+    },
+    "EmailInstitute": {
+      "Label": "Email Institute",
+      "Placeholder": "Email Institute"
+    },
+    "EmailPersonal": {
+      "Label": "Email Personal",
+      "Placeholder": "Email Personal"
+    },
+    "Mobile": {
+      "Label": "Mobile",
+      "Placeholder": "Mobile"
+    },
+    "AadharNo": {
+      "Label": "Aadhar No",
+      "Placeholder": "Aadhar No"
+    },
+    "PANNo": {
+      "Label": "PAN No",
+      "Placeholder": "PAN No"
+    },
+    "SelectionMode": {
+      "Label": "Selection Mode",
+      "Placeholder": "Selection Mode"
+    },
+    "ActualGrossSalary": {
+      "Label": "Actual Gross Salary",
+      "Placeholder": "Actual Gross Salary"
+    },
+    "JoiningDate": {
+      "Label": "Joining Date",
+      "Placeholder": "Joining Date"
+    },
+    "ResignationDate": {
+      "Label": "Resignation Date",
+      "Placeholder": "Resignation Date"
+    },
+    "AppointmentType": {
+      "Label": "Appointment Type",
+      "Placeholder": "Appointment Type"
+    },
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Staff"
+    },
+    "Edit": {
+      "Title": "Staff"
+    },
+    "List": {
+      "Title": "Staff"
+    }
+  },
+  "STF_Publication": {
+    "Required": {
+      "PublicationTitle": {
+        "Label": "Enter Publication Title*",
+        "Placeholder": "Enter Publication Title*"
+      },
+      "PublicationMonthYear": {
+        "Label": "Select Publication Month Year*",
+        "Placeholder": "Select Publication Month Year*"
+      }
+    },
+    "RequiredDropDown": {
+      "PublicationTitle": {
+        "Label": "Select Publication Title*",
+        "Placeholder": "Select Publication Title*"
+      }
+    },
+    "PublicationTitle": {
+      "Label": "Enter Publication Title",
+      "Placeholder": "Enter Publication Title"
+    },
+    "PublicationMonthYear": {
+      "Label": "Select Publication Month Year",
+      "Placeholder": "Select Publication Month Year"
+    },
+    "JournalConferenceName": {
+      "Label": "Enter Journal Conference Name",
+      "Placeholder": "Enter Journal Conference Name"
+    },
+
+    "AuthorNameCSV": {
+      "Label": "Enter Author Name",
+      "Placeholder": "Enter Author Name"
+    },
+    "IssueNo": {
+      "Label": "Enter Issue No",
+      "Placeholder": "Enter Issue No"
+    },
+    "AuthorPosition": {
+      "Label": "Enter Author Position",
+      "Placeholder": "Enter Author Position"
+    },
+    "PublicationURL": {
+      "Label": "Enter Publication URL",
+      "Placeholder": "Enter Publication URL"
+    },
+    "ISSNNo": {
+      "Label": "Enter ISSN No",
+      "Placeholder": "Enter ISSN No"
+    },
+    "VolumeNo": {
+      "Label": "Enter Volume No",
+      "Placeholder": "Enter Volume No"
+    },
+    "PageNo": {
+      "Label": "Enter Page No",
+      "Placeholder": "Enter Page No"
+    },
+    "PaperPath": {
+      "Label": "Paper Path",
+      "Placeholder": "Paper Path"
+    },
+    "IndexedDatabaseProofPath": {
+      "Label": "Indexed Database Proof Path",
+      "Placeholder": "Indexed Database Proof Path"
+    },
+    "LastSyncDate": {
+      "Label": "Select Last Sync Date",
+      "Placeholder": "Select Last Sync Date"
+    },
+    "StaleDate": {
+      "Label": "Select Stale Date",
+      "Placeholder": "Select Stale Date"
+    },
+    "Description": {
+      "Label": "Enter Description",
+      "Placeholder": "Enter Description"
+    },
+    "DOI": {
+      "Label": "Enter DOI",
+      "Placeholder": "Enter DOI"
+    },
+    "ViewModel": {
+      "Label": "Staff Publication Details"
+    },
+    "Create": {
+      "Title": "Staff Publication"
+    },
+
+    "Edit": {
+      "Title": "Staff Publication"
+    },
+    "List": {
+      "Title": "Staff Publication"
+    }
+  },
+  "STF_EducationQualification": {
+    "ViewModel": {
+      "Label": "Introduction"
+    },
+    "Create": {
+      "Title": "Staff Education Qualification"
+    },
+
+    "Edit": {
+      "Title": "Staff Education Qualification"
+    },
+    "List": {
+      "Title": "Staff Education Qualification"
+    }
+  },
+  "LOC_Country": {
+    "Required": {
+      "CountryName": {
+        "Label": "Enter Country*",
+        "Placeholder": "Enter Country*"
+      },
+      "Sequence": {
+        "Label": "Enter Sequence*",
+        "Placeholder": "Enter Sequence*"
+      }
+    },
+    "RequiredDropDown": {
+      "CountryName": {
+        "Label": "Select Country*",
+        "Placeholder": "Select Country*"
+      }
+    },
+    "CountryName": {
+      "Label": "Enter Country",
+      "Placeholder": "Enter Country"
+    },
+    "Create": {
+      "Title": "Country"
+    },
+
+    "Edit": {
+      "Title": "Country"
+    },
+    "List": {
+      "Title": "Country"
+    }
+  },
+  "LOC_State": {
+    "Required": {
+      "StateName": {
+        "Label": "Enter State*",
+        "Placeholder": "Enter State*"
+      }
+    },
+    "StateName": {
+      "Label": "Enter State",
+      "Placeholder": "Enter State"
+    },
+    "Create": {
+      "Title": "State"
+    },
+
+    "Edit": {
+      "Title": "State"
+    },
+    "List": {
+      "Title": "State"
+    }
+  },
+  "Dashboard": {
+    "MainDashboard": {
+      "Title": "Dashboard"
+    },
+    "Dashboard": {
+      "Title": "Dashboard"
+    }
+  },
+  "global": {
+    "institute": {
+      "admissionInstituteName": "Admission Institute Name",
+      "admissionInstituteNamePlaceholder": "Enter Admission Institute Name",
+      "admissionInstituteShortName": "Admission Institute Short Name",
+      "admissionInstituteSHortNamePlaceholder": "Enter Admission Institute Short Name"
+    },
+    "Gender": { "Label": "Gender", "Placeholder": "Gender" },
+    "Cast": { "Label": "Student Cast Category", "Placeholder": "Student Cast Category" },
+    "Religion": { "Label": "Religion", "Placeholder": "Religion" },
+    "Country": { "Label": "Country", "Placeholder": "Country" },
+    "State": { "Label": "State", "Placeholder": "State" },
+    "SearchAny": { "Label": "Search Any", "Placeholder": "Search Any" },
+    "VerificationStatus": {
+      "Label": "Select Verification Status",
+      "Placeholder": "Select Verification Status"
+    },
+    "ViewModel": {
+      "CreatedByUserName": "Created By UserName",
+      "ModifiedByUserName": "Modified By User Name",
+      "Created": "Created",
+      "Modified": "Modified"
+    }
+  }
+}

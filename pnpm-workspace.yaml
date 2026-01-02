@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - '@mui/x-telemetry'
+  - '@swc/core'
+  - esbuild
+  - unrs-resolver

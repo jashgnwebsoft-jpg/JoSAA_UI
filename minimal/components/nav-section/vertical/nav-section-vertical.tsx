@@ -1,0 +1,101 @@
+import type { NavGroupProps, NavSectionProps } from '../types';
+
+import { useBoolean } from 'minimal-shared/hooks';
+import { mergeClasses } from 'minimal-shared/utils';
+
+import Collapse from '@mui/material/Collapse';
+import { useTheme } from '@mui/material/styles';
+
+import { NavList } from './nav-list';
+import { Nav, NavUl, NavLi, NavSubheader } from '../components';
+import { navSectionClasses, navSectionCssVars } from '../styles';
+
+// ----------------------------------------------------------------------
+
+export function NavSectionVertical({
+  sx,
+  Data: data,
+  render,
+  className,
+  slotProps,
+  checkPermissions,
+  enabledRootRedirect,
+  cssVars: overridesVars,
+  ...other
+}: NavSectionProps) {
+  const theme = useTheme();
+
+  const cssVars = { ...navSectionCssVars.vertical(theme), ...overridesVars };
+
+  return (
+    <Nav
+      className={mergeClasses([navSectionClasses.vertical, className])}
+      sx={[{ ...cssVars }, ...(Array.isArray(sx) ? sx : [sx])]}
+      {...other}
+    >
+      <NavUl sx={{ flex: '1 1 auto', gap: 'var(--nav-item-gap)' }}>
+        {data.map(group => (
+          <Group
+            key={group.Subheader ?? group.Items[0].Title}
+            Subheader={group.Subheader}
+            Items={group.Items}
+            render={render}
+            slotProps={slotProps}
+            checkPermissions={checkPermissions}
+            enabledRootRedirect={enabledRootRedirect}
+          />
+        ))}
+      </NavUl>
+    </Nav>
+  );
+}
+
+// ----------------------------------------------------------------------
+
+function Group({
+  Items: items,
+  render,
+  Subheader: subheader,
+  slotProps,
+  checkPermissions,
+  enabledRootRedirect,
+}: NavGroupProps) {
+  const groupOpen = useBoolean(true);
+
+  const renderContent = () => (
+    <NavUl sx={{ gap: 'var(--nav-item-gap)' }}>
+      {items.map(list => (
+        <NavList
+          key={list.Title}
+          Data={list}
+          render={render}
+          depth={1}
+          slotProps={slotProps}
+          checkPermissions={checkPermissions}
+          enabledRootRedirect={enabledRootRedirect}
+        />
+      ))}
+    </NavUl>
+  );
+
+  return (
+    <NavLi>
+      {subheader ? (
+        <>
+          <NavSubheader
+            data-title={subheader}
+            open={groupOpen.value}
+            onClick={groupOpen.onToggle}
+            sx={slotProps?.subheader}
+          >
+            {subheader}
+          </NavSubheader>
+
+          <Collapse in={groupOpen.value}>{renderContent()}</Collapse>
+        </>
+      ) : (
+        renderContent()
+      )}
+    </NavLi>
+  );
+}
