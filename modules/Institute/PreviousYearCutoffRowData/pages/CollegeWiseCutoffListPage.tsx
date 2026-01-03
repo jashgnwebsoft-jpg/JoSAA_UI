@@ -11,7 +11,11 @@ import {
   CollegeWiseCutoffListResponse,
   CollegeWiseCutoffListSchema,
 } from '../types';
-import { useAdmissionOptions, useCurrentYearQuery } from '@modules/Master/AdmissionYear/api/hooks';
+import {
+  useAdmissionOptions,
+  useCSABAdmissionOptions,
+  useCurrentYearQuery,
+} from '@modules/Master/AdmissionYear/api/hooks';
 import { useCollegeOptions } from '@modules/Institute/College/api/hooks';
 import { useCategoryOptions } from '@modules/Master/Category/api/hooks';
 import { useReservationTypeOptions } from '@modules/Master/ReservationType/api/hooks';
@@ -27,12 +31,24 @@ import { Grid, Card, CardHeader, CardContent, Box, Button, Typography } from '@m
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { fNumber } from '@core/utils/format-number';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SimpleTabs } from '@core/components';
+import { TabPanel } from '@mui/lab';
+import {
+  CSABCollegeWiseCutoffListRequest,
+  CSABCollegeWiseCutoffListResponse,
+  CSABCollegeWiseCutoffListSchema,
+} from '@modules/Institute/CSABPreviousYearCutoffRowData/types';
+import { useCSABCollegeWiseCutOffListStore } from '@modules/Institute/CSABPreviousYearCutoffRowData/api/store';
+import { useCSABCollegeRankWiseCutOffQuery } from '@modules/Institute/CSABPreviousYearCutoffRowData/api/hooks';
+import { useCSABRoundOptions, useRoundOptions } from '@modules/Institute/Round/api/hooks';
 
 const CollegeWiseCutoffListPage = () => {
   const { t } = useTranslate();
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const [jossaInitialized, setJossaInitialized] = useState(false);
+  const [csabInitialized, setCsabInitialized] = useState(false);
+  const [activeTab, setActiveTab] = useState<number>(1);
 
-  const columns = useMemo<GridColDef<CollegeWiseCutoffListResponse>[]>(
+  const josaaColumns = useMemo<GridColDef<CollegeWiseCutoffListResponse>[]>(
     () => [
       {
         field: 'BranchProperName',
@@ -80,46 +96,98 @@ const CollegeWiseCutoffListPage = () => {
     []
   );
 
-  const { postModel, handlePagination, handleSorting, handleFiltering } =
-    useCollegeWiseCutOffListStore();
+  const csabColumns = useMemo<GridColDef<CSABCollegeWiseCutoffListResponse>[]>(
+    () => [
+      {
+        field: 'BranchProperName',
+        headerName: t('Institute.Branch.List.Title'),
+        flex: 2,
+        minWidth: 120,
+        sortable: true,
+      },
+      {
+        field: 'QuotaName',
+        headerName: t('Master.Quota.Status.Label'),
+        flex: 1,
+        minWidth: 120,
+        sortable: true,
+      },
+      {
+        field: 'CategoryName',
+        headerName: t('Master.Category.Category.Label'),
+        flex: 1,
+        minWidth: 120,
+        sortable: true,
+      },
+      {
+        field: 'ReservationType',
+        headerName: t('Master.ReservationType.SeatPool.Label'),
+        flex: 1,
+        minWidth: 120,
+        sortable: true,
+      },
+      {
+        field: 'CloseRank',
+        headerName: t('Institute.PreviousYearCutoffRow.Close.Label'),
+        flex: 1,
+        minWidth: 120,
+        sortable: true,
+        align: 'right',
+        headerAlign: 'right',
+        renderCell: params => (
+          <Typography variant='body2' color='primary'>
+            {fNumber(params.row.CloseRank)}
+          </Typography>
+        ),
+      },
+    ],
+    []
+  );
 
-  const { control, handleSubmit, reset } = useForm<CollegeWiseCutoffListRequest>({
+  const josaaStore = useCollegeWiseCutOffListStore();
+  const csabStore = useCSABCollegeWiseCutOffListStore();
+
+  const josaaForm = useForm<CollegeWiseCutoffListRequest>({
     resolver: zodResolver(CollegeWiseCutoffListSchema),
     shouldUnregister: false,
     mode: 'onSubmit',
   });
 
-  const initializedRef = useRef<boolean>(false);
+  const csabForm = useForm<CSABCollegeWiseCutoffListRequest>({
+    resolver: zodResolver(CSABCollegeWiseCutoffListSchema),
+    shouldUnregister: false,
+    mode: 'onSubmit',
+  });
+
+  const josaaInitializedRef = useRef<boolean>(false);
+  const csabInitializedRef = useRef<boolean>(false);
 
   const yearOptions = useAdmissionOptions();
+  const CSABYearOptions = useCSABAdmissionOptions();
+
   const collegeOptions = useCollegeOptions();
+  const reservationTypeOptions = useReservationTypeOptions();
+
   const categoryOptions = useCategoryOptions();
   const categoryOptionsWithAll = useMemo(() => {
     if (!categoryOptions.data) return [];
 
     return [{ Value: '', Label: 'All' }, ...categoryOptions.data];
   }, [categoryOptions.data]);
-  const reservationTypeOptions = useReservationTypeOptions();
-  const roundOptions = useMemo(
-    () => [
-      { Label: 'Round 1', Value: 1 },
-      { Label: 'Round 2', Value: 2 },
-      { Label: 'Round 3', Value: 3 },
-      { Label: 'Round 4', Value: 4 },
-      { Label: 'Round 5', Value: 5 },
-      { Label: 'Round 6', Value: 6 },
-      { Label: 'Round 7', Value: 7 },
-    ],
-    []
-  );
 
-  const defaultValues = useMemo<CollegeWiseCutoffListRequest | null>(() => {
+  const Year = josaaForm.watch('Year');
+  const roundOptions = useRoundOptions(Year, !!Year);
+
+  const CSABYear = csabForm.watch('Year');
+  const CSABRoundOptions = useCSABRoundOptions(CSABYear, !!CSABYear);
+
+  const josaaDefaultValues = useMemo<CollegeWiseCutoffListRequest | null>(() => {
     if (
       !yearOptions.data?.length ||
       !collegeOptions.data?.length ||
       !categoryOptionsWithAll?.length ||
       !reservationTypeOptions.data?.length ||
-      !roundOptions.length
+      !roundOptions.data?.length
     ) {
       return null;
     }
@@ -129,47 +197,142 @@ const CollegeWiseCutoffListPage = () => {
       College: collegeOptions.data[0].Value,
       Category: categoryOptionsWithAll[0].Value,
       ReservationType: reservationTypeOptions.data[0].Value,
-      RoundID: roundOptions?.[0].Value,
+      RoundID: roundOptions.data?.[0].Value,
     };
   }, [
     yearOptions.data,
     collegeOptions.data,
     categoryOptionsWithAll,
     reservationTypeOptions.data,
-    roundOptions,
+    roundOptions.data,
+  ]);
+
+  const csabDefaultValues = useMemo<CSABCollegeWiseCutoffListRequest | null>(() => {
+    if (
+      !CSABYearOptions.data?.length ||
+      !collegeOptions.data?.length ||
+      !categoryOptionsWithAll?.length ||
+      !reservationTypeOptions.data?.length ||
+      !CSABRoundOptions.data?.length
+    ) {
+      return null;
+    }
+
+    return {
+      Year: CSABYearOptions.data?.[0].Value,
+      College: collegeOptions.data[0].Value,
+      Category: categoryOptionsWithAll[0].Value,
+      ReservationType: reservationTypeOptions.data[0].Value,
+      RoundID: CSABRoundOptions?.data?.[0].Value,
+    };
+  }, [
+    CSABYearOptions.data,
+    collegeOptions.data,
+    categoryOptionsWithAll,
+    reservationTypeOptions.data,
+    CSABRoundOptions,
   ]);
 
   useEffect(() => {
-    if (initializedRef.current) return;
-    if (!defaultValues) return;
+    if (josaaInitializedRef.current) return;
+    if (!josaaDefaultValues) return;
 
-    if (postModel.filterModel && Object.keys(postModel.filterModel).length > 0) {
-      reset(postModel.filterModel);
+    if (
+      josaaStore.postModel.filterModel &&
+      Object.keys(josaaStore.postModel.filterModel).length > 0
+    ) {
+      josaaForm.reset(josaaStore.postModel.filterModel);
     } else {
-      reset(defaultValues);
-      handleFiltering(defaultValues);
+      josaaForm.reset(josaaDefaultValues);
+      josaaStore.handleFiltering(josaaDefaultValues);
     }
 
-    initializedRef.current = true;
-    setIsInitialized(true);
-  }, [defaultValues, postModel.filterModel, reset, handleFiltering]);
+    josaaInitializedRef.current = true;
+    setJossaInitialized(true);
+  }, [
+    josaaDefaultValues,
+    josaaStore.postModel.filterModel,
+    josaaForm.reset,
+    josaaStore.handleFiltering,
+  ]);
 
-  const { data, totalRecords, isLoading, error } = useCollegeRankWiseCutOffQuery(
-    postModel,
-    isInitialized
+  useEffect(() => {
+    if (csabInitializedRef.current) return;
+    if (!csabDefaultValues) return;
+
+    if (
+      csabStore.postModel.filterModel &&
+      Object.keys(csabStore.postModel.filterModel).length > 0
+    ) {
+      csabForm.reset(csabStore.postModel.filterModel);
+    } else {
+      csabForm.reset(csabDefaultValues);
+      csabStore.handleFiltering(csabDefaultValues);
+    }
+
+    csabInitializedRef.current = true;
+    setCsabInitialized(true);
+  }, [
+    csabDefaultValues,
+    csabStore.postModel.filterModel,
+    csabForm.reset,
+    csabStore.handleFiltering,
+  ]);
+
+  const josaaQuery = useCollegeRankWiseCutOffQuery(
+    josaaStore.postModel,
+    activeTab === 1 && jossaInitialized
   );
   {
-    error && toast.error(error.message);
+    josaaQuery.error && toast.error(josaaQuery.error.message);
   }
-  const { data: currentYear } = useCurrentYearQuery();
 
-  const toolbarProps: DataGridToolbarProps<
+  const csabQuery = useCSABCollegeRankWiseCutOffQuery(
+    csabStore.postModel,
+    activeTab === 2 && csabInitialized
+  );
+  {
+    csabQuery.error && toast.error(csabQuery.error.message);
+  }
+
+  const selectedJosaaYear = yearOptions.data?.find(item => item.Value === Year)?.Label;
+  const selectedJosaaRound = roundOptions.data
+    ?.find(item => item.Value === josaaForm.watch('RoundID'))
+    ?.Label.split(' ')
+    .join(' - ');
+
+  const selectedCsabYear = CSABYearOptions.data?.find(item => item.Value === CSABYear)?.Label;
+  const selectedCsabRound = CSABRoundOptions.data
+    ?.find(item => item.Value === csabForm.watch('RoundID'))
+    ?.Label.split(' ')
+    .join(' - ');
+
+  const josaaToolbarProps: DataGridToolbarProps<
     CollegeWiseCutoffListRequest,
     CollegeWiseCutoffListResponse
   > = {
     toolbar: {
-      columns,
-      filterModel: postModel.filterModel ?? {},
+      columns: josaaColumns,
+      filterModel: josaaStore.postModel.filterModel ?? {},
+      addNew: () => {},
+      handleExport: () => {},
+      showFilter: () => {},
+      actionButtons: [],
+      permissions: {
+        showAdd: false,
+        showExport: false,
+        showFilter: false,
+      },
+    },
+  };
+
+  const csabToolbarProps: DataGridToolbarProps<
+    CSABCollegeWiseCutoffListRequest,
+    CSABCollegeWiseCutoffListResponse
+  > = {
+    toolbar: {
+      columns: csabColumns,
+      filterModel: csabStore.postModel.filterModel ?? {},
       addNew: () => {},
       handleExport: () => {},
       showFilter: () => {},
@@ -185,19 +348,30 @@ const CollegeWiseCutoffListPage = () => {
   const footerProps: DataGridFooterProps = {
     footer: {
       actionButtons: [],
-      totalCount: totalRecords,
+      totalCount: activeTab === 1 ? josaaQuery.totalRecords : csabQuery.totalRecords,
     },
   };
 
-  const onSubmit = handleSubmit(data => {
-    handleFiltering(data);
+  const josaaOnSubmit = josaaForm.handleSubmit(data => {
+    josaaStore.handleFiltering(data);
   });
 
-  const handleReset = () => {
-    if (!defaultValues) return;
+  const csabOnSubmit = csabForm.handleSubmit(data => {
+    csabStore.handleFiltering(data);
+  });
 
-    reset(defaultValues);
-    handleFiltering(defaultValues);
+  const josaaHandleReset = () => {
+    if (!josaaDefaultValues) return;
+
+    josaaForm.reset(josaaDefaultValues);
+    josaaStore.handleFiltering(josaaDefaultValues);
+  };
+
+  const csabHandleReset = () => {
+    if (!csabDefaultValues) return;
+
+    csabForm.reset(csabDefaultValues);
+    csabStore.handleFiltering(csabDefaultValues);
   };
 
   return (
@@ -219,57 +393,121 @@ const CollegeWiseCutoffListPage = () => {
         <Grid size={{ xs: 12, md: 6, lg: 3 }}>
           <Card>
             <CardHeader title={t('Institute.PreviousYearCutoffRow.MeritRankWiseCutOff.Label')} />
-            <CardContent>
-              <Box
-                component='form'
-                onSubmit={onSubmit}
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
+            <CardContent sx={{ p: 0 }}>
+              <SimpleTabs
+                onTabChange={(newValue: number) => setActiveTab(newValue)}
+                tabs={[
+                  { label: 'JoSAA', value: 1 },
+                  { label: 'CSAB', value: 2 },
+                ]}
               >
-                <Field.Select
-                  control={control}
-                  size='small'
-                  name='College'
-                  label={t('Institute.College.List.Title') + '*'}
-                  options={collegeOptions.data || []}
-                />
-                <Field.Select
-                  control={control}
-                  size='small'
-                  name='Category'
-                  label={t('Master.Category.Category.Label')}
-                  options={categoryOptionsWithAll}
-                />
-                <Field.Select
-                  control={control}
-                  size='small'
-                  name='ReservationType'
-                  label={t('Master.ReservationType.SeatPool.Label') + '*'}
-                  options={reservationTypeOptions.data || []}
-                />
-                <Field.Select
-                  control={control}
-                  size='small'
-                  name='Year'
-                  label={t('Institute.PreviousYearCutoffRow.year.Label') + '*'}
-                  options={yearOptions.data || []}
-                />
-                <Field.Select
-                  control={control}
-                  size='small'
-                  name='RoundID'
-                  label={t('Institute.PreviousYearCutoffRow.Round.Label') + '*'}
-                  options={roundOptions || []}
-                />
-
-                <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
-                  <Button type='submit' variant='contained' color='primary'>
-                    Submit
-                  </Button>
-                  <Button variant='soft' onClick={handleReset}>
-                    Reset
-                  </Button>
-                </Box>
-              </Box>
+                <TabPanel value={1}>
+                  <Box
+                    component='form'
+                    onSubmit={josaaOnSubmit}
+                    sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
+                  >
+                    <Field.Select
+                      control={josaaForm.control}
+                      size='small'
+                      name='College'
+                      label={t('Institute.College.List.Title') + '*'}
+                      options={collegeOptions.data || []}
+                    />
+                    <Field.Select
+                      control={josaaForm.control}
+                      size='small'
+                      name='Year'
+                      label={t('Institute.PreviousYearCutoffRow.year.Label') + '*'}
+                      options={yearOptions.data || []}
+                    />
+                    <Field.SelectCascade
+                      control={josaaForm.control}
+                      dependsOn='Year'
+                      size='small'
+                      name='RoundID'
+                      label={t('Institute.PreviousYearCutoffRow.Round.Label') + '*'}
+                      options={roundOptions.data || []}
+                      disabled={roundOptions.data?.length === 0}
+                    />
+                    <Field.Select
+                      control={josaaForm.control}
+                      size='small'
+                      name='ReservationType'
+                      label={t('Master.ReservationType.SeatPool.Label') + '*'}
+                      options={reservationTypeOptions.data || []}
+                    />
+                    <Field.Select
+                      control={josaaForm.control}
+                      size='small'
+                      name='Category'
+                      label={t('Master.Category.Category.Label')}
+                      options={categoryOptionsWithAll}
+                    />
+                    <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+                      <Button type='submit' variant='contained' color='primary'>
+                        Submit
+                      </Button>
+                      <Button variant='soft' onClick={josaaHandleReset}>
+                        Reset
+                      </Button>
+                    </Box>
+                  </Box>
+                </TabPanel>
+                <TabPanel value={2}>
+                  <Box
+                    component='form'
+                    onSubmit={csabOnSubmit}
+                    sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
+                  >
+                    <Field.Select
+                      control={csabForm.control}
+                      size='small'
+                      name='College'
+                      label={t('Institute.College.List.Title') + '*'}
+                      options={collegeOptions.data || []}
+                    />
+                    <Field.Select
+                      control={csabForm.control}
+                      size='small'
+                      name='Year'
+                      label={t('Institute.PreviousYearCutoffRow.year.Label') + '*'}
+                      options={CSABYearOptions.data || []}
+                    />
+                    <Field.SelectCascade
+                      control={csabForm.control}
+                      dependsOn='Year'
+                      size='small'
+                      name='RoundID'
+                      label={t('Institute.PreviousYearCutoffRow.Round.Label') + '*'}
+                      options={CSABRoundOptions.data || []}
+                      disabled={CSABRoundOptions.data?.length === 0}
+                    />
+                    <Field.Select
+                      control={csabForm.control}
+                      size='small'
+                      name='ReservationType'
+                      label={t('Master.ReservationType.SeatPool.Label') + '*'}
+                      options={reservationTypeOptions.data || []}
+                    />
+                    <Field.Select
+                      control={csabForm.control}
+                      size='small'
+                      name='Category'
+                      label={t('Master.Category.Category.Label')}
+                      options={categoryOptionsWithAll}
+                    />
+                    <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+                      <Button type='submit' variant='contained' color='primary'>
+                        Submit
+                      </Button>
+                      <Button variant='soft' onClick={csabHandleReset}>
+                        Reset
+                      </Button>
+                    </Box>
+                  </Box>
+                </TabPanel>
+              </SimpleTabs>
             </CardContent>
           </Card>
         </Grid>
@@ -281,20 +519,32 @@ const CollegeWiseCutoffListPage = () => {
                 <Box
                   sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
                 >
-                  <Typography variant='h6'>
-                    Closings as per Year {currentYear?.AdmissionYear} Round-
-                    {currentYear?.RoundNumber}
-                  </Typography>
-                  <Typography variant='subtitle2' color='error'>
-                    Rank represent respective category ranks
-                  </Typography>
+                  {activeTab === 1 ? (
+                    <>
+                      <Typography variant='h6'>
+                        Closings as per Year - {selectedJosaaYear ?? ''} {selectedJosaaRound ?? ''}
+                      </Typography>
+                      <Typography variant='subtitle2' color='error'>
+                        Rank represent respective category ranks
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Typography variant='h6'>
+                        Closings as per Year - {selectedCsabYear ?? ''} {selectedCsabRound ?? ''}
+                      </Typography>
+                      <Typography variant='subtitle2' color='error'>
+                        Rank represent respective category ranks
+                      </Typography>
+                    </>
+                  )}
                 </Box>
               }
             />
             <CardContent sx={{ height: 700 }}>
               <DataGridPro
-                rows={data}
-                columns={columns}
+                rows={activeTab === 1 ? josaaQuery.data : csabQuery.data}
+                columns={activeTab === 1 ? josaaColumns : csabColumns}
                 getRowId={row => row.CutoffID}
                 paginationMode='server'
                 sortingMode='server'
@@ -303,18 +553,31 @@ const CollegeWiseCutoffListPage = () => {
                 initialState={{
                   pagination: {
                     paginationModel: {
-                      page: postModel.pageOffset,
-                      pageSize: postModel.pageSize,
+                      page:
+                        activeTab === 1
+                          ? josaaStore.postModel.pageOffset
+                          : csabStore.postModel.pageOffset,
+                      pageSize:
+                        activeTab === 1
+                          ? josaaStore.postModel.pageSize
+                          : csabStore.postModel.pageSize,
                     },
                   },
                   sorting: {
-                    sortModel: postModel.sortModel,
+                    sortModel:
+                      activeTab === 1
+                        ? josaaStore.postModel.sortModel
+                        : csabStore.postModel.sortModel,
                   },
                 }}
-                onPaginationModelChange={handlePagination}
-                onSortModelChange={handleSorting}
-                rowCount={totalRecords}
-                loading={isLoading}
+                onPaginationModelChange={
+                  activeTab === 1 ? josaaStore.handlePagination : csabStore.handlePagination
+                }
+                onSortModelChange={
+                  activeTab === 1 ? josaaStore.handleSorting : csabStore.handleSorting
+                }
+                rowCount={activeTab === 1 ? josaaQuery.totalRecords : csabQuery.totalRecords}
+                loading={activeTab === 1 ? josaaQuery.isLoading : csabQuery.isLoading}
                 pageSizeOptions={CONFIG.defaultPageSizeOptions}
                 disableRowSelectionOnClick
                 slots={{
@@ -326,7 +589,7 @@ const CollegeWiseCutoffListPage = () => {
                     variant: 'skeleton',
                     noRowsVariant: 'skeleton',
                   },
-                  toolbar: toolbarProps,
+                  toolbar: activeTab === 1 ? josaaToolbarProps : csabToolbarProps,
                   footer: footerProps,
                 }}
                 sx={dataGridStyles}

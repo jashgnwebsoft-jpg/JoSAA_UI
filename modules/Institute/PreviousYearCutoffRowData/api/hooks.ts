@@ -21,8 +21,8 @@ import {
   PivotRow,
   PreviousYearWiseCutoffListResponse,
 } from '../types';
-import { toast } from 'sonner';
 import { GridColDef } from '@mui/x-data-grid';
+import { fNumber } from '@core/utils/format-number';
 
 export function useCurrentYearWiseCutoffListQuery(
   model: PostModel<CurrentYearWiseCutoffListRequest>,
@@ -111,12 +111,11 @@ export function usePreviousYearWiseCutoffListModifiedQuery(
 
   const rounds: string[] = Array.from(
     new Set(list.map((item: PreviousYearWiseCutoffListResponse) => item.RoundTitle))
-  );
+  ).sort((a, b) => b.localeCompare(a, undefined, { numeric: true, sensitivity: 'base' }));
 
   const rows: PivotRow[] = Object.values(
     list.reduce<Record<string, PivotRow>>((acc, curr) => {
       const key = `${curr.BranchName}-${curr.ReservationType}`;
-
       if (!acc[key]) {
         acc[key] = {
           id: key,
@@ -124,25 +123,37 @@ export function usePreviousYearWiseCutoffListModifiedQuery(
           ReservationType: curr.ReservationType,
         };
       }
-
       acc[key][curr.RoundTitle] = curr.ClosingRank !== null ? curr.ClosingRank : '-';
       return acc;
     }, {})
   );
 
-  // 👉 DataGrid columns
+  const roundColumns: GridColDef[] = rounds.map<GridColDef>(round => ({
+    field: round,
+    headerName: round,
+    width: 110,
+    type: 'number',
+    align: 'center',
+    headerAlign: 'center',
+    renderCell: params =>
+      params.value !== null && params.value !== undefined ? fNumber(params.value) : '-',
+  }));
+
   const columns: GridColDef[] = [
-    { field: 'BranchName', headerName: 'Branch Name', flex: 1 },
-    { field: 'ReservationType', headerName: 'Reservation Type', flex: 1 },
-    ...rounds.map<GridColDef>(round => ({
-      field: round,
-      headerName: round,
-      width: 120,
-      type: 'number',
-    })),
+    ...roundColumns,
+    {
+      field: 'BranchName',
+      headerName: 'Branch Name',
+      width: 300,
+    },
+    {
+      field: 'ReservationType',
+      headerName: 'Reservation Type',
+      width: 200,
+    },
   ];
 
-  const rowCount = useStableRowCount(data?.Total);
+  const rowCount = useStableRowCount(rows?.length);
 
   return {
     rows,

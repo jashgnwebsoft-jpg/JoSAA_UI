@@ -57,6 +57,9 @@ export const Institute = {
   ReportingCenterList: 'ReportingCenterList',
   BranchWisePlacementList: 'BranchWisePlacementList',
   CollegeCompare: 'CollegeCompare',
+  CSABPreviousYearWiseCutoffList: 'CSABPreviousYearWiseCutoffList',
+  CSABBranchWiseCutOffList: 'CSABBranchWiseCutOffList',
+  CSABCollegeWiseCutOffList: 'CSABCollegeWiseCutOffList',
 };
 
 export const Master = {
