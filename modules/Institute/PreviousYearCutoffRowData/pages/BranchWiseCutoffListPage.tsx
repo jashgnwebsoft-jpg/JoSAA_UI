@@ -13,7 +13,11 @@ import {
 } from '../types';
 import { useCollegeTypeOptions } from '@modules/Institute/College/api/hooks';
 import { useSystemBranchOptions } from '@modules/Master/SystemBranch/api/hooks';
-import { useAdmissionOptions, useCurrentYearQuery } from '@modules/Master/AdmissionYear/api/hooks';
+import {
+  useAdmissionOptions,
+  useCSABAdmissionOptions,
+  useCurrentYearQuery,
+} from '@modules/Master/AdmissionYear/api/hooks';
 import { useCategoryOptions } from '@modules/Master/Category/api/hooks';
 import { useReservationTypeOptions } from '@modules/Master/ReservationType/api/hooks';
 import { useBranchWiseCutOffQuery } from '../api/hooks';
@@ -30,12 +34,22 @@ import { fNumber } from '@core/utils/format-number';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SimpleTabs } from '@core/components';
 import { TabPanel } from '@mui/lab';
+import {
+  CSABBranchWiseCutoffListRequest,
+  CSABBranchWiseCutoffListResponse,
+  CSABBranchWiseCutoffListSchema,
+} from '@modules/Institute/CSABPreviousYearCutoffRowData/types';
+import { useCSABBranchWiseCutOffListStore } from '@modules/Institute/CSABPreviousYearCutoffRowData/api/store';
+import { useCSABBranchWiseCutOffQuery } from '@modules/Institute/CSABPreviousYearCutoffRowData/api/hooks';
+import { useCSABRoundOptions, useRoundOptions } from '@modules/Institute/Round/api/hooks';
 
 const BranchWiseCutoffListPage = () => {
   const { t } = useTranslate();
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const [josaaInitialized, setJosaaInitialized] = useState(false);
+  const [csabInitialized, setCsabInitialized] = useState(false);
+  const [activeTab, setActiveTab] = useState<number>(1);
 
-  const columns = useMemo<GridColDef<BranchWiseCutoffListResponse>[]>(
+  const josaaColumns = useMemo<GridColDef<BranchWiseCutoffListResponse>[]>(
     () => [
       {
         field: 'CollegeShortName',
@@ -90,53 +104,125 @@ const BranchWiseCutoffListPage = () => {
     []
   );
 
-  const { postModel, handlePagination, handleSorting, handleFiltering } =
-    useBranchWiseCutOffListStore();
+  const csabColumns = useMemo<GridColDef<CSABBranchWiseCutoffListResponse>[]>(
+    () => [
+      {
+        field: 'CollegeShortName',
+        headerName: t('Institute.College.List.Title'),
+        flex: 2,
+        minWidth: 120,
+        sortable: true,
+      },
+      {
+        field: 'BranchProperName',
+        headerName: t('Institute.Branch.List.Title'),
+        flex: 2,
+        minWidth: 120,
+        sortable: true,
+      },
+      {
+        field: 'CollegeTypeShortName',
+        headerName: t('Institute.College.CollegeType.Label'),
+        flex: 1,
+        minWidth: 120,
+        sortable: true,
+      },
+      {
+        field: 'CategoryName',
+        headerName: t('Master.Category.Category.Label'),
+        flex: 1,
+        minWidth: 120,
+        sortable: true,
+      },
+      {
+        field: 'ReservationType',
+        headerName: t('Master.ReservationType.SeatPool.Label'),
+        flex: 1,
+        minWidth: 120,
+        sortable: true,
+      },
+      {
+        field: 'CloseRank',
+        headerName: t('Institute.PreviousYearCutoffRow.Close.Label'),
+        flex: 1,
+        minWidth: 120,
+        sortable: true,
+        align: 'right',
+        headerAlign: 'right',
+        renderCell: params => (
+          <Typography variant='body2' color='primary'>
+            {fNumber(params.row.CloseRank)}
+          </Typography>
+        ),
+      },
+    ],
+    []
+  );
 
-  const { control, handleSubmit, reset } = useForm<BranchWiseCutoffListRequest>({
+  const josaaStore = useBranchWiseCutOffListStore();
+  const csabStore = useCSABBranchWiseCutOffListStore();
+
+  const josaaForm = useForm<BranchWiseCutoffListRequest>({
     resolver: zodResolver(BranchWiseCutoffListSchema),
     shouldUnregister: false,
     mode: 'onSubmit',
   });
 
-  const initializedRef = useRef<boolean>(false);
+  const csabForm = useForm<CSABBranchWiseCutoffListRequest>({
+    resolver: zodResolver(CSABBranchWiseCutoffListSchema),
+    shouldUnregister: false,
+    mode: 'onSubmit',
+  });
+
+  const josaaInitializedRef = useRef<boolean>(false);
+  const csabInitializedRef = useRef<boolean>(false);
 
   const yearOptions = useAdmissionOptions();
+  const CSABYearOptions = useCSABAdmissionOptions();
+
   const branchOptions = useSystemBranchOptions();
+  const reservationTypeOptions = useReservationTypeOptions();
+
   const collegeTypeOptions = useCollegeTypeOptions();
   const collegeTypeOptionsWithAll = useMemo(() => {
     if (!collegeTypeOptions.data) return [];
 
     return [{ Value: '', Label: 'All' }, ...collegeTypeOptions.data];
   }, [collegeTypeOptions.data]);
+
   const categoryOptions = useCategoryOptions();
   const categoryOptionsWithAll = useMemo(() => {
     if (!categoryOptions.data) return [];
 
     return [{ Value: '', Label: 'All' }, ...categoryOptions.data];
   }, [categoryOptions.data]);
-  const reservationTypeOptions = useReservationTypeOptions();
-  const roundOptions = useMemo(
-    () => [
-      { Label: 'Round 1', Value: 1 },
-      { Label: 'Round 2', Value: 2 },
-      { Label: 'Round 3', Value: 3 },
-      { Label: 'Round 4', Value: 4 },
-      { Label: 'Round 5', Value: 5 },
-      { Label: 'Round 6', Value: 6 },
-      { Label: 'Round 7', Value: 7 },
-    ],
-    []
-  );
 
-  const defaultValues = useMemo<BranchWiseCutoffListRequest | null>(() => {
+  const Year = josaaForm.watch('Year');
+  const roundOptions = useRoundOptions(Year, !!Year);
+  // const roundOptions = useMemo(
+  //   () => [
+  //     { Label: 'Round 1', Value: 1 },
+  //     { Label: 'Round 2', Value: 2 },
+  //     { Label: 'Round 3', Value: 3 },
+  //     { Label: 'Round 4', Value: 4 },
+  //     { Label: 'Round 5', Value: 5 },
+  //     { Label: 'Round 6', Value: 6 },
+  //     { Label: 'Round 7', Value: 7 },
+  //   ],
+  //   []
+  // );
+
+  const CSABYear = csabForm.watch('Year');
+  const CSABRoundOptions = useCSABRoundOptions(CSABYear, !!CSABYear);
+
+  const josaaDefaultValues = useMemo<BranchWiseCutoffListRequest | null>(() => {
     if (
       !yearOptions.data?.length ||
       !branchOptions.data?.length ||
       !collegeTypeOptionsWithAll?.length ||
       !categoryOptionsWithAll.length ||
       !reservationTypeOptions.data?.length ||
-      !roundOptions.length
+      !roundOptions.data?.length
     ) {
       return null;
     }
@@ -147,7 +233,7 @@ const BranchWiseCutoffListPage = () => {
       CollegeType: collegeTypeOptionsWithAll[0].Value,
       Category: categoryOptionsWithAll[0].Value,
       ReservationType: reservationTypeOptions.data[0].Value,
-      RoundID: roundOptions?.[0].Value,
+      RoundID: roundOptions.data?.[0].Value,
     };
   }, [
     yearOptions.data,
@@ -155,40 +241,138 @@ const BranchWiseCutoffListPage = () => {
     collegeTypeOptionsWithAll,
     categoryOptionsWithAll,
     reservationTypeOptions.data,
-    roundOptions,
+    roundOptions.data,
+  ]);
+
+  const csabDefaultValues = useMemo<CSABBranchWiseCutoffListRequest | null>(() => {
+    if (
+      !CSABYearOptions.data?.length ||
+      !branchOptions.data?.length ||
+      !collegeTypeOptionsWithAll?.length ||
+      !categoryOptionsWithAll.length ||
+      !reservationTypeOptions.data?.length ||
+      !CSABRoundOptions.data?.length
+    ) {
+      return null;
+    }
+
+    return {
+      Year: CSABYearOptions.data?.[0].Value,
+      Branch: branchOptions.data?.[0].Value,
+      CollegeType: collegeTypeOptionsWithAll[0].Value,
+      Category: categoryOptionsWithAll[0].Value,
+      ReservationType: reservationTypeOptions.data[0].Value,
+      RoundID: CSABRoundOptions.data?.[0].Value,
+    };
+  }, [
+    CSABYear,
+    branchOptions.data,
+    collegeTypeOptionsWithAll,
+    categoryOptionsWithAll,
+    reservationTypeOptions.data,
+    CSABRoundOptions.data,
   ]);
 
   useEffect(() => {
-    if (initializedRef.current) return;
-    if (!defaultValues) return;
+    if (josaaInitializedRef.current) return;
+    if (!josaaDefaultValues) return;
 
-    if (postModel.filterModel && Object.keys(postModel.filterModel).length > 0) {
-      reset(postModel.filterModel);
+    if (
+      josaaStore.postModel.filterModel &&
+      Object.keys(josaaStore.postModel.filterModel).length > 0
+    ) {
+      josaaForm.reset(josaaStore.postModel.filterModel);
     } else {
-      reset(defaultValues);
-      handleFiltering(defaultValues);
+      josaaForm.reset(josaaDefaultValues);
+      josaaStore.handleFiltering(josaaDefaultValues);
     }
 
-    initializedRef.current = true;
-    setIsInitialized(true);
-  }, [defaultValues, postModel.filterModel, reset, handleFiltering]);
+    josaaInitializedRef.current = true;
+    setJosaaInitialized(true);
+  }, [
+    josaaDefaultValues,
+    josaaStore.postModel.filterModel,
+    josaaForm.reset,
+    josaaStore.handleFiltering,
+  ]);
 
-  const { data, totalRecords, isLoading, error } = useBranchWiseCutOffQuery(
-    postModel,
-    isInitialized
+  useEffect(() => {
+    if (csabInitializedRef.current) return;
+    if (!csabDefaultValues) return;
+
+    if (
+      csabStore.postModel.filterModel &&
+      Object.keys(csabStore.postModel.filterModel).length > 0
+    ) {
+      csabForm.reset(csabStore.postModel.filterModel);
+    } else {
+      csabForm.reset(csabDefaultValues);
+      csabStore.handleFiltering(csabDefaultValues);
+    }
+
+    csabInitializedRef.current = true;
+    setCsabInitialized(true);
+  }, [
+    csabDefaultValues,
+    csabStore.postModel.filterModel,
+    csabForm.reset,
+    csabStore.handleFiltering,
+  ]);
+
+  const josaaQuery = useBranchWiseCutOffQuery(
+    josaaStore.postModel,
+    activeTab === 1 && josaaInitialized
   );
   {
-    error && toast.error(error.message);
+    josaaQuery.error && toast.error(josaaQuery.error.message);
   }
-  const { data: currentYear } = useCurrentYearQuery();
 
-  const toolbarProps: DataGridToolbarProps<
+  const csabQuery = useCSABBranchWiseCutOffQuery(
+    csabStore.postModel,
+    activeTab === 2 && csabInitialized
+  );
+  {
+    csabQuery.error && toast.error(csabQuery.error.message);
+  }
+
+  const selectedJosaaYear = yearOptions.data?.find(item => item.Value === Year)?.Label;
+  const selectedJosaaRound = roundOptions.data
+    ?.find(item => item.Value === josaaForm.watch('RoundID'))
+    ?.Label.split(' ')
+    .join(' - ');
+
+  const selectedCsabYear = CSABYearOptions.data?.find(item => item.Value === CSABYear)?.Label;
+  const selectedCsabRound = CSABRoundOptions.data
+    ?.find(item => item.Value === csabForm.watch('RoundID'))
+    ?.Label.split(' ')
+    .join(' - ');
+
+  const josaaToolbarProps: DataGridToolbarProps<
     BranchWiseCutoffListRequest,
     BranchWiseCutoffListResponse
   > = {
     toolbar: {
-      columns,
-      filterModel: postModel.filterModel ?? {},
+      columns: josaaColumns,
+      filterModel: josaaStore.postModel.filterModel ?? {},
+      addNew: () => {},
+      handleExport: () => {},
+      showFilter: () => {},
+      actionButtons: [],
+      permissions: {
+        showAdd: false,
+        showExport: false,
+        showFilter: false,
+      },
+    },
+  };
+
+  const csabToolbarProps: DataGridToolbarProps<
+    CSABBranchWiseCutoffListRequest,
+    CSABBranchWiseCutoffListResponse
+  > = {
+    toolbar: {
+      columns: csabColumns,
+      filterModel: csabStore.postModel.filterModel ?? {},
       addNew: () => {},
       handleExport: () => {},
       showFilter: () => {},
@@ -204,20 +388,32 @@ const BranchWiseCutoffListPage = () => {
   const footerProps: DataGridFooterProps = {
     footer: {
       actionButtons: [],
-      totalCount: totalRecords,
+      totalCount: activeTab === 1 ? josaaQuery.totalRecords : csabQuery.totalRecords,
     },
   };
 
-  const onSubmit = handleSubmit(data => {
-    handleFiltering(data);
+  const josaaOnSubmit = josaaForm.handleSubmit(data => {
+    josaaStore.handleFiltering(data);
   });
 
-  const handleReset = () => {
-    if (!defaultValues) return;
+  const csabOnSubmit = csabForm.handleSubmit(data => {
+    csabStore.handleFiltering(data);
+  });
 
-    reset(defaultValues);
-    handleFiltering(defaultValues);
+  const josaaHandleReset = () => {
+    if (!josaaDefaultValues) return;
+
+    josaaForm.reset(josaaDefaultValues);
+    josaaStore.handleFiltering(josaaDefaultValues);
   };
+
+  const csabHandleReset = () => {
+    if (!csabDefaultValues) return;
+
+    csabForm.reset(csabDefaultValues);
+    csabStore.handleFiltering(csabDefaultValues);
+  };
+
   return (
     <DashboardContent>
       <Helmet>
@@ -239,6 +435,7 @@ const BranchWiseCutoffListPage = () => {
             <CardHeader title={t('Institute.PreviousYearCutoffRow.MeritRankWiseCutOff.Label')} />
             <CardContent sx={{ p: 0 }}>
               <SimpleTabs
+                onTabChange={(newValue: number) => setActiveTab(newValue)}
                 tabs={[
                   { label: 'JoSAA', value: 1 },
                   { label: 'CSAB', value: 2 },
@@ -247,11 +444,11 @@ const BranchWiseCutoffListPage = () => {
                 <TabPanel value={1}>
                   <Box
                     component='form'
-                    onSubmit={onSubmit}
+                    onSubmit={josaaOnSubmit}
                     sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
                   >
                     <Field.Select
-                      control={control}
+                      control={josaaForm.control}
                       name='Branch'
                       size='small'
                       label={t('Institute.Branch.List.Title') + '*'}
@@ -259,23 +456,25 @@ const BranchWiseCutoffListPage = () => {
                       options={branchOptions.data || []}
                     />
                     <Field.Select
-                      control={control}
+                      control={josaaForm.control}
                       size='small'
-                      name='CollegeType'
-                      label={t('Institute.College.CollegeType.Label')}
-                      placeholder={t('Institute.College.CollegeType.Placeholder')}
-                      options={collegeTypeOptionsWithAll}
+                      name='Year'
+                      label={t('Institute.PreviousYearCutoffRow.year.Label') + '*'}
+                      placeholder={t('Institute.PreviousYearCutoffRow.year.Placeholder') + '*'}
+                      options={yearOptions.data || []}
+                    />
+                    <Field.SelectCascade
+                      control={josaaForm.control}
+                      dependsOn='Year'
+                      size='small'
+                      name='RoundID'
+                      label={t('Institute.PreviousYearCutoffRow.Round.Label') + '*'}
+                      placeholder={t('Institute.PreviousYearCutoffRow.Round.Placeholder') + '*'}
+                      options={roundOptions.data || []}
+                      disabled={roundOptions.data?.length === 0}
                     />
                     <Field.Select
-                      control={control}
-                      size='small'
-                      name='Category'
-                      label={t('Master.Category.Category.Label')}
-                      placeholder={t('Master.Category.Category.Placeholder')}
-                      options={categoryOptionsWithAll}
-                    />
-                    <Field.Select
-                      control={control}
+                      control={josaaForm.control}
                       size='small'
                       name='ReservationType'
                       label={t('Master.ReservationType.SeatPool.Label') + '*'}
@@ -283,27 +482,27 @@ const BranchWiseCutoffListPage = () => {
                       options={reservationTypeOptions.data || []}
                     />
                     <Field.Select
-                      control={control}
+                      control={josaaForm.control}
                       size='small'
-                      name='Year'
-                      label={t('Institute.PreviousYearCutoffRow.year.Label') + '*'}
-                      placeholder={t('Institute.PreviousYearCutoffRow.year.Placeholder') + '*'}
-                      options={yearOptions.data || []}
+                      name='CollegeType'
+                      label={t('Institute.College.CollegeType.Label')}
+                      placeholder={t('Institute.College.CollegeType.Placeholder')}
+                      options={collegeTypeOptionsWithAll}
                     />
                     <Field.Select
-                      control={control}
+                      control={josaaForm.control}
                       size='small'
-                      name='RoundID'
-                      label={t('Institute.PreviousYearCutoffRow.Round.Label') + '*'}
-                      placeholder={t('Institute.PreviousYearCutoffRow.Round.Placeholder') + '*'}
-                      options={roundOptions || []}
+                      name='Category'
+                      label={t('Master.Category.Category.Label')}
+                      placeholder={t('Master.Category.Category.Placeholder')}
+                      options={categoryOptionsWithAll}
                     />
 
                     <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
                       <Button type='submit' variant='contained' color='primary'>
                         Submit
                       </Button>
-                      <Button variant='soft' onClick={handleReset}>
+                      <Button variant='soft' onClick={josaaHandleReset}>
                         Reset
                       </Button>
                     </Box>
@@ -312,11 +511,11 @@ const BranchWiseCutoffListPage = () => {
                 <TabPanel value={2}>
                   <Box
                     component='form'
-                    onSubmit={onSubmit}
+                    onSubmit={csabOnSubmit}
                     sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
                   >
                     <Field.Select
-                      control={control}
+                      control={csabForm.control}
                       name='Branch'
                       size='small'
                       label={t('Institute.Branch.List.Title') + '*'}
@@ -324,23 +523,25 @@ const BranchWiseCutoffListPage = () => {
                       options={branchOptions.data || []}
                     />
                     <Field.Select
-                      control={control}
+                      control={csabForm.control}
                       size='small'
-                      name='CollegeType'
-                      label={t('Institute.College.CollegeType.Label')}
-                      placeholder={t('Institute.College.CollegeType.Placeholder')}
-                      options={collegeTypeOptionsWithAll}
+                      name='Year'
+                      label={t('Institute.PreviousYearCutoffRow.year.Label') + '*'}
+                      placeholder={t('Institute.PreviousYearCutoffRow.year.Placeholder') + '*'}
+                      options={CSABYearOptions.data || []}
+                    />
+                    <Field.SelectCascade
+                      control={csabForm.control}
+                      size='small'
+                      name='RoundID'
+                      label={t('Institute.PreviousYearCutoffRow.Round.Label') + '*'}
+                      placeholder={t('Institute.PreviousYearCutoffRow.Round.Placeholder') + '*'}
+                      dependsOn='Year'
+                      disabled={CSABRoundOptions.data?.length == 0}
+                      options={CSABRoundOptions.data || []}
                     />
                     <Field.Select
-                      control={control}
-                      size='small'
-                      name='Category'
-                      label={t('Master.Category.Category.Label')}
-                      placeholder={t('Master.Category.Category.Placeholder')}
-                      options={categoryOptionsWithAll}
-                    />
-                    <Field.Select
-                      control={control}
+                      control={csabForm.control}
                       size='small'
                       name='ReservationType'
                       label={t('Master.ReservationType.SeatPool.Label') + '*'}
@@ -348,27 +549,27 @@ const BranchWiseCutoffListPage = () => {
                       options={reservationTypeOptions.data || []}
                     />
                     <Field.Select
-                      control={control}
+                      control={csabForm.control}
                       size='small'
-                      name='Year'
-                      label={t('Institute.PreviousYearCutoffRow.year.Label') + '*'}
-                      placeholder={t('Institute.PreviousYearCutoffRow.year.Placeholder') + '*'}
-                      options={yearOptions.data || []}
+                      name='CollegeType'
+                      label={t('Institute.College.CollegeType.Label')}
+                      placeholder={t('Institute.College.CollegeType.Placeholder')}
+                      options={collegeTypeOptionsWithAll}
                     />
                     <Field.Select
-                      control={control}
+                      control={csabForm.control}
                       size='small'
-                      name='RoundID'
-                      label={t('Institute.PreviousYearCutoffRow.Round.Label') + '*'}
-                      placeholder={t('Institute.PreviousYearCutoffRow.Round.Placeholder') + '*'}
-                      options={roundOptions || []}
+                      name='Category'
+                      label={t('Master.Category.Category.Label')}
+                      placeholder={t('Master.Category.Category.Placeholder')}
+                      options={categoryOptionsWithAll}
                     />
 
                     <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
                       <Button type='submit' variant='contained' color='primary'>
                         Submit
                       </Button>
-                      <Button variant='soft' onClick={handleReset}>
+                      <Button variant='soft' onClick={csabHandleReset}>
                         Reset
                       </Button>
                     </Box>
@@ -386,20 +587,32 @@ const BranchWiseCutoffListPage = () => {
                 <Box
                   sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
                 >
-                  <Typography variant='h6'>
-                    Closings as per Year {currentYear?.AdmissionYear} Round-
-                    {currentYear?.RoundNumber}
-                  </Typography>
-                  <Typography variant='subtitle2' color='error'>
-                    Rank represent respective category ranks
-                  </Typography>
+                  {activeTab === 1 ? (
+                    <>
+                      <Typography variant='h6'>
+                        Closings as per Year - {selectedJosaaYear ?? ''} {selectedJosaaRound ?? ''}
+                      </Typography>
+                      <Typography variant='subtitle2' color='error'>
+                        Rank represent respective category ranks
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Typography variant='h6'>
+                        Closings as per Year - {selectedCsabYear ?? ''} {selectedCsabRound ?? ''}
+                      </Typography>
+                      <Typography variant='subtitle2' color='error'>
+                        Rank represent respective category ranks
+                      </Typography>
+                    </>
+                  )}
                 </Box>
               }
             />
             <CardContent sx={{ height: 700 }}>
               <DataGridPro
-                rows={data}
-                columns={columns}
+                rows={activeTab === 1 ? josaaQuery.data : csabQuery.data}
+                columns={activeTab === 1 ? josaaColumns : csabColumns}
                 getRowId={row => row.CutoffID}
                 paginationMode='server'
                 sortingMode='server'
@@ -408,18 +621,28 @@ const BranchWiseCutoffListPage = () => {
                 initialState={{
                   pagination: {
                     paginationModel: {
-                      page: postModel.pageOffset,
-                      pageSize: postModel.pageSize,
+                      page:
+                        activeTab === 1
+                          ? josaaStore.postModel.pageOffset
+                          : csabStore.postModel.pageOffset,
+                      pageSize:
+                        activeTab === 1
+                          ? josaaStore.postModel.pageSize
+                          : csabStore.postModel.pageSize,
                     },
                   },
                   sorting: {
-                    sortModel: postModel.sortModel,
+                    sortModel: josaaStore.postModel.sortModel,
                   },
                 }}
-                onPaginationModelChange={handlePagination}
-                onSortModelChange={handleSorting}
-                rowCount={totalRecords}
-                loading={isLoading}
+                onPaginationModelChange={
+                  activeTab === 1 ? josaaStore.handlePagination : csabStore.handlePagination
+                }
+                onSortModelChange={
+                  activeTab === 1 ? josaaStore.handleSorting : csabStore.handleSorting
+                }
+                rowCount={activeTab === 1 ? josaaQuery.totalRecords : csabQuery.totalRecords}
+                loading={activeTab === 1 ? josaaQuery.isLoading : csabQuery.isLoading}
                 pageSizeOptions={CONFIG.defaultPageSizeOptions}
                 disableRowSelectionOnClick
                 slots={{
@@ -431,7 +654,7 @@ const BranchWiseCutoffListPage = () => {
                     variant: 'skeleton',
                     noRowsVariant: 'skeleton',
                   },
-                  toolbar: toolbarProps,
+                  toolbar: activeTab === 1 ? josaaToolbarProps : csabToolbarProps,
                   footer: footerProps,
                 }}
                 sx={dataGridStyles}
@@ -443,4 +666,5 @@ const BranchWiseCutoffListPage = () => {
     </DashboardContent>
   );
 };
+
 export default BranchWiseCutoffListPage;

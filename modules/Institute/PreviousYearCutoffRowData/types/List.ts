@@ -27,9 +27,7 @@ export type CurrentYearWiseCutoffRow = {
 export const PreviousYearWiseCutoffListSchema = z.object({
   CollegeID: z.string().nullish(),
   CategoryID: z.string().nullish(),
-  SeatPoolID: z.string().nullish(),
   Status: z.string().nullish(),
-  BranchID: z.string().nullish(),
 });
 
 export type PreviousYearWiseCutoffListRequest = z.infer<typeof PreviousYearWiseCutoffListSchema>;
@@ -102,7 +100,7 @@ export type MeritRankCutOffResponse = {
 export const BranchWiseCutoffListSchema = z.object({
   Year: z.string({ message: 'Select Year' }),
   Category: z.string().nullish(),
-  RoundID: z.number({ message: 'Select Round' }),
+  RoundID: z.string({ message: 'Select Round' }),
   CollegeType: z.string().nullish(),
   Branch: z.string({ message: 'Select Branch' }),
   ReservationType: z.string({ message: 'Select Seat Pool' }),
@@ -123,7 +121,7 @@ export type BranchWiseCutoffListResponse = {
 export const CollegeWiseCutoffListSchema = z.object({
   Year: z.string({ message: 'Select Year' }),
   Category: z.string().nullish(),
-  RoundID: z.number({ message: 'Select Round' }),
+  RoundID: z.string({ message: 'Select Round' }),
   College: z.string({ message: 'Select College' }),
   ReservationType: z.string({ message: 'Select Seat Pool' }),
 });

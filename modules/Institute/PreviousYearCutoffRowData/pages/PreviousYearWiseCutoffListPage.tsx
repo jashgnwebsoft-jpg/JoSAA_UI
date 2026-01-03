@@ -248,7 +248,7 @@ const PreviousYearWiseCutoffListPage = () => {
                   width: '70vw',
                 }}
               >
-                <Box sx={{ width: { xs: '100%', md: '40%' } }}>
+                {/* <Box sx={{ width: { xs: '100%', md: '40%' } }}>
                   <Field.Select
                     control={control}
                     name='BranchID'
@@ -258,7 +258,7 @@ const PreviousYearWiseCutoffListPage = () => {
                     onChange={onFilterChange('BranchID')}
                     size='small'
                   />
-                </Box>
+                </Box> */}
                 <Box sx={{ width: { xs: '100%', md: '40%' } }}>
                   <Field.Select
                     control={control}
@@ -271,7 +271,7 @@ const PreviousYearWiseCutoffListPage = () => {
                     size='small'
                   />
                 </Box>
-                <Box sx={{ width: { xs: '100%', md: '40%' } }}>
+                {/* <Box sx={{ width: { xs: '100%', md: '40%' } }}>
                   <Field.Select
                     control={control}
                     name='SeatPoolID'
@@ -282,7 +282,7 @@ const PreviousYearWiseCutoffListPage = () => {
                     fullWidth
                     size='small'
                   />
-                </Box>
+                </Box> */}
                 <Box sx={{ width: { xs: '100%', md: '40%' } }}>
                   <Field.Select
                     control={control}
@@ -315,14 +315,14 @@ const PreviousYearWiseCutoffListPage = () => {
             }}
           />
         </Box>
-        <CardContent sx={{ py: 1 }}>
+        {/* <CardContent sx={{ py: 1 }}>
           <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
             <Typography variant='subtitle1'>Select Branch :-</Typography>
             <Typography mb={2} variant='body1' color='primary'>
               {branchByCollegeID.data?.find(temp => temp.Value === getValues('BranchID'))?.Label}
             </Typography>
           </Box>
-        </CardContent>
+        </CardContent> */}
         <CardContent sx={{ height: 700, py: 0 }}>
           <DataGridPro
             rows={data}

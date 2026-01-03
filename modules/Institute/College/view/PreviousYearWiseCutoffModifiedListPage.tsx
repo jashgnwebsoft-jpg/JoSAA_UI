@@ -128,28 +128,18 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
       <Card>
         <Box component='form'>
           <CardHeader
-            title={t('Institute.PreviousYearCutoffRow.List.Title')}
+            title={'JoSAA : ' + t('Institute.PreviousYearCutoffRow.List.Title')}
             action={
               <Box
                 sx={{
                   display: 'flex',
                   flexDirection: { xs: 'column', lg: 'row' },
                   gap: 2,
-                  width: '70vw',
+                  width: '25vw',
+                  mb: 2,
                 }}
               >
-                <Box sx={{ width: { xs: '100%', md: '40%' } }}>
-                  <Field.Select
-                    control={control}
-                    name='BranchID'
-                    label={t('Institute.Branch.List.Title')}
-                    placeholder={t('Institute.Branch.List.Title')}
-                    options={branchByCollegeID.data || []}
-                    onChange={onFilterChange('BranchID')}
-                    size='small'
-                  />
-                </Box>
-                <Box sx={{ width: { xs: '100%', md: '40%' } }}>
+                <Box sx={{ width: { xs: '100%', md: '50%' } }}>
                   <Field.Select
                     control={control}
                     name='CategoryID'
@@ -161,19 +151,7 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
                     size='small'
                   />
                 </Box>
-                <Box sx={{ width: { xs: '100%', md: '40%' } }}>
-                  <Field.Select
-                    control={control}
-                    name='SeatPoolID'
-                    label={t('Master.ReservationType.SeatPool.Label')}
-                    placeholder={t('Master.ReservationType.SeatPool.Placeholder')}
-                    options={reservationTypeOptions.data || []}
-                    onChange={onFilterChange('SeatPoolID')}
-                    fullWidth
-                    size='small'
-                  />
-                </Box>
-                <Box sx={{ width: { xs: '100%', md: '40%' } }}>
+                <Box sx={{ width: { xs: '100%', md: '50%' } }}>
                   <Field.Select
                     control={control}
                     name='Status'
@@ -205,14 +183,6 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
             }}
           />
         </Box>
-        <CardContent sx={{ py: 1 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-            <Typography variant='subtitle1'>Select Branch :-</Typography>
-            <Typography mb={2} variant='body1' color='primary'>
-              {branchByCollegeID.data?.find(temp => temp.Value === getValues('BranchID'))?.Label}
-            </Typography>
-          </Box>
-        </CardContent>
         <CardContent sx={{ height: 700, py: 0 }}>
           <DataGridPro
             rows={rows}
@@ -232,6 +202,7 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
               sorting: {
                 sortModel: postModel.sortModel,
               },
+              pinnedColumns: { left: ['BranchName', 'ReservationType'] },
             }}
             onPaginationModelChange={handlePagination}
             onSortModelChange={handleSorting}
@@ -251,7 +222,20 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
               toolbar: toolbarProps,
               footer: footerProps,
             }}
-            sx={dataGridStyles}
+            sx={{
+              // ...dataGridStyles,
+              '& .MuiDataGrid-columnHeaderTitle': {
+                whiteSpace: 'nowrap', 
+                textOverflow: 'unset',
+                overflow: 'visible',
+              },
+              '& .MuiDataGrid-cell': {
+                whiteSpace: 'nowrap',
+              },
+              '& .MuiDataGrid-main': {
+                overflowX: 'auto',
+              },
+            }}
           />
         </CardContent>
       </Card>

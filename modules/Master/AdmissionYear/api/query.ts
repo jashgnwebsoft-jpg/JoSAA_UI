@@ -14,9 +14,17 @@ export const admissionYearQueries = createQueryKeys('admissionYear', {
     queryFn: () => apiClient.get<OptionsResponse[]>(endpoints.AdmissionYearOptions!),
   }),
 });
+
 export const currentYaerQueries = createQueryKeys('currentYear', {
   Get: () => ({
     queryKey: ['currentYear'],
     queryFn: () => apiClient.get<CurrentYearResponse>(endpoints.CurrentYear),
+  }),
+});
+
+export const CSABAdmissionYearQueries = createQueryKeys('CSABAdmissionYear', {
+  Options: () => ({
+    queryKey: ['CSABAdmissionYear'],
+    queryFn: () => apiClient.get<OptionsResponse[]>(endpoints.CSABAdmissionYearOptions!),
   }),
 });

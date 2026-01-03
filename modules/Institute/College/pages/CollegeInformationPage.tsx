@@ -25,6 +25,8 @@ import { CONFIG } from '@/global-config';
 import BranchWisePlacementListPage from '@modules/Institute/BranchWisePlacement/pages/BranchWisePlacementListPage';
 import { useState } from 'react';
 import FeesDeatilsView from './FeesDetailsView';
+import CSABPreviousYearWiseCutoffListPage from '@modules/Institute/CSABPreviousYearCutoffRowData/pages/CSABPreviousYearWiseCutoffListPage';
+import PreviousYearWiseCutoffModifiedListPage from '../view/PreviousYearWiseCutoffModifiedListPage';
 
 const CollegeInformationPage = () => {
   const { t } = useTranslate();
@@ -210,7 +212,9 @@ const CollegeInformationPage = () => {
         </Grid>
         <IntakeListPage />
         <CurrentYearWiseCutoffList />
-        <PreviousYearWiseCutoffListPage />
+        {/* <PreviousYearWiseCutoffListPage /> */}
+        <PreviousYearWiseCutoffModifiedListPage />
+        <CSABPreviousYearWiseCutoffListPage />
         <BranchWisePlacementListPage />
         <FeesDeatilsView
           collegeID={collegeID}
