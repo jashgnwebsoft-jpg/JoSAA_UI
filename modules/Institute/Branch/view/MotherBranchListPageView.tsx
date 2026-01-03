@@ -13,6 +13,7 @@ import {
   InputLabel,
   CardContent,
   FormControl,
+  Tooltip,
 } from '@mui/material';
 
 import { paths } from '@/paths';
@@ -171,19 +172,22 @@ const MotherBranchListPageView = () => {
               </Typography>
 
               <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
-                <Box
-                  sx={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'center' }}
-                >
-                  <Iconify icon='ph:chair-fill' color='#00a76f' />
-                  <Typography variant='subtitle1'>{item.Intake}</Typography>
-                </Box>
-
-                <Box
-                  sx={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'center' }}
-                >
-                  <Iconify icon='fa7-solid:university' color='#00a76f' />
-                  <Typography variant='subtitle1'>{item.Colleges}</Typography>
-                </Box>
+                <Tooltip title='Intake'>
+                  <Box
+                    sx={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'center' }}
+                  >
+                    <Iconify icon='ph:chair-fill' color='#00a76f' />
+                    <Typography variant='subtitle1'>{item.Intake}</Typography>
+                  </Box>
+                </Tooltip>
+                <Tooltip title='Colleges'>
+                  <Box
+                    sx={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'center' }}
+                  >
+                    <Iconify icon='fa7-solid:university' color='#00a76f' />
+                    <Typography variant='subtitle1'>{item.Colleges}</Typography>
+                  </Box>
+                </Tooltip>
               </Box>
             </CardContent>
           </Card>
