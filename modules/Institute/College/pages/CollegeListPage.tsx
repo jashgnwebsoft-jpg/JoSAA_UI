@@ -123,6 +123,7 @@ const CollegeListPage = () => {
             size='small'
           />
         }
+        totalRecords={totalRecords}
       >
         <TabPanel value={1} sx={{ px: 0, pb: 0 }}>
           <Box

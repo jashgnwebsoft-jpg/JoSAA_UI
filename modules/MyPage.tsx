@@ -15,6 +15,7 @@ type MyProps = {
   tabs: { value: number; label: string }[];
   pagination: pagination;
   action?: ReactNode;
+  totalRecords: number;
 };
 
 const MyPage = ({
@@ -24,6 +25,7 @@ const MyPage = ({
   tabs,
   pagination,
   action,
+  totalRecords,
 }: MyProps & PropsWithChildren) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
@@ -34,6 +36,7 @@ const MyPage = ({
           setCurrentTab(newValue);
         }}
         action={action}
+        totalRecords={totalRecords}
       >
         {children}
 

@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 import { TabContext } from '@mui/lab';
 import { Box, Tab, Tabs } from '@mui/material';
+import { Label } from '@minimal/components/label';
 
 export interface TabItem {
   label: string;
@@ -19,6 +20,7 @@ interface CustomTabsProps {
   tabSx?: SxProps;
   tabsSx?: SxProps;
   action?: ReactNode;
+  totalRecords?: number;
 }
 
 const SimpleTabs = ({
@@ -29,6 +31,7 @@ const SimpleTabs = ({
   tabSx,
   tabsSx,
   action,
+  totalRecords,
 }: CustomTabsProps & PropsWithChildren) => {
   const [value, setValue] = useState<number>(defaultValue);
 
@@ -57,6 +60,14 @@ const SimpleTabs = ({
               value={tab.value}
               disabled={tab.permission === false}
               sx={{ fontSize: '1rem', ...tabSx }}
+              icon={
+                tab.value === value && totalRecords && totalRecords > 0 ? (
+                  <Label variant='soft' color='primary'>
+                    {totalRecords}
+                  </Label>
+                ) : undefined
+              }
+              iconPosition='end'
             />
           ))}
         </Tabs>

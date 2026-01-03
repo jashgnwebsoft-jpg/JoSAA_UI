@@ -86,6 +86,7 @@ const HomeStateListPage = () => {
         links={[{ name: 'Home' }, { name: t('Institute.College.HomeState.Label') }]}
       />
       <MyPage
+        totalRecords={totalRecords}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
         tabs={[

@@ -85,6 +85,7 @@ const ReportingCenterListPage = () => {
         links={[{ name: 'Home' }, { name: t('Institute.ReportingCenter.List.Title') }]}
       />
       <MyPage
+        totalRecords={totalRecords}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
         tabs={[

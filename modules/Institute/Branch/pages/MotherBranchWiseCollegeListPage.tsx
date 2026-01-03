@@ -98,6 +98,7 @@ const MotherBranchWiseCollegeListPage = () => {
         links={[{ name: 'Home' }, { name: t('Institute.Branch.MotherBranchWiseColleges.Label') }]}
       />
       <MyPage
+        totalRecords={totalRecords}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
         tabs={[
