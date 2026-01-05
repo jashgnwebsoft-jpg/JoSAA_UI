@@ -110,8 +110,14 @@ const ReportingCenterListPage = () => {
             size='small'
           />
         }
+        contentSx={{
+          height: 'calc(100dvh - 310px)',
+          overflow: 'auto',
+          pt: '1rem',
+          '&::-webkit-scrollbar': { display: 'none' },
+        }}
       >
-        <TabPanel value={1} sx={{ px: 0, pb: 0 }}>
+        <TabPanel value={1} sx={{ p: 0 }}>
           <Box
             sx={{
               gap: 3,
@@ -169,7 +175,7 @@ const ReportingCenterListPage = () => {
             ))}
           </Box>
         </TabPanel>
-        <TabPanel value={2} sx={{ px: 0, pb: 0 }}>
+        <TabPanel value={2} sx={{ p: 0 }}>
           <Box
             sx={{
               gap: 3,
@@ -220,7 +226,9 @@ const ReportingCenterListPage = () => {
                     )}
                   </>
                 }
-                onClick={() => navigate(paths.josaa.collegeinformation.root(data?.CollegeID))}
+                onClick={() =>
+                  data.CollegeID && navigate(paths.josaa.collegeinformation.root(data?.CollegeID))
+                }
               />
             ))}
           </Box>

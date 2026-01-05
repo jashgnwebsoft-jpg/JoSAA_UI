@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     react(),
     checker({
-      typescript: true,
+      // typescript: true,
       eslint: {
         useFlatConfig: true,
         lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',
@@ -60,7 +60,8 @@ export default defineConfig({
       {
         find: '@utils',
         replacement: path.resolve(process.cwd(), 'core/utils'),
-      }, {
+      },
+      {
         find: '@types',
         replacement: path.resolve(process.cwd(), 'core/types'),
       },

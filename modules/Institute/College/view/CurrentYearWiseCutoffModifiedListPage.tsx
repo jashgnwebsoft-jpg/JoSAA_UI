@@ -46,57 +46,48 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
   const reservationTypeOptions = useReservationTypeOptions();
   const quotaOptions = useQuotaOptions(collegeID!);
 
-  const { control, handleSubmit, setValue, reset } = useForm<CurrentYearWiseCutoffListRequest>({
+  const { control, handleSubmit, reset, setValue } = useForm<CurrentYearWiseCutoffListRequest>({
     resolver: zodResolver(CurrentYearWiseCutoffListSchema),
     shouldUnregister: false,
   });
 
   const { data: currentYear } = useCurrentYearQuery();
 
-  const initializedRef = useRef(false);
-
-  const defaultValues = useMemo<CurrentYearWiseCutoffListRequest | null>(() => {
+  useEffect(() => {
     if (
+      !collegeID ||
       !categoryOptions.data?.length ||
       !reservationTypeOptions.data?.length ||
       !quotaOptions.data?.length
     ) {
-      return null;
+      return;
     }
 
-    return {
+    const defaultValues: CurrentYearWiseCutoffListRequest = {
       CategoryID: categoryOptions.data[0].Value,
       SeatPoolID: reservationTypeOptions.data[0].Value,
       Status: quotaOptions.data[0].Value,
     };
-  }, [categoryOptions.data, reservationTypeOptions.data, quotaOptions.data]);
 
-  useEffect(() => {
-    if (initializedRef.current) return;
-    if (!defaultValues) return;
+    setValue('CategoryID', defaultValues.CategoryID);
+    setValue('SeatPoolID', defaultValues.SeatPoolID);
+    setValue('Status', defaultValues.Status);
 
-    if (postModel.filterModel && Object.keys(postModel.filterModel).length > 0) {
-      reset(postModel.filterModel);
-    } else {
-      reset(defaultValues);
-      handleFiltering(defaultValues);
-    }
+    handleFiltering({ ...postModel.filterModel, ...defaultValues });
+  }, [
+    collegeID,
+    categoryOptions.data,
+    reservationTypeOptions.data?.length,
+    quotaOptions.data?.length,
+  ]);
 
-    initializedRef.current = true;
-  }, [defaultValues, postModel.filterModel, reset, handleFiltering]);
-
-  const requestModel = useMemo(
-    () => ({
-      ...postModel,
-      CollegeID: collegeID!,
-    }),
-    [postModel, collegeID]
-  );
+  const updateModal = { ...postModel, CollegeID: collegeID };
 
   const { data, totalRecords, isLoading } = useCurrentYearWiseCutoffListQuery(
-    requestModel,
-    !!defaultValues
+    updateModal,
+    !!collegeID
   );
+
   const columns = useMemo<GridColDef<CurrentYearWiseCutoffRow>[]>(() => {
     const baseColumns: GridColDef<CurrentYearWiseCutoffRow>[] = [
       {
@@ -105,6 +96,19 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
         minWidth: 120,
         flex: 2,
         sortable: false,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.Branch.BranchName.Label')}
+          </div>
+        ),
       },
     ];
 
@@ -176,7 +180,7 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
                   display: 'flex',
                   flexDirection: { xs: 'column', md: 'row' },
                   gap: 2,
-                  width: { xs: '70vw', md: '30vw' },
+                  width: { xs: '70vw', md: '35vw' },
                 }}
               >
                 <Box sx={{ width: '100%' }}>
@@ -235,9 +239,10 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
             }}
           />
         </Box>
-        <CardContent sx={{ height: 700 }}>
+        <CardContent sx={{ height: 650 }}>
           <DataGridPro
             rows={data}
+            density='compact'
             columns={columns}
             getRowId={row => row.BranchCode}
             paginationMode='server'
@@ -254,12 +259,14 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
               sorting: {
                 sortModel: postModel.sortModel,
               },
+              pinnedColumns: { left: ['BranchName'] },
             }}
             onPaginationModelChange={handlePagination}
             onSortModelChange={handleSorting}
             rowCount={totalRecords}
             loading={isLoading}
             pageSizeOptions={CONFIG.defaultPageSizeOptions}
+            getRowHeight={() => 'auto'}
             disableRowSelectionOnClick
             slots={{
               toolbar: ExtendedDataGridToolbar,
@@ -273,7 +280,26 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
               toolbar: toolbarProps,
               footer: footerProps,
             }}
-            sx={dataGridStyles}
+            sx={{
+              // ...dataGridStyles,
+              '& .MuiDataGrid-row:nth-of-type(even)': {
+                backgroundColor: theme => theme.palette.action.hover,
+              },
+              '& .MuiDataGrid-cell': {
+                padding: 1,
+                display: 'flex',
+                alignItems: 'center',
+              },
+              '& .MuiTablePagination-root': {
+                justifyContent: { xs: 'flex-start', md: 'flex-end' },
+              },
+              '& .MuiTablePagination-toolbar': {
+                paddingLeft: { xs: 0 },
+              },
+              '& .MuiBox-root .css-1shozee': {
+                display: 'none',
+              },
+            }}
           />
         </CardContent>
       </Card>

@@ -13,7 +13,7 @@ import { useProgarmOptions } from '@modules/Master/Program/api/hooks';
 import { useReservationTypeOptions } from '@modules/Master/ReservationType/api/hooks';
 import { useSystemBranchOptions } from '@modules/Master/SystemBranch/api/hooks';
 import { Box, Button, Card, CardContent, CardHeader } from '@mui/material';
-import { useEffect, useMemo, useRef } from 'react'; // Added useRef
+import { useEffect, useMemo, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
@@ -27,6 +27,7 @@ const Cutoff = () => {
 
   const { control, handleSubmit, reset, watch } = useForm<MeritRankCutOffRequest>({
     resolver: zodResolver(MeritRankCutOffSchema),
+    defaultValues: { AirRank: 's4cbnP_om7y0-niCdJYqwA' },
   });
 
   const categoryOptions = useCategoryOptions();
@@ -39,9 +40,9 @@ const Cutoff = () => {
   }, [systemBranchOptions.data]);
 
   const rankOptions = [
-    { Label: 'JEE Advance', Value: 1 },
-    { Label: 'JEE Main - I', Value: 2 },
-    { Label: 'JEE Main - II', Value: 3 },
+    { Label: 'JEE Advance', Value: 's4cbnP_om7y0-niCdJYqwA' },
+    { Label: 'JEE Main - I', Value: '2BIrDCIJSubhBkMq3PCYEw' },
+    { Label: 'JEE Main - II', Value: 'jwF0Rr9zpWYuwrItBmkhzw' },
   ];
 
   const AirRank = watch('AirRank');
@@ -72,12 +73,13 @@ const Cutoff = () => {
       reset({
         AirRank: rankOptions[0].Value,
         MeritRank: '1',
-        CategoryID: categoryOptions.data?.[0]?.Value,
-        SeatPoolID: reservationTypeOptions.data?.[0]?.Value,
-        CollegeType: collegeTypeOptionsWithAll[0].Value,
+        CategoryID: categoryOptions.data?.[0]?.Value ?? '',
+        SeatPoolID: reservationTypeOptions.data?.[0]?.Value ?? '',
+        CollegeType: collegeTypeOptionsWithAll?.[0]?.Value ?? '',
         CourseID: '',
         BranchID: '',
       });
+
       isInitialized.current = true;
     }
   }, [
@@ -107,7 +109,7 @@ const Cutoff = () => {
   };
 
   return (
-    <Card sx={{ height: 550 }}>
+    <Card sx={{ height: { md: 550 }, width: '100%' }}>
       <CardHeader title='Cut-OFF' />
       <CardContent>
         <Box
@@ -123,7 +125,7 @@ const Cutoff = () => {
             options={rankOptions || []}
             size='small'
           />
-          {(AirRank === 2 || AirRank === 3) && (
+          {(AirRank === '2BIrDCIJSubhBkMq3PCYEw' || AirRank === 'jwF0Rr9zpWYuwrItBmkhzw') && (
             <Field.Select
               control={control}
               size='small'

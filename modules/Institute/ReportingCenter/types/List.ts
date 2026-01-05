@@ -14,5 +14,5 @@ export type ReportingCenterListResponse = {
   Phone: string | null;
   Fax: string | null;
   Website: string | null;
-  CollegeID: string;
+  CollegeID: string | null;
 };

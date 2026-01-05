@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Card,
@@ -18,10 +18,11 @@ import { Iconify } from '@minimal/components/iconify';
 import { useTranslate } from '@minimal/utils/locales';
 import { fNumber } from '@core/utils/format-number';
 
-import { CollegeCompareRequest } from '../types';
-import { useCollegeCompareCollegeDetailsQuery } from '../api/hooks';
-import { useCollegeComparePreviousYearsOpenCloseRankListQuery } from '@modules/Institute/Branch/api/hooks';
-import { PreviousYearOpenClose } from '@modules/Institute/Branch/types';
+import { CollegeCompareCollegeDetailsResponse } from '../types';
+import {
+  CollegeComparePreviousYearsOpenCloseRankFormateListResponse,
+  PreviousYearOpenClose,
+} from '@modules/Institute/Branch/types';
 
 const CATEGORIES = ['General', 'EWS', 'OBC-NCL', 'SC', 'ST'];
 const ROUNDS = [1, 2, 3, 4, 5, 6, 7];
@@ -33,34 +34,36 @@ const getRankCell = (list: PreviousYearOpenClose[], category: string, round: num
 };
 
 type Props = {
-  request: CollegeCompareRequest | null;
   onAddClick: () => void;
+  college: CollegeCompareCollegeDetailsResponse;
+  rankData: CollegeComparePreviousYearsOpenCloseRankFormateListResponse[];
+  onRemoveData: () => void;
 };
 
-const CollegeColumn = memo(({ request, onAddClick }: Props) => {
+const cellStyle = {
+  height: 60,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  px: 1,
+  borderBottom: '1px solid',
+  borderColor: 'divider',
+  textAlign: 'center',
+};
+
+const CollegeColumn = ({ onAddClick, college, rankData, onRemoveData }: Props) => {
   const { t } = useTranslate();
-  const [open, setOpen] = useState(false);
-
-  const { data: college } = useCollegeCompareCollegeDetailsQuery(request!, !!request);
-
-  const { data: rankData } = useCollegeComparePreviousYearsOpenCloseRankListQuery(
-    request!,
-    !!request
-  );
-
-  const cellStyle = {
-    height: 60,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    px: 1,
-    borderBottom: '1px solid',
-    borderColor: 'divider',
-    textAlign: 'center',
-  };
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <Box sx={{ flex: 1, minWidth: 280, borderLeft: '1px solid', borderColor: 'divider' }}>
+    <Box
+      sx={{
+        flex: 1,
+        width: { xs: 200, md: 50 },
+        borderLeft: '1px solid',
+        borderColor: 'divider',
+      }}
+    >
       <Box
         sx={{
           p: 1.5,
@@ -82,13 +85,35 @@ const CollegeColumn = memo(({ request, onAddClick }: Props) => {
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
+            px: 1,
+            position: 'relative',
             '&:hover': { borderColor: 'primary.main' },
           }}
         >
-          {request ? (
-            <Typography variant='subtitle2' textAlign='center'>
-              {college?.CollegeName || 'Loading...'}
-            </Typography>
+          {college ? (
+            <>
+              <IconButton
+                size='small'
+                onClick={e => {
+                  e.stopPropagation();
+                  onRemoveData();
+                }}
+                sx={{
+                  position: 'absolute',
+                  top: 4,
+                  right: 4,
+                  zIndex: 10,
+                  color: 'text.disabled',
+                  '&:hover': { color: 'error.main', bgcolor: 'error.lighter' },
+                }}
+              >
+                <Iconify icon='carbon:close' width={20} />
+              </IconButton>
+
+              <Typography variant='subtitle2' textAlign='center'>
+                {college?.CollegeName || 'Loading...'}
+              </Typography>
+            </>
           ) : (
             <Box textAlign='center'>
               <IconButton color='primary'>
@@ -101,12 +126,12 @@ const CollegeColumn = memo(({ request, onAddClick }: Props) => {
       </Box>
 
       <Box sx={cellStyle}>{college?.CollegeShortName || '-'}</Box>
-      <Box sx={cellStyle}>{college?.Fees ? fNumber(college.Fees) : '-'}</Box>
+      <Box sx={cellStyle}>{college?.Fees ? fNumber(college?.Fees) : '-'}</Box>
       <Box sx={cellStyle}>{college?.NIRFRank || '-'}</Box>
-      <Box sx={cellStyle}>{college?.HigherPackage ? fNumber(college.HigherPackage) : '-'}</Box>
-      <Box sx={cellStyle}>{college?.MedianPackage ? fNumber(college.MedianPackage) : '-'}</Box>
-      <Box sx={cellStyle}>{college?.AveragePackage ? fNumber(college.AveragePackage) : '-'}</Box>
-      <Box sx={cellStyle}>{college?.LowerPackage ? fNumber(college.LowerPackage) : '-'}</Box>
+      <Box sx={cellStyle}>{college?.HigherPackage ? fNumber(college?.HigherPackage) : '-'}</Box>
+      <Box sx={cellStyle}>{college?.MedianPackage ? fNumber(college?.MedianPackage) : '-'}</Box>
+      <Box sx={cellStyle}>{college?.AveragePackage ? fNumber(college?.AveragePackage) : '-'}</Box>
+      <Box sx={cellStyle}>{college?.LowerPackage ? fNumber(college?.LowerPackage) : '-'}</Box>
 
       <Box sx={{ p: 1.5, textAlign: 'center' }}>
         <IconButton size='small' onClick={() => setOpen(v => !v)}>
@@ -155,6 +180,6 @@ const CollegeColumn = memo(({ request, onAddClick }: Props) => {
       </Box>
     </Box>
   );
-});
+};
 
 export default CollegeColumn;

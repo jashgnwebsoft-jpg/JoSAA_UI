@@ -114,10 +114,10 @@ export function DashboardLayout({
       leftArea: (
         <>
           {/** @slot Nav mobile */}
-          <MenuButton
+          {/* <MenuButton
             onClick={onOpen}
             sx={{ mr: 1, ml: -1, [theme.breakpoints.up(layoutQuery)]: { display: 'none' } }}
-          />
+          /> */}
           {/* <NavMobile
             Data={navData}
             open={open}

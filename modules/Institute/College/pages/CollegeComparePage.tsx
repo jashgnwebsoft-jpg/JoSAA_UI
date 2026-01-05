@@ -13,8 +13,17 @@ import { useCollegeCompareStore } from '../api/store';
 const CollegeComparePage = () => {
   const { t } = useTranslate();
 
-  const { requests, open, openDialog, closeDialog, saveRequest, activeIndex } =
-    useCollegeCompareStore();
+  const {
+    requests,
+    open,
+    openDialog,
+    closeDialog,
+    saveRequest,
+    activeIndex,
+    saveCollegeDetailsData: saveData,
+    saveCollegeRankData: rankData,
+    removeDataRequest,
+  } = useCollegeCompareStore();
 
   const selectedRequest = activeIndex !== null ? requests[activeIndex] : null;
 
@@ -32,7 +41,9 @@ const CollegeComparePage = () => {
       />
 
       <Paper variant='outlined' sx={{ display: 'flex', overflowX: 'auto', mb: 2 }}>
-        <Box sx={{ width: 240, borderRight: '1px solid', borderColor: 'divider' }}>
+        <Box
+          sx={{ width: { xs: 'auto', md: 240 }, borderRight: '1px solid', borderColor: 'divider' }}
+        >
           {[
             t('Institute.College.CompareDetails.Label'),
             t('Institute.College.CollegeName.Label'),
@@ -50,6 +61,7 @@ const CollegeComparePage = () => {
                 height: i === 0 ? 160 : 60,
                 display: 'flex',
                 alignItems: 'center',
+                width: 240,
                 px: 2,
                 fontWeight: 600,
                 borderBottom: '1px solid',
@@ -63,8 +75,14 @@ const CollegeComparePage = () => {
         </Box>
 
         <Box sx={{ display: 'flex', flex: 1 }}>
-          {requests.map((req, i) => (
-            <CollegeColumn key={i} request={req} onAddClick={() => openDialog(i)} />
+          {saveData.map((res, index) => (
+            <CollegeColumn
+              key={index}
+              onAddClick={() => openDialog(index)}
+              college={res!}
+              rankData={rankData[index]!}
+              onRemoveData={() => removeDataRequest(index)}
+            />
           ))}
         </Box>
       </Paper>

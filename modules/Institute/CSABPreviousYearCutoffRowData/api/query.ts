@@ -10,6 +10,10 @@ import {
 } from '../types';
 import { endpoints } from './endpoints';
 import { getGlobalApiClient } from '@core/api/createApiClient';
+import {
+  BranchWiseCutoffListResponse,
+  CollegeWiseCutoffListResponse,
+} from '@modules/Institute/PreviousYearCutoffRowData/types';
 
 const apiClient = getGlobalApiClient();
 
@@ -30,7 +34,7 @@ export const CSABBranchWiseCutoffQueries = createQueryKeys('CSABBranchWiseCutoff
   List: (postModel: PostModel<CSABBranchWiseCutoffListRequest>) => ({
     queryKey: [postModel],
     queryFn: () =>
-      apiClient.filter<CSABBranchWiseCutoffListResponse, CSABBranchWiseCutoffListRequest>(
+      apiClient.filter<BranchWiseCutoffListResponse, CSABBranchWiseCutoffListRequest>(
         endpoints.CSABBranchWiseCutoffList!,
         postModel,
         {
@@ -44,7 +48,7 @@ export const CSABCollegeWiseCutoffQueries = createQueryKeys('CSABCollegeWiseCuto
   List: (postModel: PostModel<CSABCollegeWiseCutoffListRequest>) => ({
     queryKey: [postModel],
     queryFn: () =>
-      apiClient.filter<CSABCollegeWiseCutoffListResponse, CSABCollegeWiseCutoffListRequest>(
+      apiClient.filter<CollegeWiseCutoffListResponse, CSABCollegeWiseCutoffListRequest>(
         endpoints.CSABCollegeWiseCutoffList!,
         postModel,
         {

@@ -36,6 +36,19 @@ const BranchWisePlacementListPage = () => {
         minWidth: 120,
         flex: 2,
         sortable: true,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.Branch.BranchName.Label')}
+          </div>
+        ),
       },
       {
         field: 'NumberOfStudentRegistered',
@@ -340,9 +353,10 @@ const BranchWisePlacementListPage = () => {
           },
         }}
       />
-      <CardContent sx={{ height: 700 }}>
+      <CardContent sx={{ height: 650 }}>
         <DataGridPro
           rows={data}
+          density='compact'
           columns={columns}
           getRowId={row => row.BranchWisePlacementID}
           paginationMode='server'
@@ -359,6 +373,7 @@ const BranchWisePlacementListPage = () => {
             sorting: {
               sortModel: postModel.sortModel,
             },
+            pinnedColumns: { left: ['BranchName'] },
           }}
           onPaginationModelChange={handlePagination}
           onSortModelChange={handleSorting}
@@ -366,6 +381,7 @@ const BranchWisePlacementListPage = () => {
           loading={isLoading}
           pageSizeOptions={CONFIG.defaultPageSizeOptions}
           disableRowSelectionOnClick
+          getRowHeight={() => 'auto'}
           slots={{
             toolbar: ExtendedDataGridToolbar,
             footer: ExtendedDataGridFooter,
@@ -378,7 +394,26 @@ const BranchWisePlacementListPage = () => {
             toolbar: toolbarProps,
             footer: footerProps,
           }}
-          sx={dataGridStyles}
+          sx={{
+            // ...dataGridStyles,
+            '& .MuiDataGrid-row:nth-of-type(even)': {
+              backgroundColor: theme => theme.palette.action.hover,
+            },
+            '& .MuiDataGrid-cell': {
+              padding: 1,
+              display: 'flex',
+              alignItems: 'center',
+            },
+            '& .MuiTablePagination-root': {
+              justifyContent: { xs: 'flex-start', md: 'flex-end' },
+            },
+            '& .MuiTablePagination-toolbar': {
+              paddingLeft: { xs: 0 },
+            },
+            '& .MuiBox-root .css-1shozee': {
+              display: 'none',
+            },
+          }}
         />
       </CardContent>
     </Card>

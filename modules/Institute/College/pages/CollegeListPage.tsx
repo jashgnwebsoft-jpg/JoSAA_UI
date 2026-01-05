@@ -124,8 +124,14 @@ const CollegeListPage = () => {
           />
         }
         totalRecords={totalRecords}
+        contentSx={{
+          height: 'calc(100dvh - 310px)',
+          overflow: 'auto',
+          pt: '1rem',
+          '&::-webkit-scrollbar': { display: 'none' },
+        }}
       >
-        <TabPanel value={1} sx={{ px: 0, pb: 0 }}>
+        <TabPanel value={1} sx={{ p: 0 }}>
           <Box
             sx={{
               gap: 3,
@@ -150,7 +156,7 @@ const CollegeListPage = () => {
             ))}
           </Box>
         </TabPanel>
-        <TabPanel value={2} sx={{ px: 0, pb: 0 }}>
+        <TabPanel value={2} sx={{ p: 0 }}>
           <Box
             sx={{
               gap: 3,
@@ -175,7 +181,7 @@ const CollegeListPage = () => {
             ))}
           </Box>
         </TabPanel>
-        <TabPanel value={3} sx={{ px: 0, pb: 0 }}>
+        <TabPanel value={3} sx={{ p: 0 }}>
           <Box
             sx={{
               gap: 3,
@@ -200,7 +206,7 @@ const CollegeListPage = () => {
             ))}
           </Box>
         </TabPanel>
-        <TabPanel value={4} sx={{ px: 0, pb: 0 }}>
+        <TabPanel value={4} sx={{ p: 0 }}>
           <Box
             sx={{
               gap: 3,
@@ -225,7 +231,7 @@ const CollegeListPage = () => {
             ))}
           </Box>
         </TabPanel>
-        <TabPanel value={5} sx={{ px: 0, pb: 0 }}>
+        <TabPanel value={5} sx={{ p: 0 }}>
           <Box
             sx={{
               gap: 3,

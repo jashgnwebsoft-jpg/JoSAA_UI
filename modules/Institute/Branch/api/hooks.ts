@@ -92,9 +92,9 @@ export function useBranchWiseCollegeListQuery(
 
 export function useCollegeComparePreviousYearsOpenCloseRankListQuery(
   model: CollegeCompareRequest,
-  enabled: boolean = true
+  enabled: boolean
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...collegeComparePreviousYearsOpenCloseRankListQueries.List(model),
     select: result => result?.data ?? [],
     enabled,
@@ -132,5 +132,6 @@ export function useCollegeComparePreviousYearsOpenCloseRankListQuery(
     data: transformedData,
     isLoading,
     error,
+    isSuccess,
   };
 }

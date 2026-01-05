@@ -30,8 +30,7 @@ const HeroSection = ({ sx, ...other }: BoxProps) => {
           ...theme.mixins.bgGradient({
             images: [
               `linear-gradient(0deg, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.8)}, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.8)})`,
-              //   `url(${CONFIG.assetsDir}/assets/images/contact/Parul.jpg)`,
-              `url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2yxaKXsnSE620T_kWj5cw2CB4Fx3BBQW_SA&s)`,
+              `url(https://www.shutterstock.com/image-photo/roorkee-india-july-12-administrative-260nw-2495641377.jpg)`,
             ],
           }),
           overflow: 'hidden',
@@ -56,7 +55,7 @@ const HeroSection = ({ sx, ...other }: BoxProps) => {
           </Typography>
           <Typography component='h5' variant='h5' sx={{ color: 'common.white' }}>
             Your complete guide to IIT, IIIT, NIT & GFTI admissions through JEE. Get the latest
-            cutoffs, college information, and admission guidance.
+            cutoffs, college information and admission guidance.
           </Typography>
           <m.div variants={varFade('inUp', { distance: 24 })}>
             <Box component='form'>
