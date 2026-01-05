@@ -1,5 +1,5 @@
 import { GridColDef } from '@mui/x-data-grid';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import { BranchListRequest, BranchListResponse } from '../types';
 import { Button } from '@mui/material';
@@ -16,6 +16,7 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 import { Helmet } from 'react-helmet-async';
 import { paths } from '@/paths';
 import { useTranslate } from '@minimal/utils/locales';
+import { toast } from 'sonner';
 
 const BranchListPage = () => {
   const navigate = useNavigate();
@@ -92,7 +93,16 @@ const BranchListPage = () => {
 
   const { postModel, handlePagination, handleSorting } = useBranchListStore();
 
-  const { data, totalRecords, isLoading } = useBranchListQuery(postModel);
+  const { data, totalRecords, isLoading, error } = useBranchListQuery(postModel);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message);
+    }
+    if (!isLoading && data.length === 0) {
+      toast.info('No data present');
+    }
+  }, [data, error, isLoading]);
 
   const toolbarProps: DataGridToolbarProps<BranchListRequest, BranchListResponse> = {
     toolbar: {
@@ -130,6 +140,7 @@ const BranchListPage = () => {
       >
         <DataGridPro
           rows={data}
+          density='compact'
           columns={columns}
           getRowId={row => row.BranchID}
           paginationMode='server'
@@ -165,7 +176,12 @@ const BranchListPage = () => {
             toolbar: toolbarProps,
             footer: footerProps,
           }}
-          sx={dataGridStyles}
+          sx={{
+            ...dataGridStyles,
+            '& .MuiDataGrid-row:nth-of-type(even)': {
+              backgroundColor: theme => theme.palette.action.hover,
+            },
+          }}
         />
       </MainContent>
     </DashboardContent>

@@ -104,7 +104,7 @@ const BranchWiseCutoffListPage = () => {
     []
   );
 
-  const csabColumns = useMemo<GridColDef<CSABBranchWiseCutoffListResponse>[]>(
+  const csabColumns = useMemo<GridColDef<BranchWiseCutoffListResponse>[]>(
     () => [
       {
         field: 'CollegeShortName',
@@ -142,7 +142,7 @@ const BranchWiseCutoffListPage = () => {
         sortable: true,
       },
       {
-        field: 'CloseRank',
+        field: 'ClosingRank',
         headerName: t('Institute.PreviousYearCutoffRow.Close.Label'),
         flex: 1,
         minWidth: 120,
@@ -151,7 +151,7 @@ const BranchWiseCutoffListPage = () => {
         headerAlign: 'right',
         renderCell: params => (
           <Typography variant='body2' color='primary'>
-            {fNumber(params.row.CloseRank)}
+            {fNumber(params.row.ClosingRank)}
           </Typography>
         ),
       },
@@ -323,17 +323,21 @@ const BranchWiseCutoffListPage = () => {
     josaaStore.postModel,
     activeTab === 1 && josaaInitialized
   );
-  {
-    josaaQuery.error && toast.error(josaaQuery.error.message);
-  }
+  useEffect(() => {
+    if (josaaQuery.error) {
+      toast.error(josaaQuery.error.message);
+    }
+  }, [josaaQuery.error]);
 
   const csabQuery = useCSABBranchWiseCutOffQuery(
     csabStore.postModel,
     activeTab === 2 && csabInitialized
   );
-  {
-    csabQuery.error && toast.error(csabQuery.error.message);
-  }
+  useEffect(() => {
+    if (csabQuery.error) {
+      toast.error(csabQuery.error.message);
+    }
+  }, [csabQuery.error]);
 
   const selectedJosaaYear = yearOptions.data?.find(item => item.Value === Year)?.Label;
   const selectedJosaaRound = roundOptions.data
@@ -353,7 +357,7 @@ const BranchWiseCutoffListPage = () => {
   > = {
     toolbar: {
       columns: josaaColumns,
-      filterModel: josaaStore.postModel.filterModel ?? {},
+      filterModel: (josaaStore.postModel.filterModel ?? josaaDefaultValues)!,
       addNew: () => {},
       handleExport: () => {},
       showFilter: () => {},
@@ -368,11 +372,11 @@ const BranchWiseCutoffListPage = () => {
 
   const csabToolbarProps: DataGridToolbarProps<
     CSABBranchWiseCutoffListRequest,
-    CSABBranchWiseCutoffListResponse
+    BranchWiseCutoffListResponse
   > = {
     toolbar: {
       columns: csabColumns,
-      filterModel: csabStore.postModel.filterModel ?? {},
+      filterModel: (csabStore.postModel.filterModel ?? csabDefaultValues)!,
       addNew: () => {},
       handleExport: () => {},
       showFilter: () => {},
@@ -585,7 +589,11 @@ const BranchWiseCutoffListPage = () => {
             <CardHeader
               title={
                 <Box
-                  sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    justifyContent: 'space-between',
+                  }}
                 >
                   {activeTab === 1 ? (
                     <>
@@ -609,8 +617,9 @@ const BranchWiseCutoffListPage = () => {
                 </Box>
               }
             />
-            <CardContent sx={{ height: 700 }}>
+            <CardContent sx={{ height: 650 }}>
               <DataGridPro
+                density='compact'
                 rows={activeTab === 1 ? josaaQuery.data : csabQuery.data}
                 columns={activeTab === 1 ? josaaColumns : csabColumns}
                 getRowId={row => row.CutoffID}
@@ -657,7 +666,12 @@ const BranchWiseCutoffListPage = () => {
                   toolbar: activeTab === 1 ? josaaToolbarProps : csabToolbarProps,
                   footer: footerProps,
                 }}
-                sx={dataGridStyles}
+                sx={{
+                  ...dataGridStyles,
+                  '& .MuiDataGrid-row:nth-of-type(even)': {
+                    backgroundColor: theme => theme.palette.action.hover,
+                  },
+                }}
               />
             </CardContent>
           </Card>

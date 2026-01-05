@@ -351,9 +351,10 @@ const IntakeListPage = () => {
         />
       </Box>
 
-      <CardContent sx={{ height: 700 }}>
+      <CardContent sx={{ height: 650 }}>
         <DataGridPro
           rows={totalWithRows}
+          density='compact'
           columns={columns}
           getRowId={row => row.IntakeCutoffID}
           getRowClassName={params =>
@@ -399,6 +400,9 @@ const IntakeListPage = () => {
               '& .MuiDataGrid-cell': {
                 borderTop: '2px solid #00A76F',
               },
+            },
+            '& .MuiDataGrid-row:nth-of-type(even)': {
+              backgroundColor: theme => theme.palette.action.hover,
             },
           }}
         />

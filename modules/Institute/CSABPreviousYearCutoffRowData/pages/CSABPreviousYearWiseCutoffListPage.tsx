@@ -23,6 +23,7 @@ import { dataGridStyles } from '@core/components/Styles';
 import { Field } from '@gnwebsoft/ui';
 import { Card, Box, CardHeader, CardContent, Typography } from '@mui/material';
 import { DataGridPro } from '@mui/x-data-grid-pro';
+import { LoadingScreen } from '@minimal/components/loading-screen';
 
 const CSABPreviousYearWiseCutoffListPage = () => {
   const { collegeID } = useParams();
@@ -112,6 +113,10 @@ const CSABPreviousYearWiseCutoffListPage = () => {
     },
   };
 
+  if (isLoading) {
+    <LoadingScreen />;
+  }
+
   return (
     <Card>
       <Box component='form'>
@@ -171,9 +176,10 @@ const CSABPreviousYearWiseCutoffListPage = () => {
           }}
         />
       </Box>
-      <CardContent sx={{ height: 700, py: 0 }}>
+      <CardContent sx={{ height: 650, py: 0 }}>
         <DataGridPro
           rows={rows}
+          density='compact'
           columns={columns}
           getRowId={row => row.id}
           paginationMode='server'
@@ -196,7 +202,7 @@ const CSABPreviousYearWiseCutoffListPage = () => {
           onSortModelChange={handleSorting}
           rowCount={totalRecords}
           loading={isLoading}
-          pageSizeOptions={CONFIG.defaultPageSizeOptions}
+          pageSizeOptions={[1000]}
           disableRowSelectionOnClick
           slots={{
             toolbar: ExtendedDataGridToolbar,
@@ -221,6 +227,9 @@ const CSABPreviousYearWiseCutoffListPage = () => {
             },
             '& .MuiDataGrid-main': {
               overflowX: 'auto',
+            },
+            '& .MuiDataGrid-row:nth-of-type(even)': {
+              backgroundColor: theme => theme.palette.action.hover,
             },
           }}
         />

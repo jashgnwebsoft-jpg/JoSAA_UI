@@ -53,6 +53,8 @@ const MeritRankWiseCutOff = () => {
         minWidth: 120,
         sortable: true,
         renderCell: params => <span>{fNumber(params.row.OpenRank)}</span>,
+        align: 'right',
+        headerAlign: 'right',
       },
       {
         field: 'ClosingRank',
@@ -61,6 +63,8 @@ const MeritRankWiseCutOff = () => {
         minWidth: 120,
         sortable: true,
         renderCell: params => <span>{fNumber(params.row.ClosingRank)}</span>,
+        align: 'right',
+        headerAlign: 'right',
       },
     ],
     []
@@ -159,15 +163,18 @@ const MeritRankWiseCutOff = () => {
     postModel,
     isInitialized
   );
-  {
-    error && toast.error(error.message);
-  }
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message);
+    }
+  }, [error]);
+
   const { data: currentYear } = useCurrentYearQuery();
 
   const toolbarProps: DataGridToolbarProps<MeritRankCutOffRequest, MeritRankCutOffResponse> = {
     toolbar: {
       columns,
-      filterModel: postModel.filterModel ?? {},
+      filterModel: (postModel.filterModel ?? defaultValues)!,
       addNew: () => {},
       handleExport: () => {},
       showFilter: () => {},
@@ -319,9 +326,10 @@ const MeritRankWiseCutOff = () => {
                 </Box>
               }
             />
-            <CardContent sx={{ height: 680 }}>
+            <CardContent sx={{ height: 650 }}>
               <DataGridPro
                 rows={data}
+                density='compact'
                 columns={columns}
                 getRowId={row => row.CutoffID}
                 paginationMode='server'
@@ -357,7 +365,12 @@ const MeritRankWiseCutOff = () => {
                   toolbar: toolbarProps,
                   footer: footerProps,
                 }}
-                sx={dataGridStyles}
+                sx={{
+                  ...dataGridStyles,
+                  '& .MuiDataGrid-row:nth-of-type(even)': {
+                    backgroundColor: theme => theme.palette.action.hover,
+                  },
+                }}
               />
             </CardContent>
           </Card>

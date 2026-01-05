@@ -35,6 +35,8 @@ const CollegeInformationPage = () => {
 
   const { data } = useGetQuery(collegeID);
 
+  // console.log('spilt data : ', data?.Phone?.split(','));
+
   return (
     <DashboardContent>
       <Helmet>
@@ -144,15 +146,19 @@ const CollegeInformationPage = () => {
                     <Typography variant='body1' color='textDisabled'>
                       {t('Institute.College.Website.Label')}
                     </Typography>
-                    <Typography
-                      variant='subtitle1'
-                      component='a'
-                      href={`https://${data?.Website}`}
-                      target='_blank'
-                      color='primary'
-                    >
-                      {data?.Website}
-                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      {data?.Website?.split(',').map((item: string) => (
+                        <Typography
+                          variant='subtitle1'
+                          component='a'
+                          href={`https://${item}`}
+                          target='_blank'
+                          color='primary'
+                        >
+                          {item}
+                        </Typography>
+                      ))}
+                    </Box>
                   </Box>
                 </Box>
                 <Box
@@ -169,14 +175,18 @@ const CollegeInformationPage = () => {
                     <Typography variant='body1' color='textDisabled'>
                       {t('Institute.College.Phone.Label')}
                     </Typography>
-                    <Typography
-                      variant='subtitle1'
-                      component='a'
-                      href={`tel:${data?.Phone}`}
-                      color='primary'
-                    >
-                      {data?.Phone}
-                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      {data?.Phone?.split(',').map((item: string) => (
+                        <Typography
+                          variant='subtitle1'
+                          component='a'
+                          href={`tel:${item}`}
+                          color='primary'
+                        >
+                          {item}
+                        </Typography>
+                      ))}
+                    </Box>
                   </Box>
                 </Box>
                 <Box
@@ -193,14 +203,18 @@ const CollegeInformationPage = () => {
                     <Typography variant='body1' color='textDisabled'>
                       {t('Institute.College.Email.Label')}
                     </Typography>
-                    <Typography
-                      variant='subtitle1'
-                      component='a'
-                      href={`mailto:${data?.Email}`}
-                      color='primary'
-                    >
-                      {data?.Email}
-                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      {data?.Email?.split(',').map((item: string) => (
+                        <Typography
+                          variant='subtitle1'
+                          component='a'
+                          href={`mailto:${item}`}
+                          color='primary'
+                        >
+                          {item}
+                        </Typography>
+                      ))}
+                    </Box>
                   </Box>
                 </Box>
               </CardContent>

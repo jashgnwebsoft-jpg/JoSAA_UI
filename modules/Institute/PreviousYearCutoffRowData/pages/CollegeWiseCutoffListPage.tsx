@@ -14,7 +14,6 @@ import {
 import {
   useAdmissionOptions,
   useCSABAdmissionOptions,
-  useCurrentYearQuery,
 } from '@modules/Master/AdmissionYear/api/hooks';
 import { useCollegeOptions } from '@modules/Institute/College/api/hooks';
 import { useCategoryOptions } from '@modules/Master/Category/api/hooks';
@@ -35,7 +34,6 @@ import { SimpleTabs } from '@core/components';
 import { TabPanel } from '@mui/lab';
 import {
   CSABCollegeWiseCutoffListRequest,
-  CSABCollegeWiseCutoffListResponse,
   CSABCollegeWiseCutoffListSchema,
 } from '@modules/Institute/CSABPreviousYearCutoffRowData/types';
 import { useCSABCollegeWiseCutOffListStore } from '@modules/Institute/CSABPreviousYearCutoffRowData/api/store';
@@ -96,7 +94,7 @@ const CollegeWiseCutoffListPage = () => {
     []
   );
 
-  const csabColumns = useMemo<GridColDef<CSABCollegeWiseCutoffListResponse>[]>(
+  const csabColumns = useMemo<GridColDef<CollegeWiseCutoffListResponse>[]>(
     () => [
       {
         field: 'BranchProperName',
@@ -127,7 +125,7 @@ const CollegeWiseCutoffListPage = () => {
         sortable: true,
       },
       {
-        field: 'CloseRank',
+        field: 'ClosingRank',
         headerName: t('Institute.PreviousYearCutoffRow.Close.Label'),
         flex: 1,
         minWidth: 120,
@@ -136,7 +134,7 @@ const CollegeWiseCutoffListPage = () => {
         headerAlign: 'right',
         renderCell: params => (
           <Typography variant='body2' color='primary'>
-            {fNumber(params.row.CloseRank)}
+            {fNumber(params.row.ClosingRank)}
           </Typography>
         ),
       },
@@ -283,17 +281,21 @@ const CollegeWiseCutoffListPage = () => {
     josaaStore.postModel,
     activeTab === 1 && jossaInitialized
   );
-  {
-    josaaQuery.error && toast.error(josaaQuery.error.message);
-  }
+  useEffect(() => {
+    if (josaaQuery.error) {
+      toast.error(josaaQuery.error.message);
+    }
+  }, [josaaQuery.error]);
 
   const csabQuery = useCSABCollegeRankWiseCutOffQuery(
     csabStore.postModel,
     activeTab === 2 && csabInitialized
   );
-  {
-    csabQuery.error && toast.error(csabQuery.error.message);
-  }
+  useEffect(() => {
+    if (csabQuery.error) {
+      toast.error(csabQuery.error.message);
+    }
+  }, [csabQuery.error]);
 
   const selectedJosaaYear = yearOptions.data?.find(item => item.Value === Year)?.Label;
   const selectedJosaaRound = roundOptions.data
@@ -313,7 +315,7 @@ const CollegeWiseCutoffListPage = () => {
   > = {
     toolbar: {
       columns: josaaColumns,
-      filterModel: josaaStore.postModel.filterModel ?? {},
+      filterModel: (josaaStore.postModel.filterModel ?? josaaDefaultValues)!,
       addNew: () => {},
       handleExport: () => {},
       showFilter: () => {},
@@ -328,11 +330,11 @@ const CollegeWiseCutoffListPage = () => {
 
   const csabToolbarProps: DataGridToolbarProps<
     CSABCollegeWiseCutoffListRequest,
-    CSABCollegeWiseCutoffListResponse
+    CollegeWiseCutoffListResponse
   > = {
     toolbar: {
       columns: csabColumns,
-      filterModel: csabStore.postModel.filterModel ?? {},
+      filterModel: (csabStore.postModel.filterModel ?? csabDefaultValues)!,
       addNew: () => {},
       handleExport: () => {},
       showFilter: () => {},
@@ -541,8 +543,9 @@ const CollegeWiseCutoffListPage = () => {
                 </Box>
               }
             />
-            <CardContent sx={{ height: 700 }}>
+            <CardContent sx={{ height: 650 }}>
               <DataGridPro
+                density='compact'
                 rows={activeTab === 1 ? josaaQuery.data : csabQuery.data}
                 columns={activeTab === 1 ? josaaColumns : csabColumns}
                 getRowId={row => row.CutoffID}

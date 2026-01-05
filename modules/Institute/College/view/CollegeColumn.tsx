@@ -48,6 +48,9 @@ const CollegeColumn = memo(({ request, onAddClick }: Props) => {
     !!request
   );
 
+  console.log('College : ', college);
+  console.log('rank : ', rankData);
+
   const cellStyle = {
     height: 60,
     display: 'flex',
@@ -60,7 +63,7 @@ const CollegeColumn = memo(({ request, onAddClick }: Props) => {
   };
 
   return (
-    <Box sx={{ flex: 1, minWidth: 280, borderLeft: '1px solid', borderColor: 'divider' }}>
+    <Box sx={{ flex: 1, width: 50, borderLeft: '1px solid', borderColor: 'divider' }}>
       <Box
         sx={{
           p: 1.5,

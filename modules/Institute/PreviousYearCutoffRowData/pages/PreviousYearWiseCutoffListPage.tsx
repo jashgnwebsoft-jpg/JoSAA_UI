@@ -323,9 +323,10 @@ const PreviousYearWiseCutoffListPage = () => {
             </Typography>
           </Box>
         </CardContent> */}
-        <CardContent sx={{ height: 700, py: 0 }}>
+        <CardContent sx={{ height: 650, py: 0 }}>
           <DataGridPro
             rows={data}
+            density='compact'
             columns={columns}
             getRowId={row => row.id}
             paginationMode='server'
@@ -361,7 +362,12 @@ const PreviousYearWiseCutoffListPage = () => {
               toolbar: toolbarProps,
               footer: footerProps,
             }}
-            sx={dataGridStyles}
+            sx={{
+              ...dataGridStyles,
+              '& .MuiDataGrid-row:nth-of-type(even)': {
+                backgroundColor: theme => theme.palette.action.hover,
+              },
+            }}
           />
         </CardContent>
       </Card>

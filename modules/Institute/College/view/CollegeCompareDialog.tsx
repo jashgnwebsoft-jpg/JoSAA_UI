@@ -61,14 +61,21 @@ const CollegeCompareDialog = ({ open, onClose, onSave, defaultValues }: Props) =
             label={t('Institute.College.List.Title') + '*'}
             options={collegeOptions.data || []}
           />
+          {/* <Field.AsyncSelect
+            control={control}
+            name='CollegeID'
+            placeholder={t('Dashboard.Dashboard.College.Placeholder')}
+            queryFn={useCollegeAsyncQuery}
+            size='small'
+          /> */}
           <Field.SelectCascade
             control={control}
             name='SystemBranchID'
-            label={t('Institute.Branch.List.Title')}
-            placeholder={t('Institute.Branch.List.Title')}
+            label={t('Institute.Branch.List.Title') + '*'}
+            placeholder={t('Institute.Branch.List.Title') + '*'}
             options={branchByCollegeID.data || []}
             dependsOn='CollegeID'
-            disabled={branchByCollegeID.data?.length == 0}
+            disabled={branchByCollegeID.data?.length === 0}
             size='small'
           />
           <Field.Select

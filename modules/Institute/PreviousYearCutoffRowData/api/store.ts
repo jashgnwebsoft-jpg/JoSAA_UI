@@ -88,7 +88,7 @@ export const usePreviousYearWiseCutoffListStore = create<
     set => ({
       postModel: {
         pageOffset: 0,
-        pageSize: CONFIG.defaultPageSize,
+        pageSize: 1000,
         sortField: null,
         sortOrder: null,
       },
