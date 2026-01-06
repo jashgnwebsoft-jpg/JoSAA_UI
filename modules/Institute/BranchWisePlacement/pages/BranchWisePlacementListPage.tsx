@@ -36,6 +36,19 @@ const BranchWisePlacementListPage = () => {
         minWidth: 120,
         flex: 2,
         sortable: true,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.Branch.BranchName.Label')}
+          </div>
+        ),
       },
       {
         field: 'NumberOfStudentRegistered',
@@ -360,6 +373,7 @@ const BranchWisePlacementListPage = () => {
             sorting: {
               sortModel: postModel.sortModel,
             },
+            pinnedColumns: { left: ['BranchName'] },
           }}
           onPaginationModelChange={handlePagination}
           onSortModelChange={handleSorting}
@@ -367,6 +381,7 @@ const BranchWisePlacementListPage = () => {
           loading={isLoading}
           pageSizeOptions={CONFIG.defaultPageSizeOptions}
           disableRowSelectionOnClick
+          getRowHeight={() => 'auto'}
           slots={{
             toolbar: ExtendedDataGridToolbar,
             footer: ExtendedDataGridFooter,
@@ -380,9 +395,12 @@ const BranchWisePlacementListPage = () => {
             footer: footerProps,
           }}
           sx={{
-            ...dataGridStyles,
+            // ...dataGridStyles,
             '& .MuiDataGrid-row:nth-of-type(even)': {
               backgroundColor: theme => theme.palette.action.hover,
+            },
+            '& .MuiDataGrid-cell': {
+              padding: 1,
             },
           }}
         />

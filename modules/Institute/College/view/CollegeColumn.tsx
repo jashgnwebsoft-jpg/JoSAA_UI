@@ -48,9 +48,6 @@ const CollegeColumn = memo(({ request, onAddClick }: Props) => {
     !!request
   );
 
-  console.log('College : ', college);
-  console.log('rank : ', rankData);
-
   const cellStyle = {
     height: 60,
     display: 'flex',

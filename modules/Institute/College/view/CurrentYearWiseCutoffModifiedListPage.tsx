@@ -97,6 +97,7 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
     requestModel,
     !!defaultValues
   );
+
   const columns = useMemo<GridColDef<CurrentYearWiseCutoffRow>[]>(() => {
     const baseColumns: GridColDef<CurrentYearWiseCutoffRow>[] = [
       {
@@ -105,6 +106,19 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
         minWidth: 120,
         flex: 2,
         sortable: false,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.Branch.BranchName.Label')}
+          </div>
+        ),
       },
     ];
 
@@ -176,7 +190,7 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
                   display: 'flex',
                   flexDirection: { xs: 'column', md: 'row' },
                   gap: 2,
-                  width: { xs: '70vw', md: '30vw' },
+                  width: { xs: '70vw', md: '35vw' },
                 }}
               >
                 <Box sx={{ width: '100%' }}>
@@ -255,12 +269,14 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
               sorting: {
                 sortModel: postModel.sortModel,
               },
+              pinnedColumns: { left: ['BranchName'] },
             }}
             onPaginationModelChange={handlePagination}
             onSortModelChange={handleSorting}
             rowCount={totalRecords}
             loading={isLoading}
             pageSizeOptions={CONFIG.defaultPageSizeOptions}
+            getRowHeight={() => 'auto'}
             disableRowSelectionOnClick
             slots={{
               toolbar: ExtendedDataGridToolbar,
@@ -275,9 +291,12 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
               footer: footerProps,
             }}
             sx={{
-              ...dataGridStyles,
+              // ...dataGridStyles,
               '& .MuiDataGrid-row:nth-of-type(even)': {
                 backgroundColor: theme => theme.palette.action.hover,
+              },
+              '& .MuiDataGrid-cell': {
+                padding: 1,
               },
             }}
           />

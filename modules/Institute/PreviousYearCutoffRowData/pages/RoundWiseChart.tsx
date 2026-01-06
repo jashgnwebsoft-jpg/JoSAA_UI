@@ -201,7 +201,7 @@ const RoundWiseChart = () => {
 
             '& .MuiCardHeader-content': {
               width: { xs: '100%', md: 'auto' },
-              marginBottom: { xs: 2, md: 0 },
+              marginBottom: { xs: 1, md: 0 },
             },
 
             '& .MuiCardHeader-action': {

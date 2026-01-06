@@ -133,9 +133,9 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
               <Box
                 sx={{
                   display: 'flex',
-                  flexDirection: { xs: 'column', lg: 'row' },
+                  flexDirection: { xs: 'column', md: 'row' },
                   gap: 2,
-                  width: '25vw',
+                  width: { xs: '70vw', md: '25vw' },
                   mb: 2,
                 }}
               >
@@ -167,18 +167,18 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
             }
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', lg: 'row' },
-              justifyContent: { xs: 'flex-start', lg: 'space-between' },
-              alignItems: { xs: 'flex-start', lg: 'center' },
+              flexDirection: { xs: 'column', md: 'row' },
+              justifyContent: { xs: 'flex-start', md: 'space-between' },
+              alignItems: { xs: 'flex-start', md: 'center' },
 
               '& .MuiCardHeader-content': {
-                width: { xs: '100%', lg: 'auto' },
-                marginBottom: { xs: 2, lg: 0 },
+                width: { xs: '100%', md: 'auto' },
+                marginBottom: { xs: 2, md: 0 },
               },
 
               '& .MuiCardHeader-action': {
-                width: { xs: '100%', lg: 'auto' },
-                marginTop: { xs: 1, lg: 0 },
+                width: { xs: '100%', md: 'auto' },
+                marginTop: { xs: 1, md: 0 },
               },
             }}
           />
@@ -223,6 +223,7 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
               toolbar: toolbarProps,
               footer: footerProps,
             }}
+            getRowHeight={() => 'auto'}
             sx={{
               // ...dataGridStyles,
               '& .MuiDataGrid-columnHeaderTitle': {
@@ -231,7 +232,7 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
                 overflow: 'visible',
               },
               '& .MuiDataGrid-cell': {
-                whiteSpace: 'nowrap',
+                padding: 1,
               },
               '& .MuiDataGrid-main': {
                 overflowX: 'auto',

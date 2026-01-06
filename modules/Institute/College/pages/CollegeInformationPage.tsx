@@ -27,6 +27,7 @@ import { useState } from 'react';
 import FeesDeatilsView from './FeesDetailsView';
 import CSABPreviousYearWiseCutoffListPage from '@modules/Institute/CSABPreviousYearCutoffRowData/pages/CSABPreviousYearWiseCutoffListPage';
 import PreviousYearWiseCutoffModifiedListPage from '../view/PreviousYearWiseCutoffModifiedListPage';
+import CurrentYearWiseCutoffModifiedListPage from '../view/CurrentYearWiseCutoffModifiedListPage';
 
 const CollegeInformationPage = () => {
   const { t } = useTranslate();
@@ -34,8 +35,6 @@ const CollegeInformationPage = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const { data } = useGetQuery(collegeID);
-
-  // console.log('spilt data : ', data?.Phone?.split(','));
 
   return (
     <DashboardContent>
@@ -225,7 +224,8 @@ const CollegeInformationPage = () => {
           </Grid>
         </Grid>
         <IntakeListPage />
-        <CurrentYearWiseCutoffList />
+        <CurrentYearWiseCutoffModifiedListPage />
+        {/* <CurrentYearWiseCutoffList /> */}
         {/* <PreviousYearWiseCutoffListPage /> */}
         <PreviousYearWiseCutoffModifiedListPage />
         <CSABPreviousYearWiseCutoffListPage />

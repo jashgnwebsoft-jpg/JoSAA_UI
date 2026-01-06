@@ -50,7 +50,7 @@ export function useCSABPreviousYearWiseCutoffListQuery(
   const roundColumns: GridColDef[] = rounds.map<GridColDef>(round => ({
     field: round,
     headerName: round,
-    width: 110,
+    minWidth: 110,
     type: 'number',
     align: 'center',
     headerAlign: 'center',
@@ -63,12 +63,14 @@ export function useCSABPreviousYearWiseCutoffListQuery(
     {
       field: 'BranchName',
       headerName: 'Branch Name',
-      width: 300,
+      minWidth: 110,
+      flex: 2,
     },
     {
       field: 'ReservationType',
       headerName: 'Reservation Type',
-      width: 200,
+      minWidth: 110,
+      flex: 1,
     },
   ];
 

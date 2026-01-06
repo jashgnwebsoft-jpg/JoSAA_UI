@@ -23,6 +23,7 @@ import {
 } from '../types';
 import { GridColDef } from '@mui/x-data-grid';
 import { fNumber } from '@core/utils/format-number';
+import { Label } from '@minimal/components/label';
 
 export function useCurrentYearWiseCutoffListQuery(
   model: PostModel<CurrentYearWiseCutoffListRequest>,
@@ -131,7 +132,8 @@ export function usePreviousYearWiseCutoffListModifiedQuery(
   const roundColumns: GridColDef[] = rounds.map<GridColDef>(round => ({
     field: round,
     headerName: round,
-    width: 110,
+    minWidth: 80,
+    flex: 1.5,
     type: 'number',
     align: 'center',
     headerAlign: 'center',
@@ -139,17 +141,19 @@ export function usePreviousYearWiseCutoffListModifiedQuery(
       params.value !== null && params.value !== undefined ? fNumber(params.value) : '-',
   }));
 
-  const columns: GridColDef[] = [
+  const columns: GridColDef<PivotRow>[] = [
     ...roundColumns,
     {
       field: 'BranchName',
       headerName: 'Branch Name',
-      width: 300,
+      minWidth: 110,
+      flex: 2,
     },
     {
       field: 'ReservationType',
       headerName: 'Reservation Type',
-      width: 200,
+      minWidth: 110,
+      flex: 1,
     },
   ];
 
