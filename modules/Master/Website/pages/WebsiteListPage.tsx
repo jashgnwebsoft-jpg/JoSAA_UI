@@ -60,7 +60,7 @@ const WebsiteListPage = () => {
                 }}
               >
                 <Typography color='primary'>
-                  <Iconify icon='ri:global-fill' width='14px' />
+                  <Iconify icon='solar:global-outline' />
                 </Typography>
                 <Typography
                   component='a'

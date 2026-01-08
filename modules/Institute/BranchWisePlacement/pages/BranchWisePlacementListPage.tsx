@@ -401,6 +401,8 @@ const BranchWisePlacementListPage = () => {
             },
             '& .MuiDataGrid-cell': {
               padding: 1,
+              display: 'flex',
+              alignItems: 'center',
             },
           }}
         />

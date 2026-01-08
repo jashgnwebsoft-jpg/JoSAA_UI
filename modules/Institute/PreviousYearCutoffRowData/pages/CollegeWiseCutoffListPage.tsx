@@ -24,7 +24,6 @@ import { DataGridFooterProps, DataGridToolbarProps } from '@core/components/Simp
 import { GridColDef } from '@mui/x-data-grid';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
-import { dataGridStyles } from '@core/components/Styles';
 import { Field } from '@gnwebsoft/ui';
 import { Grid, Card, CardHeader, CardContent, Box, Button, Typography } from '@mui/material';
 import { DataGridPro } from '@mui/x-data-grid-pro';
@@ -281,31 +280,41 @@ const CollegeWiseCutoffListPage = () => {
     josaaStore.postModel,
     activeTab === 1 && jossaInitialized
   );
+
   useEffect(() => {
     if (josaaQuery.error) {
       toast.error(josaaQuery.error.message);
     }
-  }, [josaaQuery.error]);
+
+    if (josaaQuery.isSuccess && josaaQuery.data.length === 0) {
+      toast.info('No Data Present');
+    }
+  }, [josaaQuery.error, josaaQuery.isSuccess]);
 
   const csabQuery = useCSABCollegeRankWiseCutOffQuery(
     csabStore.postModel,
     activeTab === 2 && csabInitialized
   );
+
   useEffect(() => {
     if (csabQuery.error) {
       toast.error(csabQuery.error.message);
     }
-  }, [csabQuery.error]);
+
+    if (csabQuery.isSuccess && csabQuery.data.length === 0) {
+      toast.info('No Data Present');
+    }
+  }, [csabQuery.error, csabQuery.isSuccess]);
 
   const selectedJosaaYear = yearOptions.data?.find(item => item.Value === Year)?.Label;
   const selectedJosaaRound = roundOptions.data
-    ?.find(item => item.Value === josaaForm.watch('RoundID'))
+    ?.find(item => item.Value === josaaForm.getValues('RoundID'))
     ?.Label.split(' ')
     .join(' - ');
 
   const selectedCsabYear = CSABYearOptions.data?.find(item => item.Value === CSABYear)?.Label;
   const selectedCsabRound = CSABRoundOptions.data
-    ?.find(item => item.Value === csabForm.watch('RoundID'))
+    ?.find(item => item.Value === csabForm.getValues('RoundID'))
     ?.Label.split(' ')
     .join(' - ');
 
@@ -519,7 +528,11 @@ const CollegeWiseCutoffListPage = () => {
             <CardHeader
               title={
                 <Box
-                  sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    justifyContent: 'space-between',
+                  }}
                 >
                   {activeTab === 1 ? (
                     <>
@@ -572,6 +585,7 @@ const CollegeWiseCutoffListPage = () => {
                         ? josaaStore.postModel.sortModel
                         : csabStore.postModel.sortModel,
                   },
+                  pinnedColumns: { left: ['BranchProperName'] },
                 }}
                 onPaginationModelChange={
                   activeTab === 1 ? josaaStore.handlePagination : csabStore.handlePagination
@@ -583,6 +597,7 @@ const CollegeWiseCutoffListPage = () => {
                 loading={activeTab === 1 ? josaaQuery.isLoading : csabQuery.isLoading}
                 pageSizeOptions={CONFIG.defaultPageSizeOptions}
                 disableRowSelectionOnClick
+                getRowHeight={() => 'auto'}
                 slots={{
                   toolbar: ExtendedDataGridToolbar,
                   footer: ExtendedDataGridFooter,
@@ -595,7 +610,17 @@ const CollegeWiseCutoffListPage = () => {
                   toolbar: activeTab === 1 ? josaaToolbarProps : csabToolbarProps,
                   footer: footerProps,
                 }}
-                sx={dataGridStyles}
+                sx={{
+                  // ...dataGridStyles,
+                  '& .MuiDataGrid-row:nth-of-type(even)': {
+                    backgroundColor: theme => theme.palette.action.hover,
+                  },
+                  '& .MuiDataGrid-cell': {
+                    padding: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                  },
+                }}
               />
             </CardContent>
           </Card>

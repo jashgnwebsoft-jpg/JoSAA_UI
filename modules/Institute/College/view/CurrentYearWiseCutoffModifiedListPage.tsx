@@ -46,56 +46,46 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
   const reservationTypeOptions = useReservationTypeOptions();
   const quotaOptions = useQuotaOptions(collegeID!);
 
-  const { control, handleSubmit, setValue, reset } = useForm<CurrentYearWiseCutoffListRequest>({
+  const { control, handleSubmit, reset, setValue } = useForm<CurrentYearWiseCutoffListRequest>({
     resolver: zodResolver(CurrentYearWiseCutoffListSchema),
     shouldUnregister: false,
   });
 
   const { data: currentYear } = useCurrentYearQuery();
 
-  const initializedRef = useRef(false);
-
-  const defaultValues = useMemo<CurrentYearWiseCutoffListRequest | null>(() => {
+  useEffect(() => {
     if (
+      !collegeID ||
       !categoryOptions.data?.length ||
       !reservationTypeOptions.data?.length ||
       !quotaOptions.data?.length
     ) {
-      return null;
+      return;
     }
 
-    return {
+    const defaultValues: CurrentYearWiseCutoffListRequest = {
       CategoryID: categoryOptions.data[0].Value,
       SeatPoolID: reservationTypeOptions.data[0].Value,
       Status: quotaOptions.data[0].Value,
     };
-  }, [categoryOptions.data, reservationTypeOptions.data, quotaOptions.data]);
 
-  useEffect(() => {
-    if (initializedRef.current) return;
-    if (!defaultValues) return;
+    setValue('CategoryID', defaultValues.CategoryID);
+    setValue('SeatPoolID', defaultValues.SeatPoolID);
+    setValue('Status', defaultValues.Status);
 
-    if (postModel.filterModel && Object.keys(postModel.filterModel).length > 0) {
-      reset(postModel.filterModel);
-    } else {
-      reset(defaultValues);
-      handleFiltering(defaultValues);
-    }
+    handleFiltering({ ...postModel.filterModel, ...defaultValues });
+  }, [
+    collegeID,
+    categoryOptions.data,
+    reservationTypeOptions.data?.length,
+    quotaOptions.data?.length,
+  ]);
 
-    initializedRef.current = true;
-  }, [defaultValues, postModel.filterModel, reset, handleFiltering]);
-
-  const requestModel = useMemo(
-    () => ({
-      ...postModel,
-      CollegeID: collegeID!,
-    }),
-    [postModel, collegeID]
-  );
+  const updateModal = { ...postModel, CollegeID: collegeID };
 
   const { data, totalRecords, isLoading } = useCurrentYearWiseCutoffListQuery(
-    requestModel,
-    !!defaultValues
+    updateModal,
+    !!collegeID
   );
 
   const columns = useMemo<GridColDef<CurrentYearWiseCutoffRow>[]>(() => {
@@ -297,6 +287,8 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
               },
               '& .MuiDataGrid-cell': {
                 padding: 1,
+                display: 'flex',
+                alignItems: 'center',
               },
             }}
           />

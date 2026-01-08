@@ -27,6 +27,7 @@ const Cutoff = () => {
 
   const { control, handleSubmit, reset, watch } = useForm<MeritRankCutOffRequest>({
     resolver: zodResolver(MeritRankCutOffSchema),
+    defaultValues: { AirRank: 's4cbnP_om7y0-niCdJYqwA' },
   });
 
   const categoryOptions = useCategoryOptions();
@@ -39,9 +40,9 @@ const Cutoff = () => {
   }, [systemBranchOptions.data]);
 
   const rankOptions = [
-    { Label: 'JEE Advance', Value: 1 },
-    { Label: 'JEE Main - I', Value: 2 },
-    { Label: 'JEE Main - II', Value: 3 },
+    { Label: 'JEE Advance', Value: 's4cbnP_om7y0-niCdJYqwA' },
+    { Label: 'JEE Main - I', Value: '2BIrDCIJSubhBkMq3PCYEw' },
+    { Label: 'JEE Main - II', Value: 'jwF0Rr9zpWYuwrItBmkhzw' },
   ];
 
   const AirRank = watch('AirRank');
@@ -107,7 +108,7 @@ const Cutoff = () => {
   };
 
   return (
-    <Card sx={{ height: 550 }}>
+    <Card sx={{ height: { md: 550 }, width: '100%' }}>
       <CardHeader title='Cut-OFF' />
       <CardContent>
         <Box
@@ -123,7 +124,7 @@ const Cutoff = () => {
             options={rankOptions || []}
             size='small'
           />
-          {(AirRank === 2 || AirRank === 3) && (
+          {(AirRank === '2BIrDCIJSubhBkMq3PCYEw' || AirRank === 'jwF0Rr9zpWYuwrItBmkhzw') && (
             <Field.Select
               control={control}
               size='small'

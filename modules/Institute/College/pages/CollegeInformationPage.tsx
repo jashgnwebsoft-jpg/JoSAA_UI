@@ -37,7 +37,7 @@ const CollegeInformationPage = () => {
   const { data } = useGetQuery(collegeID);
 
   return (
-    <DashboardContent>
+    <DashboardContent sx={{ px: { xs: 0, md: 3 } }}>
       <Helmet>
         <title>{t('Institute.College.CollegeDetails.Label') + ` - ${CONFIG.appName}`}</title>
       </Helmet>

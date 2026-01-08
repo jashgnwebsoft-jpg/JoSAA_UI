@@ -4,11 +4,12 @@ import { getGlobalApiClient } from '@core/api/createApiClient';
 import { OptionsResponse } from '@core/models';
 
 import { endpoints } from './endpoints';
+import { EntityId } from '@core/hooks/useListView';
 
 const apiClient = getGlobalApiClient();
 
 export const programQueries = createQueryKeys('program', {
-  Options: (id: number) => ({
+  Options: (id: EntityId) => ({
     queryKey: ['Options', id],
     queryFn: () => apiClient.get<OptionsResponse[]>(endpoints.Options(id!)),
   }),

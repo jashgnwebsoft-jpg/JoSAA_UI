@@ -7,7 +7,7 @@ const apiClient = getGlobalApiClient();
 
 export const roundQueries = createQueryKeys('round', {
   Options: (id: string) => ({
-    queryKey: ['Options'],
+    queryKey: ['Options', id],
     queryFn: () => apiClient.get<OptionsResponse[]>(endpoints.Options(id!)),
   }),
 });

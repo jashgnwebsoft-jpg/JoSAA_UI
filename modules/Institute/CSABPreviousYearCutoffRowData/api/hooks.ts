@@ -89,7 +89,7 @@ export function useCSABBranchWiseCutOffQuery(
   model: PostModel<CSABBranchWiseCutoffListRequest>,
   enabled: boolean
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...CSABBranchWiseCutoffQueries.List(model),
     select: result => result?.data,
     enabled,
@@ -97,14 +97,14 @@ export function useCSABBranchWiseCutOffQuery(
 
   const rowCount = useStableRowCount(data?.Total);
 
-  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
+  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount, isSuccess };
 }
 
 export function useCSABCollegeRankWiseCutOffQuery(
   model: PostModel<CSABCollegeWiseCutoffListRequest>,
   enabled: boolean
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...CSABCollegeWiseCutoffQueries.List(model),
     select: result => result?.data,
     enabled,
@@ -112,5 +112,5 @@ export function useCSABCollegeRankWiseCutOffQuery(
 
   const rowCount = useStableRowCount(data?.Total);
 
-  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
+  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount, isSuccess };
 }

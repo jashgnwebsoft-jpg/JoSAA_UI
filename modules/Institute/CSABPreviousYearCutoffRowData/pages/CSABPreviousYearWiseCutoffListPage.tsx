@@ -1,29 +1,24 @@
 import { useParams } from 'react-router';
 import {
   CSABPreviousYearWiseCutoffListRequest,
+  CSABPreviousYearWiseCutoffListSchema,
   CSABPreviousYearWiseCutoffRow,
-  PivotRow,
 } from '../types';
 import { useTranslate } from '@minimal/utils/locales';
-import { GridColDef } from '@mui/x-data-grid';
-import { useEffect, useMemo, useRef } from 'react';
-import { fNumber } from '@core/utils/format-number';
+import { useEffect } from 'react';
 import { useCSABPreviousYearWiseCutoffListStore } from '../api/store';
-import { useCategoryOptions } from '@modules/Master/api/query';
-import { useReservationTypeOptions } from '@modules/Master/ReservationType/api/hooks';
 import { useQuotaOptions } from '@modules/Master/Quota/api/hooks';
-import { useSelectBranchByCollegeIDQuery } from '@modules/Institute/Branch/api/hooks';
 import { useForm } from 'react-hook-form';
 import { useCSABPreviousYearWiseCutoffListQuery } from '../api/hooks';
 import { DataGridFooterProps, DataGridToolbarProps } from '@core/components/SimpleDataGrid/types';
-import { CONFIG } from '@/global-config';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
-import { dataGridStyles } from '@core/components/Styles';
 import { Field } from '@gnwebsoft/ui';
-import { Card, Box, CardHeader, CardContent, Typography } from '@mui/material';
+import { Card, Box, CardHeader, CardContent } from '@mui/material';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { LoadingScreen } from '@minimal/components/loading-screen';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useCategoryOptions } from '@modules/Master/Category/api/hooks';
 
 const CSABPreviousYearWiseCutoffListPage = () => {
   const { collegeID } = useParams();
@@ -35,48 +30,36 @@ const CSABPreviousYearWiseCutoffListPage = () => {
   const categoryOptions = useCategoryOptions();
   const quotaOptions = useQuotaOptions(collegeID!);
 
-  const { control, handleSubmit, reset } = useForm<CSABPreviousYearWiseCutoffListRequest>({
+  const { control, handleSubmit, setValue } = useForm<CSABPreviousYearWiseCutoffListRequest>({
+    resolver: zodResolver(CSABPreviousYearWiseCutoffListSchema),
     shouldUnregister: false,
   });
 
-  const initializedRef = useRef(false);
-
-  const defaultValues = useMemo<CSABPreviousYearWiseCutoffListRequest | null>(() => {
+  useEffect(() => {
     if (!categoryOptions.data?.length || !quotaOptions.data?.length) {
-      return null;
+      return;
     }
 
-    return {
+    const defaultValues: CSABPreviousYearWiseCutoffListRequest = {
+      CollegeID: collegeID!,
       CategoryID: categoryOptions.data[0].Value,
       Status: quotaOptions.data[0].Value,
     };
+
+    setValue('CategoryID', defaultValues.CategoryID);
+    setValue('Status', defaultValues.Status);
+
+    handleFiltering({ ...postModel.filterModel, ...defaultValues });
   }, [categoryOptions.data, quotaOptions.data]);
 
-  useEffect(() => {
-    if (initializedRef.current) return;
-    if (!defaultValues) return;
-
-    if (postModel.filterModel && Object.keys(postModel.filterModel).length > 0) {
-      reset(postModel.filterModel);
-    } else {
-      reset(defaultValues);
-      handleFiltering(defaultValues);
-    }
-
-    initializedRef.current = true;
-  }, [defaultValues, postModel.filterModel, reset, handleFiltering]);
-
-  const requestModel = useMemo(
-    () => ({
-      ...postModel,
-      CollegeID: collegeID!,
-    }),
-    [postModel, collegeID]
-  );
+  const updateModel = {
+    ...postModel,
+    CollegeID: collegeID!,
+  };
 
   const { rows, columns, totalRecords, isLoading } = useCSABPreviousYearWiseCutoffListQuery(
-    requestModel,
-    !!defaultValues
+    updateModel,
+    !!collegeID
   );
 
   const onFilterChange = (key: keyof CSABPreviousYearWiseCutoffListRequest) =>
@@ -225,6 +208,8 @@ const CSABPreviousYearWiseCutoffListPage = () => {
             },
             '& .MuiDataGrid-cell': {
               padding: 1,
+              display: 'flex',
+              alignItems: 'center',
             },
             '& .MuiDataGrid-main': {
               overflowX: 'auto',

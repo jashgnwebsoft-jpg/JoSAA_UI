@@ -367,12 +367,12 @@ const IntakeListPage = () => {
   useEffect(() => {
     if (!quotaOptions.data?.length) return;
     const defaultQuotaID = quotaOptions.data[0].Value;
-    const finalQuotaID = defaultQuotaID;
-    setValue('QuotaID', finalQuotaID);
+
+    setValue('QuotaID', defaultQuotaID);
 
     handleFiltering({
       ...postModel.filterModel,
-      QuotaID: finalQuotaID,
+      QuotaID: defaultQuotaID,
     });
   }, [quotaOptions.data]);
 
@@ -555,6 +555,8 @@ const IntakeListPage = () => {
             },
             '& .MuiDataGrid-cell': {
               padding: 1,
+              display: 'flex',
+              alignItems: 'center',
             },
             '& .MuiDataGrid-row:nth-of-type(even)': {
               backgroundColor: theme => theme.palette.action.hover,

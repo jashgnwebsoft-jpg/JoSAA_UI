@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     react(),
     checker({
-      // typescript: true,
+      typescript: true,
       eslint: {
         useFlatConfig: true,
         lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',

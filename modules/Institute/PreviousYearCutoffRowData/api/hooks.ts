@@ -141,7 +141,7 @@ export function usePreviousYearWiseCutoffListModifiedQuery(
       params.value !== null && params.value !== undefined ? fNumber(params.value) : '-',
   }));
 
-  const columns: GridColDef<PivotRow>[] = [
+  const columns: GridColDef[] = [
     ...roundColumns,
     {
       field: 'BranchName',
@@ -180,7 +180,7 @@ export function useMeritRankWiseCutOffQuery(
   model: PostModel<MeritRankCutOffRequest>,
   enabled: boolean
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...meritRankWiseCutoffQueries.List(model),
     select: result => result?.data,
     enabled,
@@ -188,14 +188,14 @@ export function useMeritRankWiseCutOffQuery(
 
   const rowCount = useStableRowCount(data?.Total);
 
-  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
+  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount, isSuccess };
 }
 
 export function useBranchWiseCutOffQuery(
   model: PostModel<BranchWiseCutoffListRequest>,
   enabled: boolean
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...branchWiseCutoffQueries.List(model),
     select: result => result?.data,
     enabled,
@@ -203,14 +203,14 @@ export function useBranchWiseCutOffQuery(
 
   const rowCount = useStableRowCount(data?.Total);
 
-  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
+  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount, isSuccess };
 }
 
 export function useCollegeRankWiseCutOffQuery(
   model: PostModel<CollegeWiseCutoffListRequest>,
   enabled: boolean
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...collegeWiseCutoffQueries.List(model),
     select: result => result?.data,
     enabled,
@@ -218,5 +218,5 @@ export function useCollegeRankWiseCutOffQuery(
 
   const rowCount = useStableRowCount(data?.Total);
 
-  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
+  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount, isSuccess };
 }

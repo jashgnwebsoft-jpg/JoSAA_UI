@@ -37,6 +37,19 @@ const BranchListPage = () => {
         minWidth: 120,
         flex: 1,
         sortable: true,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.Branch.BranchName.Label')}
+          </div>
+        ),
       },
       {
         field: 'SystemBranchProperName',
@@ -44,6 +57,19 @@ const BranchListPage = () => {
         minWidth: 120,
         flex: 0.5,
         sortable: true,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.Branch.MotherBranch.Label')}
+          </div>
+        ),
       },
       {
         field: 'Intake',
@@ -53,6 +79,19 @@ const BranchListPage = () => {
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.Intake.Label')}
+          </div>
+        ),
       },
       {
         field: 'Colleges',
@@ -62,6 +101,19 @@ const BranchListPage = () => {
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.College.List.Title')}
+          </div>
+        ),
       },
       {
         field: 'actions',
@@ -157,6 +209,7 @@ const BranchListPage = () => {
             sorting: {
               sortModel: postModel.sortModel,
             },
+            pinnedColumns: { left: ['BranchProperName'] },
           }}
           onPaginationModelChange={handlePagination}
           onSortModelChange={handleSorting}
@@ -164,6 +217,7 @@ const BranchListPage = () => {
           loading={isLoading}
           pageSizeOptions={CONFIG.defaultPageSizeOptions}
           disableRowSelectionOnClick
+          getRowHeight={() => 'auto'}
           slots={{
             toolbar: ExtendedDataGridToolbar,
             footer: ExtendedDataGridFooter,
@@ -177,7 +231,12 @@ const BranchListPage = () => {
             footer: footerProps,
           }}
           sx={{
-            ...dataGridStyles,
+            // ...dataGridStyles,
+            '& .MuiDataGrid-cell': {
+              padding: 1,
+              display: 'flex',
+              alignItems: 'center',
+            },
             '& .MuiDataGrid-row:nth-of-type(even)': {
               backgroundColor: theme => theme.palette.action.hover,
             },
