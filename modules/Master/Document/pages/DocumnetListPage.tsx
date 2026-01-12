@@ -24,6 +24,8 @@ import { useTranslate } from '@minimal/utils/locales';
 import { CONFIG } from '@/global-config';
 import { Worker, Viewer } from '@react-pdf-viewer/core';
 import apiExport from '@minimal/utils/locales/utils/utills';
+import { toast } from 'sonner';
+import pkg from 'pdfjs-dist/package.json' assert { type: 'json' };
 
 const DocumnetListPage = () => {
   const { t } = useTranslate();
@@ -38,7 +40,8 @@ const DocumnetListPage = () => {
   const page = postModel.pageOffset + 1;
   const rowsPerPage = postModel.pageSize;
 
-  const pdfWorkerUrl = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
+  const pdfWorkerUrl = `https://unpkg.com/pdfjs-dist@${pkg.version}/build/pdf.worker.min.mjs`;
+  // const pdfWorkerUrl = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
     handlePagination({
@@ -58,7 +61,7 @@ const DocumnetListPage = () => {
       setPdfUrl(objectUrl);
       setOpenDialog(true);
     } catch (error) {
-      console.error('Failed to load PDF', error);
+      toast.error('Fail to View PDF');
     } finally {
       setLoadingPdf(false);
     }

@@ -25,6 +25,7 @@ export function useSelectKeyDateQuery(enabled: boolean = true) {
   return useQuery({
     ...keyDateQueries.Get(),
     enabled,
-    select: result => result?.data?.map((item: KeyDateResponse) => mapKeyDateToEvent(item)),
+    select: result => result?.data,
+    // select: result => result?.data?.map((item: KeyDateResponse) => mapKeyDateToEvent(item)),
   });
 }

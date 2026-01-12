@@ -16,6 +16,7 @@ import { SettingsDrawer, defaultSettings, SettingsProvider } from '@minimal/comp
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
+// import MuiXLicense from './MuiXLicense';
 import { Snackbar } from '../minimal/components/snackbar';
 
 dayjs.extend(utc);
@@ -36,7 +37,7 @@ type AppProps = {
 };
 
 export default function App({ children }: AppProps) {
-  useScrollToTop();    
+  useScrollToTop();
 
   return (
     <AuthProvider>
@@ -53,6 +54,7 @@ export default function App({ children }: AppProps) {
                 <ProgressBar />
                 <SettingsDrawer defaultSettings={defaultSettings} />
                 {children}
+                {/* <MuiXLicense /> */}
               </MotionLazy>
             </ThemeProvider>
           </SettingsProvider>

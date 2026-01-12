@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import HeroSection from '../view/HeroSection';
 import { CONFIG } from '@/global-config';
 import { useTranslate } from '@minimal/utils/locales';
+import { DashboardContent } from '@minimal/layouts/dashboard';
 
 const DashboardPage = () => {
   const { t } = useTranslate();
@@ -16,28 +17,39 @@ const DashboardPage = () => {
         <title>{CONFIG.appName}</title>
       </Helmet>
       <HeroSection />
-      <Box mx={4}>
-        <Box pb={4}>
-          <Typography variant='h5'>All India Admission for JoSAA</Typography>
-          <Typography variant='subtitle2' color='textDisabled'>
-            IIT, NIT, IIIT & GFTI
-          </Typography>
+      <DashboardContent>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <Box>
+            <Typography variant='h5'>All India Admission for JoSAA</Typography>
+            <Typography variant='subtitle2' color='textDisabled'>
+              IIT, NIT, IIIT & GFTI
+            </Typography>
+          </Box>
+          <Menu />
+          {/* <Grid container spacing={3}>
+            <Grid size={{ sm: 12, md: 6 }}>
+              <Cutoff />
+            </Grid>
+            <Grid size={{ sm: 12, md: 6 }}>
+              <Card sx={{ height: 550 }}>
+                <CardHeader title='Latest News' />
+                <CardContent sx={{ height: '100%', overflowY: 'scroll' }}>
+                  <LatestNewsView />
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid> */}
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
+            <Cutoff />
+            <Card sx={{ height: 550 }}>
+              <CardHeader title='Latest News' />
+              <CardContent sx={{ height: '100%', overflowY: 'scroll' }}>
+                <LatestNewsView />
+              </CardContent>
+            </Card>
+          </Box>
         </Box>
-        <Menu />
-      </Box>
-      <Grid container spacing={3} mx={4}>
-        <Grid size={{ sm: 12, md: 6 }}>
-          <Cutoff />
-        </Grid>
-        <Grid size={{ sm: 12, md: 6 }}>
-          <Card sx={{ height: 550 }}>
-            <CardHeader title='Latest News' />
-            <CardContent sx={{ height: '100%', overflowY: 'scroll' }}>
-              <LatestNewsView />
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      </DashboardContent>
     </Box>
   );
 };

@@ -1,18 +1,14 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect } from 'react';
 import { DataGridFooterProps, DataGridToolbarProps } from '@core/components/SimpleDataGrid/types';
-import { CONFIG } from '@/global-config';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
-import { dataGridStyles } from '@core/components/Styles';
 import { DataGridPro } from '@mui/x-data-grid-pro';
-import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardHeader } from '@mui/material';
 import { useParams } from 'react-router';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
 import { Field } from '@gnwebsoft/ui';
 import { useForm } from 'react-hook-form';
 import { useCategoryOptions } from '@modules/Master/Category/api/hooks';
 import { useQuotaOptions } from '@modules/Master/Quota/api/hooks';
-import { useReservationTypeOptions } from '@modules/Master/ReservationType/api/hooks';
-import { useSelectBranchByCollegeIDQuery } from '@modules/Institute/Branch/api/hooks';
 import { useTranslate } from '@minimal/utils/locales';
 import { usePreviousYearWiseCutoffListModifiedQuery } from '@modules/Institute/PreviousYearCutoffRowData/api/hooks';
 import { usePreviousYearWiseCutoffListStore } from '@modules/Institute/PreviousYearCutoffRowData/api/store';
@@ -29,64 +25,36 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
     usePreviousYearWiseCutoffListStore();
 
   const categoryOptions = useCategoryOptions();
-  const reservationTypeOptions = useReservationTypeOptions();
   const quotaOptions = useQuotaOptions(collegeID!);
-  const branchByCollegeID = useSelectBranchByCollegeIDQuery(collegeID);
 
-  const { control, handleSubmit, reset, getValues } = useForm<PreviousYearWiseCutoffListRequest>({
+  const { control, handleSubmit, setValue } = useForm<PreviousYearWiseCutoffListRequest>({
     shouldUnregister: false,
   });
 
-  const initializedRef = useRef(false);
-
-  const defaultValues = useMemo<PreviousYearWiseCutoffListRequest | null>(() => {
-    if (
-      !categoryOptions.data?.length ||
-      !reservationTypeOptions.data?.length ||
-      !quotaOptions.data?.length ||
-      !branchByCollegeID.data?.length
-    ) {
-      return null;
-    }
-
-    return {
-      CategoryID: categoryOptions.data[0].Value,
-      SeatPoolID: reservationTypeOptions.data[0].Value,
-      Status: quotaOptions.data[0].Value,
-      BranchID: branchByCollegeID.data[0].Value.toString(),
-    };
-  }, [
-    categoryOptions.data,
-    reservationTypeOptions.data,
-    quotaOptions.data,
-    branchByCollegeID.data,
-  ]);
-
   useEffect(() => {
-    if (initializedRef.current) return;
-    if (!defaultValues) return;
-
-    if (postModel.filterModel && Object.keys(postModel.filterModel).length > 0) {
-      reset(postModel.filterModel);
-    } else {
-      reset(defaultValues);
-      handleFiltering(defaultValues);
+    if (!categoryOptions.data?.length || !quotaOptions.data?.length) {
+      return;
     }
 
-    initializedRef.current = true;
-  }, [defaultValues, postModel.filterModel, reset, handleFiltering]);
+    const defaultValues: PreviousYearWiseCutoffListRequest = {
+      CategoryID: categoryOptions.data[0].Value,
+      Status: quotaOptions.data[0].Value,
+    };
 
-  const requestModel = useMemo(
-    () => ({
-      ...postModel,
-      CollegeID: collegeID!,
-    }),
-    [postModel, collegeID]
-  );
+    setValue('CategoryID', defaultValues.CategoryID);
+    setValue('Status', defaultValues.Status);
+
+    handleFiltering({ ...postModel.filterModel, ...defaultValues });
+  }, [categoryOptions.data, quotaOptions.data]);
+
+  const updateModel = {
+    ...postModel,
+    CollegeID: collegeID!,
+  };
 
   const { rows, columns, totalRecords, isLoading } = usePreviousYearWiseCutoffListModifiedQuery(
-    requestModel,
-    !!defaultValues
+    updateModel,
+    !!collegeID
   );
 
   const onFilterChange = (key: keyof PreviousYearWiseCutoffListRequest) =>
@@ -133,9 +101,9 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
               <Box
                 sx={{
                   display: 'flex',
-                  flexDirection: { xs: 'column', lg: 'row' },
+                  flexDirection: { xs: 'column', md: 'row' },
                   gap: 2,
-                  width: '25vw',
+                  width: { xs: '70vw', md: '25vw' },
                   mb: 2,
                 }}
               >
@@ -167,25 +135,26 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
             }
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', lg: 'row' },
-              justifyContent: { xs: 'flex-start', lg: 'space-between' },
-              alignItems: { xs: 'flex-start', lg: 'center' },
+              flexDirection: { xs: 'column', md: 'row' },
+              justifyContent: { xs: 'flex-start', md: 'space-between' },
+              alignItems: { xs: 'flex-start', md: 'center' },
 
               '& .MuiCardHeader-content': {
-                width: { xs: '100%', lg: 'auto' },
-                marginBottom: { xs: 2, lg: 0 },
+                width: { xs: '100%', md: 'auto' },
+                marginBottom: { xs: 2, md: 0 },
               },
 
               '& .MuiCardHeader-action': {
-                width: { xs: '100%', lg: 'auto' },
-                marginTop: { xs: 1, lg: 0 },
+                width: { xs: '100%', md: 'auto' },
+                marginTop: { xs: 1, md: 0 },
               },
             }}
           />
         </Box>
-        <CardContent sx={{ height: 700, py: 0 }}>
+        <CardContent sx={{ height: 650, py: 0 }}>
           <DataGridPro
             rows={rows}
+            density='compact'
             columns={columns}
             getRowId={row => row.id}
             paginationMode='server'
@@ -208,7 +177,7 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
             onSortModelChange={handleSorting}
             rowCount={totalRecords}
             loading={isLoading}
-            pageSizeOptions={CONFIG.defaultPageSizeOptions}
+            pageSizeOptions={[1000]}
             disableRowSelectionOnClick
             slots={{
               toolbar: ExtendedDataGridToolbar,
@@ -222,18 +191,31 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
               toolbar: toolbarProps,
               footer: footerProps,
             }}
+            getRowHeight={() => 'auto'}
             sx={{
               // ...dataGridStyles,
               '& .MuiDataGrid-columnHeaderTitle': {
-                whiteSpace: 'nowrap', 
+                whiteSpace: 'nowrap',
                 textOverflow: 'unset',
                 overflow: 'visible',
               },
               '& .MuiDataGrid-cell': {
-                whiteSpace: 'nowrap',
+                padding: 1,
               },
               '& .MuiDataGrid-main': {
                 overflowX: 'auto',
+              },
+              '& .MuiDataGrid-row:nth-of-type(even)': {
+                backgroundColor: theme => theme.palette.action.hover,
+              },
+              '& .MuiTablePagination-root': {
+                justifyContent: { xs: 'flex-start', md: 'flex-end' },
+              },
+              '& .MuiTablePagination-toolbar': {
+                paddingLeft: { xs: 0 },
+              },
+              '& .MuiBox-root .css-1shozee': {
+                display: 'none',
               },
             }}
           />

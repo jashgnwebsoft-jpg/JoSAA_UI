@@ -27,6 +27,7 @@ import { useState } from 'react';
 import FeesDeatilsView from './FeesDetailsView';
 import CSABPreviousYearWiseCutoffListPage from '@modules/Institute/CSABPreviousYearCutoffRowData/pages/CSABPreviousYearWiseCutoffListPage';
 import PreviousYearWiseCutoffModifiedListPage from '../view/PreviousYearWiseCutoffModifiedListPage';
+import CurrentYearWiseCutoffModifiedListPage from '../view/CurrentYearWiseCutoffModifiedListPage';
 
 const CollegeInformationPage = () => {
   const { t } = useTranslate();
@@ -36,7 +37,7 @@ const CollegeInformationPage = () => {
   const { data } = useGetQuery(collegeID);
 
   return (
-    <DashboardContent>
+    <DashboardContent sx={{ px: { xs: 0, md: 3 } }}>
       <Helmet>
         <title>{t('Institute.College.CollegeDetails.Label') + ` - ${CONFIG.appName}`}</title>
       </Helmet>
@@ -60,7 +61,7 @@ const CollegeInformationPage = () => {
                     my: 2,
                   }}
                 >
-                  <Iconify icon='maki:college' />
+                  <Iconify icon='mdi:college-outline' />
                   <Box>
                     <Typography variant='body1' color='textDisabled'>
                       {t('Institute.College.CollegeCode.Label')}
@@ -111,7 +112,7 @@ const CollegeInformationPage = () => {
                     my: 2,
                   }}
                 >
-                  <Iconify icon='game-icons:wallet' />
+                  <Iconify icon='mdi:wallet' />
                   <Box>
                     <Typography variant='body1' color='textDisabled'>
                       {t('Institute.College.Fees.Label')}
@@ -139,20 +140,24 @@ const CollegeInformationPage = () => {
                     my: 2,
                   }}
                 >
-                  <Iconify icon='ri:global-fill' />
+                  <Iconify icon='solar:global-bold' />
                   <Box>
                     <Typography variant='body1' color='textDisabled'>
                       {t('Institute.College.Website.Label')}
                     </Typography>
-                    <Typography
-                      variant='subtitle1'
-                      component='a'
-                      href={`https://${data?.Website}`}
-                      target='_blank'
-                      color='primary'
-                    >
-                      {data?.Website}
-                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      {data?.Website?.split(',').map((item: string) => (
+                        <Typography
+                          variant='subtitle1'
+                          component='a'
+                          href={`https://${item}`}
+                          target='_blank'
+                          color='primary'
+                        >
+                          {item}
+                        </Typography>
+                      ))}
+                    </Box>
                   </Box>
                 </Box>
                 <Box
@@ -169,14 +174,18 @@ const CollegeInformationPage = () => {
                     <Typography variant='body1' color='textDisabled'>
                       {t('Institute.College.Phone.Label')}
                     </Typography>
-                    <Typography
-                      variant='subtitle1'
-                      component='a'
-                      href={`tel:${data?.Phone}`}
-                      color='primary'
-                    >
-                      {data?.Phone}
-                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      {data?.Phone?.split(',').map((item: string) => (
+                        <Typography
+                          variant='subtitle1'
+                          component='a'
+                          href={`tel:${item}`}
+                          color='primary'
+                        >
+                          {item}
+                        </Typography>
+                      ))}
+                    </Box>
                   </Box>
                 </Box>
                 <Box
@@ -193,14 +202,18 @@ const CollegeInformationPage = () => {
                     <Typography variant='body1' color='textDisabled'>
                       {t('Institute.College.Email.Label')}
                     </Typography>
-                    <Typography
-                      variant='subtitle1'
-                      component='a'
-                      href={`mailto:${data?.Email}`}
-                      color='primary'
-                    >
-                      {data?.Email}
-                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      {data?.Email?.split(',').map((item: string) => (
+                        <Typography
+                          variant='subtitle1'
+                          component='a'
+                          href={`mailto:${item}`}
+                          color='primary'
+                        >
+                          {item}
+                        </Typography>
+                      ))}
+                    </Box>
                   </Box>
                 </Box>
               </CardContent>
@@ -211,7 +224,8 @@ const CollegeInformationPage = () => {
           </Grid>
         </Grid>
         <IntakeListPage />
-        <CurrentYearWiseCutoffList />
+        <CurrentYearWiseCutoffModifiedListPage />
+        {/* <CurrentYearWiseCutoffList /> */}
         {/* <PreviousYearWiseCutoffListPage /> */}
         <PreviousYearWiseCutoffModifiedListPage />
         <CSABPreviousYearWiseCutoffListPage />

@@ -26,17 +26,43 @@ const IntakeListPage = () => {
       {
         field: 'BranchName',
         headerName: t('Institute.Branch.BranchName.Label'),
-        minWidth: 120,
-        flex: 2,
+        minWidth: 130,
+        flex: 1.5,
         sortable: true,
         renderCell: params => <span title={params.row.BranchWebName}>{params.row.BranchName}</span>,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.Branch.BranchName.Label')}
+          </div>
+        ),
       },
       {
         field: 'ReservationType',
         headerName: t('Master.ReservationType.List.Title'),
-        minWidth: 120,
+        minWidth: 180,
         flex: 1,
         sortable: true,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Master.ReservationType.List.Title')}
+          </div>
+        ),
         renderCell: params =>
           params.row.ReservationType !== null ? (
             params.row.ReservationType === 'Gender-Neutral' ? (
@@ -57,34 +83,73 @@ const IntakeListPage = () => {
       {
         field: 'IntakeOpen',
         headerName: t('Institute.IntakeCutoff.Open.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.Open.Label')}
+          </div>
+        ),
       },
       {
         field: 'IntakeOpenPWD',
         headerName: t('Institute.IntakeCutoff.OpenPWD.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.OpenPWD.Label')}
+          </div>
+        ),
       },
       {
         field: 'IntakeGENEWS',
         headerName: t('Institute.IntakeCutoff.GENEWS.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.GENEWS.Label')}
+          </div>
+        ),
       },
       {
         field: 'IntakeGENEWSPWD',
         // headerName: t('Institute.IntakeCutoff.GENEWSPWD.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
@@ -106,52 +171,117 @@ const IntakeListPage = () => {
       {
         field: 'IntakeSC',
         headerName: t('Institute.IntakeCutoff.Sc.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.Sc.Label')}
+          </div>
+        ),
       },
       {
         field: 'IntakeSCPWD',
         headerName: t('Institute.IntakeCutoff.ScPWD.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.ScPWD.Label')}
+          </div>
+        ),
       },
       {
         field: 'IntakeST',
         headerName: t('Institute.IntakeCutoff.St.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.St.Label')}
+          </div>
+        ),
       },
       {
         field: 'IntakeSTPWD',
         headerName: t('Institute.IntakeCutoff.StPWD.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.StPWD.Label')}
+          </div>
+        ),
       },
       {
         field: 'IntakeOBCNCL',
         headerName: t('Institute.IntakeCutoff.OBCNCL.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.OBCNCL.Label')}
+          </div>
+        ),
       },
       {
         field: 'IntakeOBCNCLPWD',
         // headerName: t('Institute.IntakeCutoff.OBCNCLPWD.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
@@ -173,18 +303,31 @@ const IntakeListPage = () => {
       {
         field: 'IntakeTotal',
         headerName: t('Institute.IntakeCutoff.Total.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         type: 'number',
         align: 'right',
         headerAlign: 'right',
         aggregationFunction: 'sum',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.Total.Label')}
+          </div>
+        ),
       },
       {
         field: 'IntakeSeatCapacity',
         // headerName: t('Institute.IntakeCutoff.SeatCapacity.Label'),
-        minWidth: 50,
+        minWidth: 90,
         flex: 0.5,
         sortable: true,
         align: 'right',
@@ -212,26 +355,25 @@ const IntakeListPage = () => {
 
   const { postModel, handlePagination, handleSorting, handleFiltering } =
     useIntakeCutoffListStore();
+
   const { control, handleSubmit, setValue } = useForm<IntakeCutoffListRequest>({
     defaultValues: {
       QuotaID: postModel.filterModel?.QuotaID,
     },
   });
+
   const quotaOptions = useQuotaOptions(collegeID!);
 
   useEffect(() => {
     if (!quotaOptions.data?.length) return;
-    const storedQuotaID = postModel.filterModel?.QuotaID;
     const defaultQuotaID = quotaOptions.data[0].Value;
-    const finalQuotaID = storedQuotaID ?? defaultQuotaID;
-    setValue('QuotaID', finalQuotaID);
 
-    if (!storedQuotaID) {
-      handleFiltering({
-        ...postModel.filterModel,
-        QuotaID: finalQuotaID,
-      });
-    }
+    setValue('QuotaID', defaultQuotaID);
+
+    handleFiltering({
+      ...postModel.filterModel,
+      QuotaID: defaultQuotaID,
+    });
   }, [quotaOptions.data]);
 
   const updateModal = {
@@ -347,13 +489,23 @@ const IntakeListPage = () => {
             flexDirection: { xs: 'column', md: 'row' },
             justifyContent: { xs: 'flex-start', md: 'space-between' },
             alignItems: { xs: 'flex-start', md: 'center' },
+            '& .MuiCardHeader-content': {
+              width: { xs: '100%', md: 'auto' },
+              marginBottom: { xs: 1, md: 0 },
+            },
+
+            '& .MuiCardHeader-action': {
+              width: { xs: '100%', md: 'auto' },
+              marginTop: { xs: 1, md: 0 },
+            },
           }}
         />
       </Box>
 
-      <CardContent sx={{ height: 700 }}>
+      <CardContent sx={{ height: 650 }}>
         <DataGridPro
           rows={totalWithRows}
+          density='compact'
           columns={columns}
           getRowId={row => row.IntakeCutoffID}
           getRowClassName={params =>
@@ -373,10 +525,12 @@ const IntakeListPage = () => {
             sorting: {
               sortModel: postModel.sortModel,
             },
+            pinnedColumns: { left: ['BranchName'] },
           }}
           onPaginationModelChange={handlePagination}
           onSortModelChange={handleSorting}
           rowCount={totalRecords}
+          getRowHeight={() => 'auto'}
           loading={isLoading}
           pageSizeOptions={CONFIG.defaultPageSizeOptions}
           disableRowSelectionOnClick
@@ -393,12 +547,28 @@ const IntakeListPage = () => {
             footer: footerProps,
           }}
           sx={{
-            ...dataGridStyles,
             '& .intake-total-row': {
               fontWeight: 700,
               '& .MuiDataGrid-cell': {
                 borderTop: '2px solid #00A76F',
               },
+            },
+            '& .MuiDataGrid-cell': {
+              padding: 1,
+              display: 'flex',
+              alignItems: 'center',
+            },
+            '& .MuiDataGrid-row:nth-of-type(even)': {
+              backgroundColor: theme => theme.palette.action.hover,
+            },
+            '& .MuiTablePagination-root': {
+              justifyContent: { xs: 'flex-start', md: 'flex-end' },
+            },
+            '& .MuiTablePagination-toolbar': {
+              paddingLeft: { xs: 0 },
+            },
+            '& .MuiBox-root .css-1shozee': {
+              display: 'none',
             },
           }}
         />

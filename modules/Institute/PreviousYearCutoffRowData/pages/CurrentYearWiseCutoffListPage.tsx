@@ -318,9 +318,10 @@ const CurrentYearWiseCutoffList = () => {
             }}
           />
         </Box>
-        <CardContent sx={{ height: 700 }}>
+        <CardContent sx={{ height: 650 }}>
           <DataGridPro
             rows={data}
+            density='compact'
             columns={columns}
             getRowId={row => row.BranchCode}
             paginationMode='server'
@@ -356,7 +357,21 @@ const CurrentYearWiseCutoffList = () => {
               toolbar: toolbarProps,
               footer: footerProps,
             }}
-            sx={dataGridStyles}
+            sx={{
+              ...dataGridStyles,
+              '& .MuiDataGrid-row:nth-of-type(even)': {
+                backgroundColor: theme => theme.palette.action.hover,
+              },
+              '& .MuiTablePagination-root': {
+                justifyContent: { xs: 'flex-start', md: 'flex-end' },
+              },
+              '& .MuiTablePagination-toolbar': {
+                paddingLeft: { xs: 0 },
+              },
+              '& .MuiBox-root .css-1shozee': {
+                display: 'none',
+              },
+            }}
           />
         </CardContent>
       </Card>

@@ -23,6 +23,7 @@ import {
 } from '../types';
 import { GridColDef } from '@mui/x-data-grid';
 import { fNumber } from '@core/utils/format-number';
+import { Label } from '@minimal/components/label';
 
 export function useCurrentYearWiseCutoffListQuery(
   model: PostModel<CurrentYearWiseCutoffListRequest>,
@@ -131,7 +132,8 @@ export function usePreviousYearWiseCutoffListModifiedQuery(
   const roundColumns: GridColDef[] = rounds.map<GridColDef>(round => ({
     field: round,
     headerName: round,
-    width: 110,
+    minWidth: 80,
+    flex: 1.5,
     type: 'number',
     align: 'center',
     headerAlign: 'center',
@@ -144,12 +146,14 @@ export function usePreviousYearWiseCutoffListModifiedQuery(
     {
       field: 'BranchName',
       headerName: 'Branch Name',
-      width: 300,
+      minWidth: 110,
+      flex: 2,
     },
     {
       field: 'ReservationType',
       headerName: 'Reservation Type',
-      width: 200,
+      minWidth: 110,
+      flex: 1,
     },
   ];
 
@@ -176,7 +180,7 @@ export function useMeritRankWiseCutOffQuery(
   model: PostModel<MeritRankCutOffRequest>,
   enabled: boolean
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...meritRankWiseCutoffQueries.List(model),
     select: result => result?.data,
     enabled,
@@ -184,14 +188,14 @@ export function useMeritRankWiseCutOffQuery(
 
   const rowCount = useStableRowCount(data?.Total);
 
-  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
+  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount, isSuccess };
 }
 
 export function useBranchWiseCutOffQuery(
   model: PostModel<BranchWiseCutoffListRequest>,
   enabled: boolean
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...branchWiseCutoffQueries.List(model),
     select: result => result?.data,
     enabled,
@@ -199,14 +203,14 @@ export function useBranchWiseCutOffQuery(
 
   const rowCount = useStableRowCount(data?.Total);
 
-  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
+  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount, isSuccess };
 }
 
 export function useCollegeRankWiseCutOffQuery(
   model: PostModel<CollegeWiseCutoffListRequest>,
   enabled: boolean
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...collegeWiseCutoffQueries.List(model),
     select: result => result?.data,
     enabled,
@@ -214,5 +218,5 @@ export function useCollegeRankWiseCutOffQuery(
 
   const rowCount = useStableRowCount(data?.Total);
 
-  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
+  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount, isSuccess };
 }

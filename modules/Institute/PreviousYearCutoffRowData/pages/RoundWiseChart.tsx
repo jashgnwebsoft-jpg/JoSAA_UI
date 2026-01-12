@@ -20,6 +20,11 @@ const RoundWiseChart = () => {
 
   const { postModel, handleFiltering } = useRoundWiseChartStore();
 
+  const yearOptions = [
+    { Label: 'Current Year', Value: 0 },
+    { Label: 'Last 3 Years', Value: 2 },
+    { Label: 'Last 5 Years', Value: 4 },
+  ];
   const categoryOptions = useCategoryOptions();
   const reservationTypeOptions = useReservationTypeOptions();
   const quotaOptions = useQuotaOptions(collegeID!);
@@ -40,7 +45,7 @@ const RoundWiseChart = () => {
 
     const defaultPayload: RoundWiseChartRequest = {
       CollegeID: collegeID,
-      Year: 3,
+      Year: 2,
       CategoryID: categoryOptions.data[0].Value,
       SeatPoolID: reservationTypeOptions.data[0].Value,
       Status: quotaOptions.data[0].Value,
@@ -64,14 +69,12 @@ const RoundWiseChart = () => {
 
   const isQueryEnabled =
     !!postModel?.CollegeID &&
-    !!postModel?.Year &&
     !!postModel?.CategoryID &&
     !!postModel?.SeatPoolID &&
     !!postModel?.Status &&
     !!postModel?.BranchID;
 
   const { data } = useRoundWiseChartQuery(postModel, isQueryEnabled);
-
   const roundTitles = data?.map((item: RoundWiseChartResponse) => item.RoundTitle) ?? [];
   const roundClosingRank = data?.map((item: RoundWiseChartResponse) => item.ClosingRank) ?? [];
 
@@ -101,12 +104,6 @@ const RoundWiseChart = () => {
       },
     ],
   };
-
-  const yearOptions = [
-    { Label: 'Current Year', Value: 1 },
-    { Label: 'Last 3 Years', Value: 3 },
-    { Label: 'Last 5 Years', Value: 5 },
-  ];
 
   return (
     <Card>
@@ -201,7 +198,7 @@ const RoundWiseChart = () => {
 
             '& .MuiCardHeader-content': {
               width: { xs: '100%', md: 'auto' },
-              marginBottom: { xs: 2, md: 0 },
+              marginBottom: { xs: 1, md: 0 },
             },
 
             '& .MuiCardHeader-action': {

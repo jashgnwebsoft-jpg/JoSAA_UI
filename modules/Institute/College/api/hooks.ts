@@ -70,11 +70,11 @@ export function useCollegeCompareCollegeDetailsQuery(
   model: CollegeCompareRequest,
   enabled: boolean = true
 ) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery({
     ...collegeCompareQueries.CollegeCompareCollegeDetails(model),
     select: result => result?.data,
     enabled,
   });
 
-  return { data: data, isLoading, error };
+  return { data: data, isLoading, error, isSuccess };
 }

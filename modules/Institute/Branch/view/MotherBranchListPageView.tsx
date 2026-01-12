@@ -64,6 +64,8 @@ const MotherBranchListPageView = () => {
       result = result.filter(
         item =>
           item.SystemBranchProperName.toLowerCase().includes(s) ||
+          item.SystemBranchName.toLowerCase().includes(s) ||
+          item.SystemBranchCode.toLowerCase().includes(s) ||
           item.SystemBranchID.toLowerCase().includes(s)
       );
     }
@@ -133,77 +135,93 @@ const MotherBranchListPageView = () => {
 
       <Box
         sx={{
-          gap: 3,
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: 'repeat(1, 1fr)',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(3, 1fr)',
-            lg: 'repeat(4, 1fr)',
-            xl: 'repeat(6, 1fr)',
-          },
+          height: 'calc(100dvh - 310px)',
+          overflow: 'auto',
+          pt: '1rem',
+          '&::-webkit-scrollbar': { display: 'none' },
         }}
       >
-        {filteredData.map(item => (
-          <Card
-            key={item.SystemBranchID}
-            sx={{
-              '&:hover': {
-                cursor: 'pointer',
-              },
-            }}
-            onClick={() => {
-              navigate(paths.josaa.systemBranchWiseCollege.root(item.SystemBranchID));
-            }}
-          >
-            <CardContent>
-              <Typography
-                variant='h6'
-                align='center'
-                pb={2}
-                color='primary'
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                {item.SystemBranchProperName}
-              </Typography>
+        <Box
+          sx={{
+            gap: 3,
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: 'repeat(1, 1fr)',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
+              lg: 'repeat(4, 1fr)',
+              xl: 'repeat(6, 1fr)',
+            },
+          }}
+        >
+          {filteredData.map(item => (
+            <Card
+              key={item.SystemBranchID}
+              sx={{
+                '&:hover': {
+                  cursor: 'pointer',
+                },
+              }}
+              onClick={() => {
+                navigate(paths.josaa.systemBranchWiseCollege.root(item.SystemBranchID));
+              }}
+            >
+              <CardContent>
+                <Typography
+                  variant='h6'
+                  align='center'
+                  pb={2}
+                  color='primary'
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {item.SystemBranchProperName}
+                </Typography>
 
-              <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
-                <Tooltip title='Intake'>
-                  <Box
-                    sx={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'center' }}
-                  >
-                    <Iconify icon='ph:chair-fill' color='#00a76f' />
-                    <Typography variant='subtitle1'>{item.Intake}</Typography>
-                  </Box>
-                </Tooltip>
-                <Tooltip title='Colleges'>
-                  <Box
-                    sx={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'center' }}
-                  >
-                    <Iconify icon='fa7-solid:university' color='#00a76f' />
-                    <Typography variant='subtitle1'>{item.Colleges}</Typography>
-                  </Box>
-                </Tooltip>
-              </Box>
-            </CardContent>
-          </Card>
-        ))}
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
+                  <Tooltip title='Intake'>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column-reverse',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Iconify icon='bx:chair' color='#00a76f' />
+                      <Typography variant='subtitle1'>{item.Intake}</Typography>
+                    </Box>
+                  </Tooltip>
+                  <Tooltip title='Colleges'>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column-reverse',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Iconify icon='uil:university' color='#00a76f' />
+                      <Typography variant='subtitle1'>{item.Colleges}</Typography>
+                    </Box>
+                  </Tooltip>
+                </Box>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+        <Pagination
+          page={page}
+          shape='circular'
+          count={Math.ceil(totalRecords / rowsPerPage)}
+          onChange={handleChangePage}
+          sx={{
+            my: 5,
+            display: 'flex',
+          }}
+        />
       </Box>
-
-      <Pagination
-        page={page}
-        shape='circular'
-        count={Math.ceil(totalRecords / rowsPerPage)}
-        onChange={handleChangePage}
-        sx={{
-          my: 5,
-          display: 'flex',
-        }}
-      />
     </DashboardContent>
   );
 };

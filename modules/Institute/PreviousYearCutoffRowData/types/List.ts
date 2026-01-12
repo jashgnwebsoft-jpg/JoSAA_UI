@@ -77,7 +77,7 @@ export type RoundWiseChartResponse = {
 };
 
 export const MeritRankCutOffSchema = z.object({
-  AirRank: z.number({ message: 'Select Air Rank' }),
+  AirRank: z.string({ message: 'Select Air Rank' }),
   CategoryID: z.string({ message: 'Select Category' }),
   MeritRank: z.string({ message: 'Enter Merit Rank' }),
   SeatPoolID: z.string({ message: 'Select Seat Pool' }),

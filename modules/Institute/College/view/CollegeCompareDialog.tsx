@@ -2,22 +2,36 @@ import { Field } from '@gnwebsoft/ui';
 import { useTranslate } from '@minimal/utils/locales';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { CollegeCompareRequest, CollegeCompareSchema } from '../types';
-import { useCollegeCompareCollegeOptionsQuery } from '../api/hooks';
+import {
+  CollegeCompareCollegeDetailsResponse,
+  CollegeCompareRequest,
+  CollegeCompareSchema,
+} from '../types';
+import {
+  useCollegeCompareCollegeDetailsQuery,
+  useCollegeCompareCollegeOptionsQuery,
+} from '../api/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useBranchWisePlacementByCollegeIDQuery } from '@modules/Institute/BranchWisePlacement/api/hooks';
 import { useAdmissionOptions } from '@modules/Master/AdmissionYear/api/hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useCollegeComparePreviousYearsOpenCloseRankListQuery } from '@modules/Institute/Branch/api/hooks';
+import { CollegeComparePreviousYearsOpenCloseRankFormateListResponse } from '@modules/Institute/Branch/types';
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  onSave: (data: CollegeCompareRequest) => void;
+  onSave: (
+    requestData: CollegeCompareRequest,
+    deatilsData: CollegeCompareCollegeDetailsResponse,
+    rankData: CollegeComparePreviousYearsOpenCloseRankFormateListResponse[]
+  ) => void;
   defaultValues: CollegeCompareRequest | null;
 };
 
 const CollegeCompareDialog = ({ open, onClose, onSave, defaultValues }: Props) => {
   const { t } = useTranslate();
+  const [requestData, setRequestData] = useState<CollegeCompareRequest | null>(null);
 
   const { handleSubmit, reset, control, watch } = useForm<CollegeCompareRequest>({
     resolver: zodResolver(CollegeCompareSchema),
@@ -42,10 +56,25 @@ const CollegeCompareDialog = ({ open, onClose, onSave, defaultValues }: Props) =
   const collegeOptions = useCollegeCompareCollegeOptionsQuery();
   const branchByCollegeID = useBranchWisePlacementByCollegeIDQuery(CollegeID, !!CollegeID);
 
-  const submit = (requestData: CollegeCompareRequest) => {
-    onSave(requestData);
+  const { data: detailsData, isSuccess: detailsSuccess } = useCollegeCompareCollegeDetailsQuery(
+    requestData!,
+    !!requestData
+  );
+  const { data: rankData, isSuccess: rankSuccess } =
+    useCollegeComparePreviousYearsOpenCloseRankListQuery(requestData!, !!requestData);
+
+  useEffect(() => {
+    if (!detailsSuccess || !rankSuccess || !requestData) return;
+
+    onSave(requestData, detailsData!, rankData!);
+
+    setRequestData(null);
     reset();
     onClose();
+  }, [detailsSuccess, rankSuccess]);
+
+  const submit = (data: CollegeCompareRequest) => {
+    setRequestData(data);
   };
 
   return (
@@ -61,14 +90,21 @@ const CollegeCompareDialog = ({ open, onClose, onSave, defaultValues }: Props) =
             label={t('Institute.College.List.Title') + '*'}
             options={collegeOptions.data || []}
           />
+          {/* <Field.AsyncSelect
+            control={control}
+            name='CollegeID'
+            placeholder={t('Dashboard.Dashboard.College.Placeholder')}
+            queryFn={useCollegeAsyncQuery}
+            size='small'
+          /> */}
           <Field.SelectCascade
             control={control}
             name='SystemBranchID'
-            label={t('Institute.Branch.List.Title')}
-            placeholder={t('Institute.Branch.List.Title')}
+            label={t('Institute.Branch.List.Title') + '*'}
+            placeholder={t('Institute.Branch.List.Title') + '*'}
             options={branchByCollegeID.data || []}
             dependsOn='CollegeID'
-            disabled={branchByCollegeID.data?.length == 0}
+            disabled={branchByCollegeID.data?.length === 0}
             size='small'
           />
           <Field.Select

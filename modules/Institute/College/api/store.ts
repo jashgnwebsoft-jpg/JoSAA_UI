@@ -4,8 +4,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { CONFIG } from '@/global-config';
 import { calculateFilterCount } from '@core/utils';
-import type { CollegeCompareRequest, CollegeListRequest, HomeStateListPageRequest } from '../types';
+import type {
+  CollegeCompareCollegeDetailsResponse,
+  CollegeCompareRequest,
+  CollegeListRequest,
+  HomeStateListPageRequest,
+} from '../types';
 import { Institute } from '@core/utils/constants';
+import { CollegeComparePreviousYearsOpenCloseRankFormateListResponse } from '@modules/Institute/Branch/types';
 
 type HomeStateListState = {
   filterCount: number;
@@ -119,12 +125,19 @@ type CollegeCompareState = {
   open: boolean;
   activeIndex: number | null;
   requests: (CollegeCompareRequest | null)[];
+  saveCollegeDetailsData: (CollegeCompareCollegeDetailsResponse | null)[];
+  saveCollegeRankData: (CollegeComparePreviousYearsOpenCloseRankFormateListResponse[] | null)[];
 };
 
 type CollegeCompareAction = {
   openDialog: (index: number) => void;
   closeDialog: () => void;
-  saveRequest: (data: CollegeCompareRequest) => void;
+  saveRequest: (
+    requestData: CollegeCompareRequest,
+    detailsData: CollegeCompareCollegeDetailsResponse,
+    rankData: CollegeComparePreviousYearsOpenCloseRankFormateListResponse[]
+  ) => void;
+  removeDataRequest: (index: number) => void;
 };
 
 export const useCollegeCompareStore = create<CollegeCompareState & CollegeCompareAction>()(
@@ -133,6 +146,8 @@ export const useCollegeCompareStore = create<CollegeCompareState & CollegeCompar
       open: false,
       activeIndex: null,
       requests: [null, null, null, null],
+      saveCollegeDetailsData: [null, null, null, null],
+      saveCollegeRankData: [null, null, null, null],
 
       openDialog: index => {
         set({
@@ -147,17 +162,44 @@ export const useCollegeCompareStore = create<CollegeCompareState & CollegeCompar
           activeIndex: null,
         }),
 
-      saveRequest: data => {
-        const { activeIndex, requests } = get();
+      saveRequest: (requestData, detailsData, rankData) => {
+        const { activeIndex, requests, saveCollegeDetailsData, saveCollegeRankData } = get();
         if (activeIndex === null) return;
 
         const copy = [...requests];
-        copy[activeIndex] = data;
+        copy[activeIndex] = requestData;
+
+        const copyDetailsData = [...saveCollegeDetailsData];
+        copyDetailsData[activeIndex] = detailsData;
+
+        const copyRankData = [...saveCollegeRankData];
+        copyRankData[activeIndex] = rankData;
 
         set({
           requests: copy,
           open: false,
           activeIndex: null,
+          saveCollegeDetailsData: copyDetailsData,
+          saveCollegeRankData: copyRankData,
+        });
+      },
+
+      removeDataRequest: index => {
+        const { saveCollegeDetailsData, saveCollegeRankData, requests } = get();
+
+        const copy = [...requests];
+        copy[index] = null;
+
+        const copyDetailsData = [...saveCollegeDetailsData];
+        copyDetailsData[index] = null;
+
+        const copyRankData = [...saveCollegeRankData];
+        copyRankData[index] = null;
+
+        set({
+          requests: copy,
+          saveCollegeDetailsData: copyDetailsData,
+          saveCollegeRankData: copyRankData,
         });
       },
     }),
@@ -165,6 +207,8 @@ export const useCollegeCompareStore = create<CollegeCompareState & CollegeCompar
       name: Institute.CollegeCompare,
       partialize: state => ({
         requests: state.requests,
+        saveCollegeDetailsData: state.saveCollegeDetailsData,
+        saveCollegeRankData: state.saveCollegeRankData,
       }),
     }
   )

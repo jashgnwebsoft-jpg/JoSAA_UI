@@ -47,7 +47,7 @@ const WebsiteListPage = () => {
         }}
       >
         {data.slice((page - 1) * rowsPerPage, page * rowsPerPage).map((data: ListResponse) => (
-          <Card>
+          <Card key={data.WebsiteID}>
             <CardContent>
               <Typography variant='h6'>{data.WebsiteTitle}</Typography>
               <Box
@@ -60,7 +60,7 @@ const WebsiteListPage = () => {
                 }}
               >
                 <Typography color='primary'>
-                  <Iconify icon='ri:global-fill' width='14px' />
+                  <Iconify icon='solar:global-outline' />
                 </Typography>
                 <Typography
                   component='a'

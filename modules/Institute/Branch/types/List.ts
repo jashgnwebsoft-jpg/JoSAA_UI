@@ -9,6 +9,8 @@ export type MotherBranchListResponse = {
   SystemBranchProperName: string;
   Intake: number | null;
   Colleges: number | null;
+  SystemBranchName: string;
+  SystemBranchCode: string;
 };
 
 export const SystemBranchWiseCollegeListSchema = z.object({

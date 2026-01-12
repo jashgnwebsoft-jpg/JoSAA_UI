@@ -1,5 +1,5 @@
 import { SimpleTabs } from '@core/components';
-import { Box, Pagination } from '@mui/material';
+import { Box, Pagination, SxProps } from '@mui/material';
 import { PropsWithChildren, ReactNode } from 'react';
 
 type pagination = {
@@ -16,6 +16,7 @@ type MyProps = {
   pagination: pagination;
   action?: ReactNode;
   totalRecords: number;
+  contentSx?: SxProps;
 };
 
 const MyPage = ({
@@ -26,6 +27,7 @@ const MyPage = ({
   pagination,
   action,
   totalRecords,
+  contentSx,
 }: MyProps & PropsWithChildren) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
@@ -38,14 +40,14 @@ const MyPage = ({
         action={action}
         totalRecords={totalRecords}
       >
-        {children}
+        <Box sx={contentSx}>{children}</Box>
 
         <Pagination
           page={pagination?.page}
           shape='circular'
           count={Math.ceil(pagination?.totalRecords / pagination?.rowsPerPage)}
           onChange={pagination?.handleChangePage}
-          sx={{ my: 3 }}
+          sx={{ my: 2 }}
         />
       </SimpleTabs>
     </Box>

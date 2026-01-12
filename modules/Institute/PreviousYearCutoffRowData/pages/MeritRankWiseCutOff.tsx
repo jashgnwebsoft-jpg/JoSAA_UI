@@ -53,6 +53,8 @@ const MeritRankWiseCutOff = () => {
         minWidth: 120,
         sortable: true,
         renderCell: params => <span>{fNumber(params.row.OpenRank)}</span>,
+        align: 'right',
+        headerAlign: 'right',
       },
       {
         field: 'ClosingRank',
@@ -61,6 +63,8 @@ const MeritRankWiseCutOff = () => {
         minWidth: 120,
         sortable: true,
         renderCell: params => <span>{fNumber(params.row.ClosingRank)}</span>,
+        align: 'right',
+        headerAlign: 'right',
       },
     ],
     []
@@ -74,35 +78,38 @@ const MeritRankWiseCutOff = () => {
     shouldUnregister: false,
     mode: 'onSubmit',
     defaultValues: {
-      AirRank: 1,
+      AirRank: 's4cbnP_om7y0-niCdJYqwA',
     },
   });
 
   const initializedRef = useRef<boolean>(false);
 
   const categoryOptions = useCategoryOptions();
-
   const reservationTypeOptions = useReservationTypeOptions();
   const systemBranchOptions = useSystemBranchOptions();
   const collegeTypeOptions = useCollegeTypeOptions();
+
   const collegeTypeOptionsWithAll = useMemo(() => {
     if (!collegeTypeOptions.data) return [];
 
     return [{ Value: '', Label: 'All' }, ...collegeTypeOptions.data];
   }, [collegeTypeOptions.data]);
+
   const systemBranchOptionsWithAll = useMemo(() => {
     if (!systemBranchOptions.data) return [];
 
     return [{ Value: '', Label: 'All' }, ...systemBranchOptions.data];
   }, [systemBranchOptions.data]);
+
   const rankOptions = useMemo(
     () => [
-      { Label: 'JEE Advance', Value: 1 },
-      { Label: 'JEE Main - I', Value: 2 },
-      { Label: 'JEE Main - II', Value: 3 },
+      { Label: 'JEE Advance', Value: 's4cbnP_om7y0-niCdJYqwA' },
+      { Label: 'JEE Main - I', Value: '2BIrDCIJSubhBkMq3PCYEw' },
+      { Label: 'JEE Main - II', Value: 'jwF0Rr9zpWYuwrItBmkhzw' },
     ],
     []
   );
+
   const AirRank = watch('AirRank');
   const programOptions = useProgarmOptions(AirRank);
   const programOptionsWithAll = useMemo(() => {
@@ -155,19 +162,25 @@ const MeritRankWiseCutOff = () => {
     setIsInitialized(true);
   }, [defaultValues, postModel.filterModel, reset, handleFiltering]);
 
-  const { data, totalRecords, isLoading, error } = useMeritRankWiseCutOffQuery(
+  const { data, totalRecords, isLoading, error, isSuccess } = useMeritRankWiseCutOffQuery(
     postModel,
     isInitialized
   );
-  {
-    error && toast.error(error.message);
-  }
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message);
+    }
+    if (isSuccess && data.length === 0) {
+      toast.info('No Data Present');
+    }
+  }, [error, isSuccess, data]);
+
   const { data: currentYear } = useCurrentYearQuery();
 
   const toolbarProps: DataGridToolbarProps<MeritRankCutOffRequest, MeritRankCutOffResponse> = {
     toolbar: {
       columns,
-      filterModel: postModel.filterModel ?? {},
+      filterModel: (postModel.filterModel ?? defaultValues)!,
       addNew: () => {},
       handleExport: () => {},
       showFilter: () => {},
@@ -241,7 +254,7 @@ const MeritRankWiseCutOff = () => {
                   placeholder={t('Institute.PreviousYearCutoffRow.AirRank.Placeholder') + '*'}
                   options={rankOptions}
                 />
-                {(AirRank === 2 || AirRank === 3) && (
+                {(AirRank === '2BIrDCIJSubhBkMq3PCYEw' || AirRank === 'jwF0Rr9zpWYuwrItBmkhzw') && (
                   <Field.Select
                     control={control}
                     size='small'
@@ -307,7 +320,11 @@ const MeritRankWiseCutOff = () => {
             <CardHeader
               title={
                 <Box
-                  sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    justifyContent: 'space-between',
+                  }}
                 >
                   <Typography variant='h6'>
                     Closings as per Year {currentYear?.AdmissionYear} Round-
@@ -319,9 +336,10 @@ const MeritRankWiseCutOff = () => {
                 </Box>
               }
             />
-            <CardContent sx={{ height: 680 }}>
+            <CardContent sx={{ height: 650 }}>
               <DataGridPro
                 rows={data}
+                density='compact'
                 columns={columns}
                 getRowId={row => row.CutoffID}
                 paginationMode='server'
@@ -338,12 +356,14 @@ const MeritRankWiseCutOff = () => {
                   sorting: {
                     sortModel: postModel.sortModel,
                   },
+                  pinnedColumns: { left: ['CollegeShortName'] },
                 }}
                 onPaginationModelChange={handlePagination}
                 onSortModelChange={handleSorting}
                 rowCount={totalRecords}
                 loading={isLoading}
                 pageSizeOptions={CONFIG.defaultPageSizeOptions}
+                getRowHeight={() => 'auto'}
                 disableRowSelectionOnClick
                 slots={{
                   toolbar: ExtendedDataGridToolbar,
@@ -357,7 +377,26 @@ const MeritRankWiseCutOff = () => {
                   toolbar: toolbarProps,
                   footer: footerProps,
                 }}
-                sx={dataGridStyles}
+                sx={{
+                  // ...dataGridStyles,
+                  '& .MuiDataGrid-row:nth-of-type(even)': {
+                    backgroundColor: theme => theme.palette.action.hover,
+                  },
+                  '& .MuiDataGrid-cell': {
+                    padding: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                  },
+                  '& .MuiTablePagination-root': {
+                    justifyContent: { xs: 'flex-start', md: 'flex-end' },
+                  },
+                  '& .MuiTablePagination-toolbar': {
+                    paddingLeft: { xs: 0 },
+                  },
+                  '& .MuiBox-root .css-1shozee': {
+                    display: 'none',
+                  },
+                }}
               />
             </CardContent>
           </Card>

@@ -1,5 +1,5 @@
 import { GridColDef } from '@mui/x-data-grid';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import { BranchListRequest, BranchListResponse } from '../types';
 import { Button } from '@mui/material';
@@ -16,6 +16,7 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 import { Helmet } from 'react-helmet-async';
 import { paths } from '@/paths';
 import { useTranslate } from '@minimal/utils/locales';
+import { toast } from 'sonner';
 
 const BranchListPage = () => {
   const navigate = useNavigate();
@@ -36,6 +37,19 @@ const BranchListPage = () => {
         minWidth: 120,
         flex: 1,
         sortable: true,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.Branch.BranchName.Label')}
+          </div>
+        ),
       },
       {
         field: 'SystemBranchProperName',
@@ -43,6 +57,19 @@ const BranchListPage = () => {
         minWidth: 120,
         flex: 0.5,
         sortable: true,
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.Branch.MotherBranch.Label')}
+          </div>
+        ),
       },
       {
         field: 'Intake',
@@ -52,6 +79,19 @@ const BranchListPage = () => {
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.IntakeCutoff.Intake.Label')}
+          </div>
+        ),
       },
       {
         field: 'Colleges',
@@ -61,6 +101,19 @@ const BranchListPage = () => {
         sortable: true,
         align: 'right',
         headerAlign: 'right',
+        renderHeader: () => (
+          <div
+            className='gn-grid-header'
+            style={{
+              whiteSpace: 'break-spaces',
+              lineBreak: 'auto',
+              textAlign: 'center',
+              fontWeight: 600,
+            }}
+          >
+            {t('Institute.College.List.Title')}
+          </div>
+        ),
       },
       {
         field: 'actions',
@@ -92,7 +145,16 @@ const BranchListPage = () => {
 
   const { postModel, handlePagination, handleSorting } = useBranchListStore();
 
-  const { data, totalRecords, isLoading } = useBranchListQuery(postModel);
+  const { data, totalRecords, isLoading, error } = useBranchListQuery(postModel);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message);
+    }
+    if (!isLoading && data.length === 0) {
+      toast.info('No data present');
+    }
+  }, [data, error, isLoading]);
 
   const toolbarProps: DataGridToolbarProps<BranchListRequest, BranchListResponse> = {
     toolbar: {
@@ -130,6 +192,7 @@ const BranchListPage = () => {
       >
         <DataGridPro
           rows={data}
+          density='compact'
           columns={columns}
           getRowId={row => row.BranchID}
           paginationMode='server'
@@ -146,6 +209,7 @@ const BranchListPage = () => {
             sorting: {
               sortModel: postModel.sortModel,
             },
+            pinnedColumns: { left: ['BranchProperName'] },
           }}
           onPaginationModelChange={handlePagination}
           onSortModelChange={handleSorting}
@@ -153,6 +217,7 @@ const BranchListPage = () => {
           loading={isLoading}
           pageSizeOptions={CONFIG.defaultPageSizeOptions}
           disableRowSelectionOnClick
+          getRowHeight={() => 'auto'}
           slots={{
             toolbar: ExtendedDataGridToolbar,
             footer: ExtendedDataGridFooter,
@@ -165,7 +230,26 @@ const BranchListPage = () => {
             toolbar: toolbarProps,
             footer: footerProps,
           }}
-          sx={dataGridStyles}
+          sx={{
+            // ...dataGridStyles,
+            '& .MuiDataGrid-cell': {
+              padding: 1,
+              display: 'flex',
+              alignItems: 'center',
+            },
+            '& .MuiDataGrid-row:nth-of-type(even)': {
+              backgroundColor: theme => theme.palette.action.hover,
+            },
+            '& .MuiTablePagination-root': {
+              justifyContent: { xs: 'flex-start', md: 'flex-end' },
+            },
+            '& .MuiTablePagination-toolbar': {
+              paddingLeft: { xs: 0 },
+            },
+            '& .MuiBox-root .css-1shozee': {
+              display: 'none',
+            },
+          }}
         />
       </MainContent>
     </DashboardContent>
