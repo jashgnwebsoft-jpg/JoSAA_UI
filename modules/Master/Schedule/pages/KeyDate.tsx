@@ -75,7 +75,7 @@ const KeyDate = () => {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'row-reverse',
+            flexDirection: { xs: 'column', md: 'row-reverse' },
             px: 1,
             py: 2,
             position: 'sticky',
@@ -99,10 +99,10 @@ const KeyDate = () => {
           <Box
             sx={{
               display: 'flex',
-              flexDirection: 'row',
+              flexDirection: { xs: 'column', md: 'row' },
               justifyContent: 'center',
-              alignItems: 'center',
-              gap: 2,
+              alignItems: { xs: 'flex-start', md: 'center' },
+              gap: { xs: 0.5, md: 2 },
             }}
           >
             {color.map((item, index) => (
