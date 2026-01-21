@@ -1,30 +1,37 @@
 import { DashboardContent } from '@minimal/layouts/dashboard';
 import { Helmet } from 'react-helmet-async';
 
-import { useSelectKeyDateQuery } from '../api/hooks';
+import { useSelectKeyDateByYearQuery, useSelectKeyDateQuery } from '../api/hooks';
 import { useTranslate } from '@minimal/utils/locales';
 import { CONFIG } from '@/global-config';
 import MainContent from '@core/components/MainContent/MainContent';
-import { Box, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { Iconify } from '@minimal/components/iconify';
 import React, { useEffect, useMemo, useState } from 'react';
 import { KeyDateResponse } from '../types';
+import { useCurrentYearQuery } from '@modules/Master/AdmissionYear/api/hooks';
 
 const KeyDate = () => {
   const { t } = useTranslate();
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
+  const { data: admissionYear } = useCurrentYearQuery();
+  const [year, setYear] = useState<number>(admissionYear?.AdmissionYear!);
 
-  const { data } = useSelectKeyDateQuery();
+  // const { data } = useSelectKeyDateQuery();
+  useEffect(() => {
+    setYear(admissionYear?.AdmissionYear!);
+  }, [admissionYear?.AdmissionYear!]);
 
-  const color = ['#8e33ff', '#003768', '#ffab00', '#22c55e', '#00b8d9'];
-  const bgColor = ['#f0eaf8', '#c4d1dd', '#fdf6e8', '#e1f5e9', '#d8edf0'];
+  const { data } = useSelectKeyDateByYearQuery(year, !!year);
+
+  const color = ['#8e33ff', '#003768', '#ffab00', '#00b8d9'];
+  const bgColor = ['#F7F2FF', '#D8E1E8', '#FFFAF2', '#EAF9FB'];
   const tooltipInfo = [
     'Choice Filling Result',
     'Registration',
     'Choice Filling',
-    'Seat Allocation',
     'Bank Fees Payment',
   ];
 
@@ -70,119 +77,161 @@ const KeyDate = () => {
           heading: t('Master.Schedule.List.Title'),
           links: [{ name: 'Home' }, { name: t('Master.Schedule.List.Title') }],
         }}
-        sx={{ p: 0 }}
+        sx={{ p: 0, boxShadow: 3, borderRadius: 2 }}
       >
         <Box
           sx={{
             display: 'flex',
-            flexDirection: { xs: 'column', md: 'row-reverse' },
-            px: 1,
-            py: 2,
-            position: 'sticky',
-            top: 0,
-            width: '100%',
-            backgroundColor: 'white',
-            gap: 2,
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            p: 2,
           }}
         >
-          <TextField
-            name='search'
-            placeholder='Search...'
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            InputProps={{
-              startAdornment: <Iconify icon='eva:search-fill' />,
-            }}
-            sx={{ width: { xs: '100%', md: '15%' } }}
-            size='small'
-          />
           <Box
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: 'center',
+              gap: 2,
+              width: '12%',
               justifyContent: 'center',
-              alignItems: { xs: 'flex-start', md: 'center' },
-              gap: { xs: 0.5, md: 2 },
             }}
           >
-            {color.map((item, index) => (
-              <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1 }}>
-                <Box
-                  sx={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: '50%',
-                    bgcolor: item,
-                  }}
-                />
-                <Typography variant='subtitle2'>{tooltipInfo[index]}</Typography>
-              </Box>
-            ))}
+            <IconButton
+              onClick={() => {
+                setYear(year - 1);
+              }}
+            >
+              <Iconify icon='carbon:chevron-left' />
+            </IconButton>
+            <Typography variant='h6'>Year {year}</Typography>
+            <IconButton
+              onClick={() => {
+                setYear(year + 1);
+              }}
+            >
+              <Iconify icon='carbon:chevron-right' />
+            </IconButton>
           </Box>
-        </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          {filteredData?.map(item => (
-            <React.Fragment key={item.ScheduleID}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: { xs: 'column', md: 'row' },
-                  justifyContent: 'space-between',
-                  alignItems: { xs: 'flex-start', md: 'center' },
-                  p: 1,
-                  m: 0,
-                  backgroundColor: theme => theme.palette.action.hover,
-                }}
-              >
-                <Typography variant='subtitle2'>
-                  {dayjs(item.ScheduleStartDate).format(CONFIG.dateTimePatterns.date) +
-                    ' - ' +
-                    dayjs(item.ScheduleEndDate).format(CONFIG.dateTimePatterns.date)}
-                </Typography>
-                <Typography variant='subtitle2'>
-                  {dayjs(item.ScheduleStartDate).format('dddd') +
-                    ' - ' +
-                    dayjs(item.ScheduleEndDate).format('dddd')}
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: { xs: 'column', md: 'row' },
-                  alignItems: { xs: 'flex-start', md: 'center' },
-                  px: 2,
-                  gap: 1,
-                }}
-              >
-                <Typography
-                  variant='subtitle2'
-                  color='textDisabled'
-                  width={{ xs: '100%', md: '8%' }}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row-reverse' },
+              position: 'sticky',
+              top: 0,
+              width: '100%',
+              backgroundColor: 'white',
+              gap: 2,
+            }}
+          >
+            <TextField
+              name='search'
+              placeholder='Search...'
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              InputProps={{
+                startAdornment: <Iconify icon='eva:search-fill' />,
+              }}
+              sx={{ width: { xs: '100%', md: '15%' } }}
+              size='small'
+            />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                justifyContent: 'center',
+                alignItems: { xs: 'flex-start', md: 'center' },
+                gap: { xs: 0.5, md: 2 },
+              }}
+            >
+              {color.map((item, index) => (
+                <Box
+                  sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1 }}
+                  key={index}
                 >
-                  {dayjs(item.ScheduleStartDate).format(CONFIG.dateTimePatterns.time) +
-                    ' - ' +
-                    dayjs(item.ScheduleEndDate).format(CONFIG.dateTimePatterns.time)}
-                </Typography>
-                <Tooltip title={tooltipInfo[item?.ColorCode % color.length]}>
                   <Box
                     sx={{
                       width: 10,
                       height: 10,
                       borderRadius: '50%',
-                      bgcolor: color[item?.ColorCode % color.length],
+                      bgcolor: item,
                     }}
                   />
-                </Tooltip>
-                <Typography
-                  variant='body2'
-                  width={{ xs: '100%', md: '90%' }}
-                  sx={{ backgroundColor: bgColor[item?.ColorCode % bgColor.length], py: 2, pl: 2 }}
+                  <Typography variant='subtitle2'>{tooltipInfo[index]}</Typography>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, height: '100%' }}>
+          {filteredData?.length === 0 ? (
+            <Box
+              sx={{
+                backgroundColor: theme => theme.palette.action.hover,
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Typography variant='subtitle1'>No Data Found</Typography>
+            </Box>
+          ) : (
+            filteredData?.map(item => (
+              <React.Fragment key={item.ScheduleID}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    justifyContent: 'space-between',
+                    alignItems: { xs: 'flex-start', md: 'center' },
+                    p: 1,
+                    m: 0,
+                    backgroundColor: theme => theme.palette.action.hover,
+                  }}
                 >
-                  {item.ScheduleTitle}
-                </Typography>
-              </Box>
-            </React.Fragment>
-          ))}
+                  <Typography variant='subtitle2'>
+                    {dayjs(item.ScheduleStartDate).format(CONFIG.dateTimePatterns.date) +
+                      ' - ' +
+                      dayjs(item.ScheduleEndDate).format(CONFIG.dateTimePatterns.date)}
+                  </Typography>
+                  <Typography variant='subtitle2'>
+                    {dayjs(item.ScheduleStartDate).format('dddd') +
+                      ' - ' +
+                      dayjs(item.ScheduleEndDate).format('dddd')}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: { xs: 'flex-start', md: 'center' },
+                    px: 2,
+                    gap: 1,
+                  }}
+                >
+                  <Typography variant='body2' color='textDisabled' width={{ xs: '50%', md: '8%' }}>
+                    {dayjs(item.ScheduleStartDate).format(CONFIG.dateTimePatterns.time) +
+                      ' - ' +
+                      dayjs(item.ScheduleEndDate).format(CONFIG.dateTimePatterns.time)}
+                  </Typography>
+                  <Tooltip title={tooltipInfo[item?.ColorCode]}>
+                    <Box
+                      sx={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: '50%',
+                        bgcolor: color[item?.ColorCode],
+                      }}
+                    />
+                  </Tooltip>
+                  <Typography variant='body2' width={{ xs: '40%', md: '90%' }}>
+                    {item.ScheduleTitle}
+                  </Typography>
+                </Box>
+              </React.Fragment>
+            ))
+          )}
         </Box>
       </MainContent>
     </DashboardContent>

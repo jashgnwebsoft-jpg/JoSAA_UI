@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { keyDateQueries } from './query';
+import { keyDateByYearQueries, keyDateQueries } from './query';
 import { event, KeyDateResponse } from '../types';
 import dayjs from 'dayjs';
 
@@ -27,5 +27,13 @@ export function useSelectKeyDateQuery(enabled: boolean = true) {
     enabled,
     select: result => result?.data,
     // select: result => result?.data?.map((item: KeyDateResponse) => mapKeyDateToEvent(item)),
+  });
+}
+
+export function useSelectKeyDateByYearQuery(id: number, enabled: boolean = true) {
+  return useQuery({
+    ...keyDateByYearQueries.Get(id),
+    enabled,
+    select: result => result?.data,
   });
 }

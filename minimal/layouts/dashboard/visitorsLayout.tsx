@@ -37,6 +37,7 @@ import { MainSection, layoutClasses, HeaderSection, LayoutSection } from '../cor
 import { LibraryPopover } from '../components/library-popover';
 import { useEffect } from 'react';
 import { Typography } from '@mui/material';
+import { RouterLink } from '@minimal/components/router-link';
 
 // ----------------------------------------------------------------------
 
@@ -142,7 +143,13 @@ export function VisitorsLayout({
           {isNavHorizontal && (
             <VerticalDivider sx={{ [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } }} />
           )}
-          <Typography variant='h3' color='primary'>
+          <Typography
+            variant='h3'
+            color='primary'
+            component={RouterLink}
+            href='/'
+            sx={{ '&:hover': { cursor: 'pointer' }, textDecoration: 'none' }}
+          >
             JoSAA
           </Typography>
 

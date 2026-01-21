@@ -33,20 +33,20 @@ const CollegeCompareDialog = ({ open, onClose, onSave, defaultValues }: Props) =
   const { t } = useTranslate();
   const [requestData, setRequestData] = useState<CollegeCompareRequest | null>(null);
 
-  const { handleSubmit, reset, control, watch } = useForm<CollegeCompareRequest>({
+  const { handleSubmit, reset, control, watch, setValue } = useForm<CollegeCompareRequest>({
     resolver: zodResolver(CollegeCompareSchema),
     defaultValues: defaultValues ?? undefined,
   });
 
   useEffect(() => {
-    if (open) {
-      reset(
-        defaultValues || {
-          CollegeID: '',
-          SystemBranchID: '',
-          AdmissionYearID: '',
-        }
-      );
+    if (open && defaultValues) {
+      reset(defaultValues);
+    } else if (open && !defaultValues) {
+      reset({
+        CollegeID: '',
+        SystemBranchID: '',
+        AdmissionYearID: '',
+      });
     }
   }, [open, defaultValues, reset]);
 
@@ -76,6 +76,19 @@ const CollegeCompareDialog = ({ open, onClose, onSave, defaultValues }: Props) =
   const submit = (data: CollegeCompareRequest) => {
     setRequestData(data);
   };
+
+  //below all code are new
+  useEffect(() => {
+    if (CollegeID && branchByCollegeID.data && branchByCollegeID.data.length > 0) {
+      setValue('SystemBranchID', branchByCollegeID.data[0].Value);
+    }
+  }, [CollegeID, branchByCollegeID.data, setValue]);
+
+  useEffect(() => {
+    if (yearOptions.data && yearOptions.data.length > 0) {
+      setValue('AdmissionYearID', yearOptions.data[0].Value);
+    }
+  }, [yearOptions.data, setValue]);
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth='sm'>

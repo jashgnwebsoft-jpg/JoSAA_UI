@@ -3,9 +3,9 @@ import { GridColDef } from '@mui/x-data-grid-pro';
 import { DataGridFooterProps, DataGridToolbarProps } from '@core/components/SimpleDataGrid/types';
 import { CONFIG } from '@/global-config';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
-import { dataGridStyles } from '@core/components/Styles';
+import { dataGridStyles, josaaDataGridStyles } from '@core/components/Styles';
 import { DataGridPro } from '@mui/x-data-grid-pro';
-import { Box, Card, CardContent, CardHeader } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Tooltip } from '@mui/material';
 import { useParams } from 'react-router';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
 import { Field } from '@gnwebsoft/ui';
@@ -108,6 +108,11 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
           >
             {t('Institute.Branch.BranchName.Label')}
           </div>
+        ),
+        renderCell: params => (
+          <Tooltip title={params.row.BranchWebName}>
+            <span>{params.row.BranchName}</span>
+          </Tooltip>
         ),
       },
     ];
@@ -281,24 +286,24 @@ const CurrentYearWiseCutoffModifiedListPage = () => {
               footer: footerProps,
             }}
             sx={{
-              // ...dataGridStyles,
-              '& .MuiDataGrid-row:nth-of-type(even)': {
-                backgroundColor: theme => theme.palette.action.hover,
-              },
-              '& .MuiDataGrid-cell': {
-                padding: 1,
-                display: 'flex',
-                alignItems: 'center',
-              },
-              '& .MuiTablePagination-root': {
-                justifyContent: { xs: 'flex-start', md: 'flex-end' },
-              },
-              '& .MuiTablePagination-toolbar': {
-                paddingLeft: { xs: 0 },
-              },
-              '& .MuiBox-root .css-1shozee': {
-                display: 'none',
-              },
+              ...josaaDataGridStyles,
+              // '& .MuiDataGrid-row:nth-of-type(even)': {
+              //   backgroundColor: theme => theme.palette.action.hover,
+              // },
+              // '& .MuiDataGrid-cell': {
+              //   padding: 1,
+              //   display: 'flex',
+              //   alignItems: 'center',
+              // },
+              // '& .MuiTablePagination-root': {
+              //   justifyContent: { xs: 'flex-start', md: 'flex-end' },
+              // },
+              // '& .MuiTablePagination-toolbar': {
+              //   paddingLeft: { xs: 0 },
+              // },
+              // '& .MuiBox-root .css-1shozee': {
+              //   display: 'none',
+              // },
             }}
           />
         </CardContent>

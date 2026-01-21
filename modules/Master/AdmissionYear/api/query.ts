@@ -5,6 +5,7 @@ import { OptionsResponse } from '@core/models';
 
 import { endpoints } from './endpoints';
 import { CurrentYearResponse } from '../types';
+import { EntityId } from '@core/hooks/useListView';
 
 const apiClient = getGlobalApiClient();
 
@@ -28,3 +29,14 @@ export const CSABAdmissionYearQueries = createQueryKeys('CSABAdmissionYear', {
     queryFn: () => apiClient.get<OptionsResponse[]>(endpoints.CSABAdmissionYearOptions!),
   }),
 });
+
+export const branchWisePlcementAdmissionYearByCollegeIDQueries = createQueryKeys(
+  'branchWisePlcementAdmissionYearByCollegeID',
+  {
+    Options: (id: EntityId) => ({
+      queryKey: ['branchWisePlcementAdmissionYearByCollegeID', id],
+      queryFn: () =>
+        apiClient.get<OptionsResponse[]>(endpoints.BranchWisePlcementYearByCollegeID(id!)),
+    }),
+  }
+);

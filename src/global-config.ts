@@ -42,8 +42,8 @@ export const CONFIG: ConfigValue = {
   appVersion: packageJson.version,
   serverUrl: import.meta.env.VITE_SERVER_URL ?? '',
   assetsDir: import.meta.env.VITE_ASSETS_DIR ?? '',
-  apiBaseUrl: 'http://localhost:5143',
-  // apiBaseUrl: 'https://api.all-india-admission.com',
+  // apiBaseUrl: 'http://localhost:5143',
+  apiBaseUrl: 'https://api.all-india-admission.com',
   /**
    * Auth
    * @method jwt | amplify | firebase | supabase | auth0

@@ -17,6 +17,8 @@ import {
   motherbranchQueries,
   branchWiseCollegeQueries,
   collegeComparePreviousYearsOpenCloseRankListQueries,
+  motherBranchInformationQueries,
+  branchInformationQueries,
 } from './query';
 import { EntityId } from '@core/hooks/useListView';
 import { CollegeCompareRequest } from '@modules/Institute/College/types';
@@ -134,4 +136,26 @@ export function useCollegeComparePreviousYearsOpenCloseRankListQuery(
     error,
     isSuccess,
   };
+}
+
+export function useMotherBranchInformationQuery(
+  id: EntityId | null | undefined,
+  enabled: boolean = true
+) {
+  return useQuery({
+    ...motherBranchInformationQueries.MotherBranchInformation(id!),
+    enabled,
+    select: result => result.data,
+  });
+}
+
+export function useBranchInformationQuery(
+  id: EntityId | null | undefined,
+  enabled: boolean = true
+) {
+  return useQuery({
+    ...branchInformationQueries.BranchInformation(id!),
+    enabled,
+    select: result => result.data,
+  });
 }

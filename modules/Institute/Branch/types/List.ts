@@ -45,9 +45,12 @@ export type BranchListRequest = z.infer<typeof BranchListSchema>;
 
 export type BranchListResponse = {
   BranchID: string;
+  SystemBranchID: string;
   BranchAdmissionCode: string;
+  BranchWebName: string;
   BranchProperName: string;
   SystemBranchProperName: string;
+  SystemBranchName: string;
   Intake: number | null;
   Colleges: number | null;
 };
@@ -91,4 +94,21 @@ export type CollegeComparePreviousYearsOpenCloseRankFormateListResponse = {
   BranchAdmissionCode: string;
   BranchProperName: string;
   PreviousYearOpenClose: PreviousYearOpenClose[];
+};
+
+export type MotherBranchInformation = {
+  SystemBranchID: string;
+  SystemBranchCode: string;
+  SystemBranchName: string;
+  SystemBranchProperName: string;
+};
+
+export type BranchInformation = {
+  BranchID: string;
+  SystemBranchID: string;
+  BranchName: string;
+  BranchProperName: string;
+  BranchAdmissionCode: string;
+  BranchGroup: string;
+  BranchWebName: string;
 };

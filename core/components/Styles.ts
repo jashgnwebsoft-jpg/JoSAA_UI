@@ -17,6 +17,85 @@ import {
 } from '@mui/material';
 import { GridToolbarContainer, GridToolbarQuickFilter } from '@mui/x-data-grid-pro';
 
+import { Theme, SxProps } from '@mui/material/styles';
+
+// export const josaaDataGridStyles: SxProps<Theme> = {
+//   '& .MuiDataGrid-row:nth-of-type(even)': {
+//     bgcolor: 'grey.100',
+//     '& .MuiDataGrid-cell': { bgcolor: 'grey.100' },
+//   },
+
+//   // '& .first-column': {
+//   //   p: '0 !important',
+//   // },
+
+//   '& .MuiDataGrid-cell': {
+//     padding: 1,
+//     display: 'flex',
+//     alignItems: 'center',
+//     '&:focus, &:focus-within': { outline: 'none' },
+//   },
+
+//   '& .MuiTablePagination-root': {
+//     justifyContent: { xs: 'flex-start', md: 'flex-end' },
+//     '& .MuiTablePagination-toolbar': { paddingLeft: { xs: 0 } },
+//   },
+
+//   '& .css-1shozee': {
+//     display: 'none',
+//   },
+// };
+
+export const josaaDataGridStyles: SxProps<Theme> = {
+  '& .MuiDataGrid-cell': {
+    padding: 1,
+    display: 'flex',
+    alignItems: 'center',
+    '&:focus, &:focus-within': { outline: 'none' },
+    '&:hover': { color: 'black' },
+  },
+
+  '& .MuiDataGrid-row:nth-of-type(even)': {
+    bgcolor: 'gray.100',
+    '& .MuiDataGrid-cell': { bgcolor: 'grey.100' },
+  },
+
+  '& .MuiTablePagination-root': {
+    justifyContent: { xs: 'flex-start', md: 'flex-end' },
+    '& .MuiTablePagination-toolbar': {
+      paddingLeft: { xs: 0 },
+    },
+  },
+
+  '& .css-1shozee': {
+    display: 'none',
+  },
+
+  '& .first-column .MuiTypography-root': {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    // '&:hover': { color: '#00a76f' },
+  },
+
+  '& .first-column-right .MuiTypography-root': {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+
+  '& .MuiDataGrid-toolbar': {
+    display: 'none',
+  },
+
+  '& .MuiDataGrid-row': {
+    cursor: 'pointer',
+  },
+};
+
 export const dataGridStyles = {
   pt: '0px !important',
   fontSize: 14,

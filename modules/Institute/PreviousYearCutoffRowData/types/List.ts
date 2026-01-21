@@ -15,12 +15,14 @@ export type CurrentYearWiseCutoffListResponse = {
   RoundTitle: string;
   BranchName: string;
   OpenRank: number;
+  BranchWebName: string;
   ClosingRank: number;
 };
 
 export type CurrentYearWiseCutoffRow = {
   BranchCode: string;
   BranchName: string;
+  BranchWebName: string;
   [key: string]: number | string;
 };
 
@@ -41,11 +43,13 @@ export type PreviousYearWiseCutoffListResponse = {
   AdmissionYear: string;
   OpenRank: number;
   ClosingRank: number;
+  BranchWebName: string;
 };
 
 export type PreviousYearWiseCutoffRow = {
   id: string;
   AdmissionYear: string;
+  BranchWebName: string;
   [key: string]: any;
 };
 
@@ -91,6 +95,10 @@ export type MeritRankCutOffRequest = z.infer<typeof MeritRankCutOffSchema>;
 export type MeritRankCutOffResponse = {
   CutoffID: string;
   CollegeShortName: string;
+  CollegeName: string;
+  BranchWebName: string;
+  CollegeID: string;
+  BranchID: string;
   BranchProperName: string;
   RoundTitle: string;
   OpenRank: number;
@@ -111,6 +119,10 @@ export type BranchWiseCutoffListRequest = z.infer<typeof BranchWiseCutoffListSch
 export type BranchWiseCutoffListResponse = {
   CutoffID: string;
   CollegeShortName: string;
+  CollegeID: string;
+  BranchID: string;
+  BranchWebName: string;
+  CollegeName: string;
   CollegeTypeShortName: string;
   BranchProperName: string;
   CategoryName: string;
@@ -130,7 +142,9 @@ export type CollegeWiseCutoffListRequest = z.infer<typeof CollegeWiseCutoffListS
 
 export type CollegeWiseCutoffListResponse = {
   CutoffID: string;
+  BranchID: string;
   BranchProperName: string;
+  BranchWebName: string;
   QuotaName: string;
   CategoryName: string;
   ReservationType: number;

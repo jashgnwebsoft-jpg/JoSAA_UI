@@ -1,5 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { admissionYearQueries, CSABAdmissionYearQueries, currentYaerQueries } from './query';
+import {
+  admissionYearQueries,
+  branchWisePlcementAdmissionYearByCollegeIDQueries,
+  CSABAdmissionYearQueries,
+  currentYaerQueries,
+} from './query';
+import { EntityId } from '@core/hooks/useListView';
 
 export function useAdmissionOptions(enabled: boolean = true) {
   return useQuery({
@@ -20,6 +26,17 @@ export function useCurrentYearQuery(enabled: boolean = true) {
 export function useCSABAdmissionOptions(enabled: boolean = true) {
   return useQuery({
     ...CSABAdmissionYearQueries.Options(),
+    enabled,
+    select: result => result.data,
+  });
+}
+
+export function useBranchWisePlacementAdmissionYearOptionsByCollegeID(
+  id: EntityId,
+  enabled: boolean = true
+) {
+  return useQuery({
+    ...branchWisePlcementAdmissionYearByCollegeIDQueries.Options(id),
     enabled,
     select: result => result.data,
   });

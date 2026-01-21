@@ -10,6 +10,7 @@ export type ReportingCenterListResponse = {
   ReportingCentreID: string;
   CollegeAdmissionCode: number;
   ReportingCentreName: string;
+  CollegeName: string;
   Address: string | null;
   Phone: string | null;
   Fax: string | null;

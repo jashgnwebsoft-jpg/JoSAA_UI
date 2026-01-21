@@ -3,7 +3,12 @@ import { dataTagSymbol, useQuery } from '@tanstack/react-query';
 
 import { useStableRowCount } from '@core/utils/useStableRowCount';
 
-import type { CollegeCompareRequest, CollegeListRequest, HomeStateListPageRequest } from '../types';
+import type {
+  CollegeCompareRequest,
+  CollegeListByStateIDListPageRequest,
+  CollegeListRequest,
+  HomeStateListPageRequest,
+} from '../types';
 import { collegeCompareQueries, collegeQueries, homestateQueries } from './query';
 import { EntityId } from '@core/hooks/useListView';
 
@@ -77,4 +82,38 @@ export function useCollegeCompareCollegeDetailsQuery(
   });
 
   return { data: data, isLoading, error, isSuccess };
+}
+
+export function useCollegeListByStateIDQuery(
+  model: PostModel<CollegeListByStateIDListPageRequest>,
+  enabled: boolean = true
+) {
+  const { data, isLoading, error } = useQuery({
+    ...collegeQueries.ListByStateID(model),
+    select: result => result?.data,
+    enabled,
+  });
+
+  const rowCount = useStableRowCount(data?.Total);
+
+  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
+}
+
+export function useCollegeCompareForPlacementByCollegeIDQuery(
+  id: EntityId | string | null | undefined,
+  enabled: boolean = true
+) {
+  return useQuery({
+    ...collegeCompareQueries.CollegeCompareForPlacementByCollegeID(id!),
+    select: result => result.data,
+    enabled: !!id && enabled,
+  });
+}
+
+export function useCollgeCardListQuery(enabled: boolean = true) {
+  return useQuery({
+    ...collegeQueries.CollegeCardList(),
+    select: result => result.data,
+    enabled,
+  });
 }

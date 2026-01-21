@@ -1,8 +1,8 @@
 import { GridColDef } from '@mui/x-data-grid';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { BranchListRequest, BranchListResponse } from '../types';
-import { Button } from '@mui/material';
+import { Box, Button, TextField, Tooltip, Typography } from '@mui/material';
 import { useBranchListStore } from '../api/store';
 import { useBranchListQuery } from '../api/hooks';
 import { DataGridFooterProps, DataGridToolbarProps } from '@core/components/SimpleDataGrid/types';
@@ -10,17 +10,22 @@ import { CONFIG } from '@/global-config';
 import MainContent from '@core/components/MainContent/MainContent';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
-import { dataGridStyles } from '@core/components/Styles';
+import { josaaDataGridStyles } from '@core/components/Styles';
 import { DashboardContent } from '@minimal/layouts/dashboard';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { Helmet } from 'react-helmet-async';
 import { paths } from '@/paths';
 import { useTranslate } from '@minimal/utils/locales';
 import { toast } from 'sonner';
+import { fNumber } from '@core/utils/format-number';
+import { Iconify } from '@minimal/components/iconify';
+import TextHighlighter from '@modules/Institute/College/view/TextHighlighter';
 
 const BranchListPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslate();
+  const [search, setSearch] = useState<string>('');
+  const [debouncedSearch, setDebouncedSearch] = useState<string>('');
 
   const columns = useMemo<GridColDef<BranchListResponse>[]>(
     () => [
@@ -39,7 +44,6 @@ const BranchListPage = () => {
         sortable: true,
         renderHeader: () => (
           <div
-            className='gn-grid-header'
             style={{
               whiteSpace: 'break-spaces',
               lineBreak: 'auto',
@@ -49,6 +53,27 @@ const BranchListPage = () => {
           >
             {t('Institute.Branch.BranchName.Label')}
           </div>
+        ),
+        cellClassName: 'first-column',
+        renderCell: params => (
+          <Tooltip title={params.row.BranchWebName}>
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                '&:hover': { cursor: 'pointer', color: 'primary.main' },
+              }}
+            >
+              <Typography
+                variant='body2'
+                width='100%'
+                // onClick={() => navigate(paths.josaa.branchWiseCollege.root(params.row.BranchID))}
+                // sx={{ '&:hover': { cursor: 'pointer' } }}
+              >
+                <TextHighlighter text={params.row.BranchProperName} highlight={debouncedSearch} />
+              </Typography>
+            </Box>
+          </Tooltip>
         ),
       },
       {
@@ -69,6 +94,33 @@ const BranchListPage = () => {
           >
             {t('Institute.Branch.MotherBranch.Label')}
           </div>
+        ),
+        cellClassName: 'first-column',
+        renderCell: params => (
+          <Tooltip title={params.row.SystemBranchName}>
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                '&:hover': { cursor: 'pointer', color: 'primary.main' },
+              }}
+            >
+              <Typography
+                variant='body2'
+                width='100%'
+                onClick={e => {
+                  e.stopPropagation();
+                  navigate(paths.josaa.systemBranchWiseCollege.root(params.row.SystemBranchID));
+                }}
+                sx={{ '&:hover': { cursor: 'pointer' } }}
+              >
+                <TextHighlighter
+                  text={params.row.SystemBranchProperName}
+                  highlight={debouncedSearch}
+                />
+              </Typography>
+            </Box>
+          </Tooltip>
         ),
       },
       {
@@ -92,6 +144,7 @@ const BranchListPage = () => {
             {t('Institute.IntakeCutoff.Intake.Label')}
           </div>
         ),
+        renderCell: params => <span>{fNumber(params.row.Intake)}</span>,
       },
       {
         field: 'Colleges',
@@ -114,6 +167,7 @@ const BranchListPage = () => {
             {t('Institute.College.List.Title')}
           </div>
         ),
+        renderCell: params => <span>{fNumber(params.row.Colleges)}</span>,
       },
       {
         field: 'actions',
@@ -130,7 +184,9 @@ const BranchListPage = () => {
               variant='text'
               size='small'
               color='primary'
-              onClick={() => {
+              startIcon={<Iconify icon='solar:eye-bold' height={15} />}
+              onClick={e => {
+                e.stopPropagation();
                 navigate(paths.josaa.branchWiseCollege.root(params.row.BranchID));
               }}
             >
@@ -140,7 +196,7 @@ const BranchListPage = () => {
         },
       },
     ],
-    []
+    [t, debouncedSearch, navigate]
   );
 
   const { postModel, handlePagination, handleSorting } = useBranchListStore();
@@ -179,6 +235,26 @@ const BranchListPage = () => {
     },
   };
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 200);
+
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  const filteredData = useMemo(() => {
+    if (!debouncedSearch) return data;
+
+    const s = debouncedSearch.toLowerCase();
+
+    return data.filter(
+      item =>
+        item.BranchProperName?.toLowerCase().includes(s) ||
+        item.SystemBranchProperName.toLowerCase().includes(s)
+    );
+  }, [debouncedSearch, data]);
+
   return (
     <DashboardContent>
       <Helmet>
@@ -190,8 +266,22 @@ const BranchListPage = () => {
           links: [{ name: 'Home' }, { name: t('Institute.Branch.List.Title') }],
         }}
       >
+        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between' }}>
+          <TextField
+            size='small'
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder='Search branch ,mother branch ...'
+            InputProps={{
+              startAdornment: (
+                <Iconify icon='eva:search-fill' sx={{ color: 'text.disabled', mr: 1 }} />
+              ),
+            }}
+            sx={{ width: { xs: '100%', sm: 300 } }}
+          />
+        </Box>
         <DataGridPro
-          rows={data}
+          rows={filteredData}
           density='compact'
           columns={columns}
           getRowId={row => row.BranchID}
@@ -199,6 +289,7 @@ const BranchListPage = () => {
           sortingMode='server'
           localeText={{ noRowsLabel: 'No Data' }}
           disableColumnMenu={true}
+          onRowClick={params => navigate(paths.josaa.branchWiseCollege.root(params.row.BranchID))}
           initialState={{
             pagination: {
               paginationModel: {
@@ -231,24 +322,24 @@ const BranchListPage = () => {
             footer: footerProps,
           }}
           sx={{
-            // ...dataGridStyles,
-            '& .MuiDataGrid-cell': {
-              padding: 1,
-              display: 'flex',
-              alignItems: 'center',
-            },
-            '& .MuiDataGrid-row:nth-of-type(even)': {
-              backgroundColor: theme => theme.palette.action.hover,
-            },
-            '& .MuiTablePagination-root': {
-              justifyContent: { xs: 'flex-start', md: 'flex-end' },
-            },
-            '& .MuiTablePagination-toolbar': {
-              paddingLeft: { xs: 0 },
-            },
-            '& .MuiBox-root .css-1shozee': {
-              display: 'none',
-            },
+            ...josaaDataGridStyles,
+            // '& .MuiDataGrid-cell': {
+            //   padding: 1,
+            //   display: 'flex',
+            //   alignItems: 'center',
+            // },
+            // '& .MuiDataGrid-row:nth-of-type(even)': {
+            //   backgroundColor: theme => theme.palette.action.hover,
+            // },
+            // '& .MuiTablePagination-root': {
+            //   justifyContent: { xs: 'flex-start', md: 'flex-end' },
+            // },
+            // '& .MuiTablePagination-toolbar': {
+            //   paddingLeft: { xs: 0 },
+            // },
+            // '& .MuiBox-root .css-1shozee': {
+            //   display: 'none',
+            // },
           }}
         />
       </MainContent>

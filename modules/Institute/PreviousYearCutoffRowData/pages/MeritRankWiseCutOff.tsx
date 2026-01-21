@@ -16,8 +16,21 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 import { CONFIG } from '@/global-config';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
-import { dataGridStyles } from '@core/components/Styles';
-import { Box, Button, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
+import { dataGridStyles, josaaDataGridStyles } from '@core/components/Styles';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Grid,
+  Tooltip,
+  Typography,
+  Zoom,
+} from '@mui/material';
 import { Field } from '@gnwebsoft/ui';
 import { useTranslate } from '@minimal/utils/locales';
 import { toast } from 'sonner';
@@ -25,55 +38,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useCurrentYearQuery } from '@modules/Master/AdmissionYear/api/hooks';
 import { fNumber } from '@core/utils/format-number';
 import { useCollegeTypeOptions } from '@modules/Institute/College/api/hooks';
+import { useNavigate } from 'react-router';
+import { paths } from '@/paths';
+import { Iconify } from '@minimal/components/iconify';
 
 const MeritRankWiseCutOff = () => {
   const { t } = useTranslate();
+  const [openNoDataAlert, setOpenNoDataAlert] = useState(false);
+  const navigate = useNavigate();
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
-
-  const columns = useMemo<GridColDef<MeritRankCutOffResponse>[]>(
-    () => [
-      {
-        field: 'CollegeShortName',
-        headerName: t('Institute.College.List.Title'),
-        flex: 2,
-        minWidth: 120,
-        sortable: true,
-      },
-      {
-        field: 'BranchProperName',
-        headerName: t('Institute.Branch.List.Title'),
-        flex: 2,
-        minWidth: 120,
-        sortable: true,
-      },
-      {
-        field: 'OpenRank',
-        headerName: t('Institute.PreviousYearCutoffRow.Open.Label'),
-        flex: 1,
-        minWidth: 120,
-        sortable: true,
-        renderCell: params => <span>{fNumber(params.row.OpenRank)}</span>,
-        align: 'right',
-        headerAlign: 'right',
-      },
-      {
-        field: 'ClosingRank',
-        headerName: t('Institute.PreviousYearCutoffRow.Close.Label'),
-        flex: 1,
-        minWidth: 120,
-        sortable: true,
-        renderCell: params => <span>{fNumber(params.row.ClosingRank)}</span>,
-        align: 'right',
-        headerAlign: 'right',
-      },
-    ],
-    []
-  );
-
-  const { postModel, handlePagination, handleSorting, handleFiltering } =
-    useMeritRankWiseCutOffListStore();
-
-  const { control, handleSubmit, reset, watch } = useForm<MeritRankCutOffRequest>({
+  const { control, handleSubmit, reset, watch, getValues } = useForm<MeritRankCutOffRequest>({
     resolver: zodResolver(MeritRankCutOffSchema),
     shouldUnregister: false,
     mode: 'onSubmit',
@@ -81,6 +55,9 @@ const MeritRankWiseCutOff = () => {
       AirRank: 's4cbnP_om7y0-niCdJYqwA',
     },
   });
+
+  const { postModel, handlePagination, handleSorting, handleFiltering } =
+    useMeritRankWiseCutOffListStore();
 
   const initializedRef = useRef<boolean>(false);
 
@@ -162,20 +139,118 @@ const MeritRankWiseCutOff = () => {
     setIsInitialized(true);
   }, [defaultValues, postModel.filterModel, reset, handleFiltering]);
 
-  const { data, totalRecords, isLoading, error, isSuccess } = useMeritRankWiseCutOffQuery(
-    postModel,
-    isInitialized
-  );
+  const { data, totalRecords, isLoading, error, isSuccess, isFetched } =
+    useMeritRankWiseCutOffQuery(postModel, isInitialized);
+  const handleClose = () => {
+    setOpenNoDataAlert(false);
+  };
   useEffect(() => {
     if (error) {
       toast.error(error.message);
     }
     if (isSuccess && data.length === 0) {
-      toast.info('No Data Present');
+      // toast.info('No Data Present');
+      setOpenNoDataAlert(true);
     }
   }, [error, isSuccess, data]);
 
   const { data: currentYear } = useCurrentYearQuery();
+
+  const onSubmit = handleSubmit(data => {
+    const sanitized = {
+      ...data,
+      CategoryID: data.CategoryID ?? '',
+      SeatPoolID: data.SeatPoolID ?? '',
+      CourseID: data.CourseID ?? '',
+      BranchID: data.BranchID ?? '',
+      CollegeType: data.CollegeType ?? '',
+    };
+
+    handleFiltering(sanitized);
+  });
+
+  const handleReset = () => {
+    if (!defaultValues) return;
+
+    reset(defaultValues);
+    handleFiltering(defaultValues);
+  };
+
+  const columns = useMemo<GridColDef<MeritRankCutOffResponse>[]>(
+    () => [
+      {
+        field: 'CollegeShortName',
+        headerName: t('Institute.College.List.Title'),
+        flex: 2,
+        minWidth: 120,
+        sortable: true,
+        cellClassName: 'first-column',
+        renderCell: params => (
+          <Tooltip title={params.row.CollegeName}>
+            <Typography
+              variant='body2'
+              width='100%'
+              // onClick={() => navigate(paths.josaa.collegeinformation.root(params.row.CollegeID))}
+              sx={{ '&:hover': { cursor: 'pointer' } }}
+            >
+              {params.row.CollegeShortName}
+            </Typography>
+          </Tooltip>
+        ),
+      },
+      {
+        field: 'BranchProperName',
+        headerName: t('Institute.Branch.List.Title'),
+        flex: 2,
+        minWidth: 120,
+        sortable: true,
+        renderCell: params => (
+          <Tooltip title={params.row.BranchWebName}>
+            <Typography
+              variant='body2'
+              width='100%'
+              onClick={e => {
+                e.stopPropagation();
+                navigate(paths.josaa.branchWiseCollege.root(params.row.BranchID));
+              }}
+              sx={{ '&:hover': { cursor: 'pointer' } }}
+            >
+              {params.row.BranchProperName}
+            </Typography>
+          </Tooltip>
+        ),
+      },
+      // {
+      //   field: 'OpenRank',
+      //   headerName: t('Institute.PreviousYearCutoffRow.Open.Label'),
+      //   flex: 1,
+      //   minWidth: 120,
+      //   sortable: true,
+      //   renderCell: params => <span>{fNumber(params.row.OpenRank)}</span>,
+      //   align: 'right',
+      //   headerAlign: 'right',
+      // },
+      {
+        field: 'ClosingRank',
+        headerName: t('Institute.PreviousYearCutoffRow.Close.Label'),
+        //  +
+        // ' (' +
+        // categoryOptions.data?.filter(item => item.Value === getValues('CategoryID'))[0].Label +
+        // ')'
+        flex: 1,
+        minWidth: 120,
+        sortable: true,
+        renderCell: params => (
+          <Typography variant='subtitle2' color='primary'>
+            {fNumber(params.row.ClosingRank)}
+          </Typography>
+        ),
+        align: 'right',
+        headerAlign: 'right',
+      },
+    ],
+    []
+  );
 
   const toolbarProps: DataGridToolbarProps<MeritRankCutOffRequest, MeritRankCutOffResponse> = {
     toolbar: {
@@ -200,26 +275,6 @@ const MeritRankWiseCutOff = () => {
     },
   };
 
-  const onSubmit = handleSubmit(data => {
-    const sanitized = {
-      ...data,
-      CategoryID: data.CategoryID ?? '',
-      SeatPoolID: data.SeatPoolID ?? '',
-      CourseID: data.CourseID ?? '',
-      BranchID: data.BranchID ?? '',
-      CollegeType: data.CollegeType ?? '',
-    };
-
-    handleFiltering(sanitized);
-  });
-
-  const handleReset = () => {
-    if (!defaultValues) return;
-
-    reset(defaultValues);
-    handleFiltering(defaultValues);
-  };
-
   return (
     <DashboardContent>
       <Helmet>
@@ -229,7 +284,11 @@ const MeritRankWiseCutOff = () => {
       </Helmet>
 
       <SimpleBreadcrumbs
-        heading={t('Institute.PreviousYearCutoffRow.MeritRankWiseCutOff.Label')}
+        heading={
+          t('Institute.PreviousYearCutoffRow.MeritRankWiseCutOff.Label') +
+          ' ' +
+          currentYear?.AdmissionYear
+        }
         links={[
           { name: 'Home' },
           { name: t('Institute.PreviousYearCutoffRow.MeritRankWiseCutOff.Label') },
@@ -239,7 +298,8 @@ const MeritRankWiseCutOff = () => {
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6, lg: 3 }}>
           <Card>
-            <CardHeader title={t('Institute.PreviousYearCutoffRow.MeritRankWiseCutOff.Label')} />
+            {/* <CardHeader title='College Admission Eligibility' /> */}
+            <CardHeader title='JEE Rank Based Admission Analysis' />
             <CardContent>
               <Box
                 component='form'
@@ -346,6 +406,9 @@ const MeritRankWiseCutOff = () => {
                 sortingMode='server'
                 localeText={{ noRowsLabel: 'No Data' }}
                 disableColumnMenu={true}
+                onRowClick={params =>
+                  navigate(paths.josaa.collegeinformation.root(params.row.CollegeID))
+                }
                 initialState={{
                   pagination: {
                     paginationModel: {
@@ -378,26 +441,58 @@ const MeritRankWiseCutOff = () => {
                   footer: footerProps,
                 }}
                 sx={{
-                  // ...dataGridStyles,
-                  '& .MuiDataGrid-row:nth-of-type(even)': {
-                    backgroundColor: theme => theme.palette.action.hover,
-                  },
-                  '& .MuiDataGrid-cell': {
-                    padding: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                  },
-                  '& .MuiTablePagination-root': {
-                    justifyContent: { xs: 'flex-start', md: 'flex-end' },
-                  },
-                  '& .MuiTablePagination-toolbar': {
-                    paddingLeft: { xs: 0 },
-                  },
-                  '& .MuiBox-root .css-1shozee': {
-                    display: 'none',
-                  },
+                  ...josaaDataGridStyles,
                 }}
               />
+              <Dialog
+                open={openNoDataAlert}
+                onClose={handleClose}
+                TransitionComponent={Zoom}
+                PaperProps={{
+                  sx: {
+                    borderRadius: 2,
+                    padding: 2,
+                    maxWidth: 400,
+                    textAlign: 'center',
+                  },
+                }}
+              >
+                <DialogContent>
+                  <Box sx={{ mb: 2 }}>
+                    <Box
+                      sx={{
+                        width: 64,
+                        height: 64,
+                        borderRadius: '50%',
+                        bgcolor: 'error.lighter',
+                        color: 'error.main',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto',
+                        mb: 2,
+                      }}
+                    >
+                      <Iconify icon='material-symbols:error' width={36} />
+                    </Box>
+
+                    <Typography variant='h6' gutterBottom>
+                      No Records Found
+                    </Typography>
+
+                    <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+                      We couldn't find any data for the selected criteria. Please check your filters
+                      or try again later.
+                    </Typography>
+                  </Box>
+                </DialogContent>
+
+                <DialogActions sx={{ justifyContent: 'center', pb: 2 }}>
+                  <Button variant='contained' color='inherit' onClick={handleClose} sx={{ px: 4 }}>
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </CardContent>
           </Card>
         </Grid>

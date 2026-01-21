@@ -100,5 +100,8 @@ export const paths = {
     newsByID: {
       root: (id: string) => `${ROOTS.JOSAA}/news/${id}`,
     },
+    stateByID: {
+      root: (id: string) => `${ROOTS.JOSAA}/state/${id}`,
+    },
   },
 };

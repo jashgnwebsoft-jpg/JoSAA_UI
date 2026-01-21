@@ -15,6 +15,9 @@ import {
   CSABPreviousYearWiseCutoffQueries,
 } from './query';
 import { fNumber } from '@core/utils/format-number';
+import React from 'react';
+import { Typography } from '@mui/material';
+import { Label } from '@minimal/components/label';
 
 export function useCSABPreviousYearWiseCutoffListQuery(
   model: PostModel<CSABPreviousYearWiseCutoffListRequest>,
@@ -71,6 +74,24 @@ export function useCSABPreviousYearWiseCutoffListQuery(
       headerName: 'Reservation Type',
       minWidth: 110,
       flex: 1,
+      renderCell: params => {
+        const type = params.row.ReservationType;
+
+        if (!type) {
+          return React.createElement(Typography, { variant: 'subtitle1', pl: 0.5 }, 'Total');
+        }
+
+        const isGenderNeutral = type === 'Gender-Neutral';
+
+        return React.createElement(
+          Label,
+          {
+            color: isGenderNeutral ? 'primary' : 'warning',
+            variant: 'soft',
+          },
+          isGenderNeutral ? type : 'Female-Only'
+        );
+      },
     },
   ];
 

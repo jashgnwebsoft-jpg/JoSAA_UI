@@ -9,6 +9,7 @@ import { useTranslate } from '@minimal/utils/locales';
 import CollegeCompareDialog from '../view/CollegeCompareDialog';
 import CollegeColumn from '../view/CollegeColumn';
 import { useCollegeCompareStore } from '../api/store';
+import { Iconify } from '@minimal/components/iconify';
 
 const CollegeComparePage = () => {
   const { t } = useTranslate();
@@ -19,6 +20,7 @@ const CollegeComparePage = () => {
     openDialog,
     closeDialog,
     saveRequest,
+    defaultFormValues,
     activeIndex,
     saveCollegeDetailsData: saveData,
     saveCollegeRankData: rankData,
@@ -42,19 +44,38 @@ const CollegeComparePage = () => {
 
       <Paper variant='outlined' sx={{ display: 'flex', overflowX: 'auto', mb: 2 }}>
         <Box
-          sx={{ width: { xs: 'auto', md: 240 }, borderRight: '1px solid', borderColor: 'divider' }}
+          sx={{
+            width: { xs: 'auto', md: 240 },
+            borderRight: '1px solid',
+            borderColor: 'divider',
+          }}
         >
           {[
-            t('Institute.College.CompareDetails.Label'),
-            t('Institute.College.CollegeName.Label'),
-            t('Institute.College.TuitionFees.Label'),
-            t('Institute.College.NIRFRank.Label'),
-            `${t('Institute.College.HigherPackage.Label')} (LPA)`,
-            `${t('Institute.College.MedianPackage.Label')} (LPA)`,
-            `${t('Institute.College.AveragePackage.Label')} (LPA)`,
-            `${t('Institute.College.LowerPackage.Label')} (LPA)`,
-            t('Institute.College.LastYearOpenClose.Label'),
-          ].map((label, i) => (
+            { label: t('Institute.College.CompareDetails.Label'), icon: 'material-symbols:info' },
+            {
+              label: t('Institute.College.CollegeName.Label'),
+              icon: 'lucide:school',
+            },
+            { label: t('Institute.College.TuitionFees.Label'), icon: 'eva:credit-card-outline' },
+            { label: t('Institute.College.NIRFRank.Label'), icon: 'eva:award-outline' },
+            {
+              label: `${t('Institute.College.HigherPackage.Label')} (LPA)`,
+              icon: 'eva:trending-up-outline',
+            },
+            {
+              label: `${t('Institute.College.MedianPackage.Label')} (LPA)`,
+              icon: 'eva:bar-chart-2-outline',
+            },
+            {
+              label: `${t('Institute.College.AveragePackage.Label')} (LPA)`,
+              icon: 'eva:activity-outline',
+            },
+            {
+              label: `${t('Institute.College.LowerPackage.Label')} (LPA)`,
+              icon: 'eva:trending-down-outline',
+            },
+            { label: t('Institute.College.LastYearOpenClose.Label'), icon: 'eva:calendar-outline' },
+          ].map((item, i) => (
             <Box
               key={i}
               sx={{
@@ -66,10 +87,13 @@ const CollegeComparePage = () => {
                 fontWeight: 600,
                 borderBottom: '1px solid',
                 borderColor: 'divider',
-                bgcolor: 'background.neutral',
+                bgcolor: i % 2 === 0 ? 'grey.100' : 'grey.50',
               }}
             >
-              <Typography variant='subtitle1'>{label}</Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Iconify icon={item.icon} width={20} height={20} />
+                <Typography variant='subtitle1'>{item.label}</Typography>
+              </Box>
             </Box>
           ))}
         </Box>
@@ -91,7 +115,8 @@ const CollegeComparePage = () => {
         open={open}
         onClose={closeDialog}
         onSave={saveRequest}
-        defaultValues={selectedRequest}
+        defaultValues={defaultFormValues}
+        // defaultValues={selectedRequest}
       />
     </DashboardContent>
   );

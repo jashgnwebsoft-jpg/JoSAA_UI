@@ -27,13 +27,48 @@ const WebsiteListPage = () => {
   return (
     <DashboardContent>
       <Helmet>
-        <title>{t('Master.Website.List.Title') + ` - ${CONFIG.appName}`}</title>
+        <title>
+          {t('Master.Website.List.Title')} - {CONFIG.appName}
+        </title>
+
+        <meta
+          name='description'
+          content='Curated list of useful websites with direct links, titles, and categories.'
+        />
+
+        <script type='application/ld+json'>
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            name: 'Website Directory',
+            itemListElement: data?.map((item, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              url: item.WebsiteUrl,
+              name: item.WebsiteTitle,
+            })),
+          })}
+        </script>
       </Helmet>
+
       <SimpleBreadcrumbs
         heading={t('Master.Website.List.Title')}
         links={[{ name: 'Home' }, { name: t('Master.Website.List.Title') }]}
       />
+      <Box component='section' sx={{ mb: 3 }}>
+        <Typography component='h1' variant='h4'>
+          Website Directory
+        </Typography>
+
+        <Typography variant='body2' color='text.secondary'>
+          This page lists curated websites with direct access links. Each website entry includes its
+          title and official URL.
+        </Typography>
+      </Box>
+
       <Box
+        component='section'
+        role='list'
         sx={{
           gap: 3,
           display: 'grid',
@@ -47,9 +82,11 @@ const WebsiteListPage = () => {
         }}
       >
         {data.slice((page - 1) * rowsPerPage, page * rowsPerPage).map((data: ListResponse) => (
-          <Card key={data.WebsiteID}>
+          <Card key={data.WebsiteID} role='listitem'>
             <CardContent>
-              <Typography variant='h6'>{data.WebsiteTitle}</Typography>
+              <Typography id={`website-${data.WebsiteID}`} variant='h6' component='h2'>
+                {data.WebsiteTitle}
+              </Typography>
               <Box
                 sx={{
                   display: 'flex',
@@ -62,15 +99,14 @@ const WebsiteListPage = () => {
                 <Typography color='primary'>
                   <Iconify icon='solar:global-outline' />
                 </Typography>
-                <Typography
-                  component='a'
+                <Link
                   href={data.WebsiteUrl}
-                  color='primary'
                   target='_blank'
-                  variant='body2'
+                  rel='noopener noreferrer'
+                  aria-label={`Visit ${data.WebsiteTitle}`}
                 >
                   {data.WebsiteUrl}
-                </Typography>
+                </Link>
               </Box>
             </CardContent>
           </Card>

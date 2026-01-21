@@ -24,6 +24,8 @@ import {
 import { GridColDef } from '@mui/x-data-grid';
 import { fNumber } from '@core/utils/format-number';
 import { Label } from '@minimal/components/label';
+import React from 'react';
+import { Chip, Tooltip, Typography } from '@mui/material';
 
 export function useCurrentYearWiseCutoffListQuery(
   model: PostModel<CurrentYearWiseCutoffListRequest>,
@@ -49,6 +51,7 @@ export function useCurrentYearWiseCutoffListQuery(
       grouped[item.BranchCode] = {
         BranchCode: item.BranchCode,
         BranchName: item.BranchName,
+        BranchWebName: item.BranchWebName,
       };
     }
 
@@ -85,6 +88,7 @@ export function usePreviousYearWiseCutoffListQuery(
       grouped[year] = {
         id: year,
         AdmissionYear: year,
+        BranchWebName: item.BranchWebName,
       };
     }
     grouped[year][`Round ${roundNumber}`] = item.ClosingRank;
@@ -152,8 +156,26 @@ export function usePreviousYearWiseCutoffListModifiedQuery(
     {
       field: 'ReservationType',
       headerName: 'Reservation Type',
-      minWidth: 110,
+      minWidth: 130,
       flex: 1,
+      renderCell: params => {
+        const type = params.row.ReservationType;
+
+        if (!type) {
+          return React.createElement(Typography, { variant: 'subtitle1', pl: 0.5 }, 'Total');
+        }
+
+        const isGenderNeutral = type === 'Gender-Neutral';
+
+        return React.createElement(
+          Label,
+          {
+            color: isGenderNeutral ? 'primary' : 'warning',
+            variant: 'soft',
+          },
+          isGenderNeutral ? type : 'Female-Only'
+        );
+      },
     },
   ];
 
@@ -180,7 +202,7 @@ export function useMeritRankWiseCutOffQuery(
   model: PostModel<MeritRankCutOffRequest>,
   enabled: boolean
 ) {
-  const { data, isLoading, error, isSuccess } = useQuery({
+  const { data, isLoading, error, isSuccess, isFetched } = useQuery({
     ...meritRankWiseCutoffQueries.List(model),
     select: result => result?.data,
     enabled,
@@ -188,7 +210,14 @@ export function useMeritRankWiseCutOffQuery(
 
   const rowCount = useStableRowCount(data?.Total);
 
-  return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount, isSuccess };
+  return {
+    data: data?.Data ?? [],
+    isLoading,
+    error,
+    totalRecords: rowCount,
+    isSuccess,
+    isFetched,
+  };
 }
 
 export function useBranchWiseCutOffQuery(

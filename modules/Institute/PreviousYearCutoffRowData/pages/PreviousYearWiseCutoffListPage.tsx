@@ -3,7 +3,7 @@ import { GridColDef } from '@mui/x-data-grid-pro';
 import { DataGridFooterProps, DataGridToolbarProps } from '@core/components/SimpleDataGrid/types';
 import { CONFIG } from '@/global-config';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
-import { dataGridStyles } from '@core/components/Styles';
+import { dataGridStyles, josaaDataGridStyles } from '@core/components/Styles';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { useParams } from 'react-router';
@@ -363,19 +363,19 @@ const PreviousYearWiseCutoffListPage = () => {
               footer: footerProps,
             }}
             sx={{
-              ...dataGridStyles,
-              '& .MuiDataGrid-row:nth-of-type(even)': {
-                backgroundColor: theme => theme.palette.action.hover,
-              },
-              '& .MuiTablePagination-root': {
-                justifyContent: { xs: 'flex-start', md: 'flex-end' },
-              },
-              '& .MuiTablePagination-toolbar': {
-                paddingLeft: { xs: 0 },
-              },
-              '& .MuiBox-root .css-1shozee': {
-                display: 'none',
-              },
+              ...josaaDataGridStyles,
+              // '& .MuiDataGrid-row:nth-of-type(even)': {
+              //   backgroundColor: theme => theme.palette.action.hover,
+              // },
+              // '& .MuiTablePagination-root': {
+              //   justifyContent: { xs: 'flex-start', md: 'flex-end' },
+              // },
+              // '& .MuiTablePagination-toolbar': {
+              //   paddingLeft: { xs: 0 },
+              // },
+              // '& .MuiBox-root .css-1shozee': {
+              //   display: 'none',
+              // },
             }}
           />
         </CardContent>

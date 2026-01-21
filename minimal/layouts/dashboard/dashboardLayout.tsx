@@ -37,6 +37,8 @@ import { MainSection, layoutClasses, HeaderSection, LayoutSection } from '../cor
 import { LibraryPopover } from '../components/library-popover';
 import { useEffect } from 'react';
 import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router';
+import { RouterLink } from '@minimal/components/router-link';
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +65,8 @@ export function DashboardLayout({
   const theme = useTheme();
 
   const { user } = useMockedUser();
+
+  const navigate = useNavigate();
 
   const settings = useSettingsContext();
 
@@ -140,7 +144,13 @@ export function DashboardLayout({
           {isNavHorizontal && (
             <VerticalDivider sx={{ [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } }} />
           )}
-          <Typography variant='h3' color='primary'>
+          <Typography
+            variant='h3'
+            color='primary'
+            component={RouterLink}
+            href='/'
+            sx={{ '&:hover': { cursor: 'pointer' }, textDecoration: 'none' }}
+          >
             JoSAA
           </Typography>
 

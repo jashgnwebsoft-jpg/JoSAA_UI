@@ -109,6 +109,7 @@ export type DataGridToolbarProps<TFilterModel, TModel extends GridValidRowModel 
 > & {
   toolbar?: {
     columns: GridColDef<TModel>[];
+    search?: { value: string; onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void };
     handleExport?: (selectedFields: string[], filterModel: TFilterModel) => void;
     actionButtons?: ActionButtonProps[];
     addNew: () => void;

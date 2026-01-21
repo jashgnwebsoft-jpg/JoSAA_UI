@@ -7,6 +7,7 @@ import { useTranslate } from '@minimal/utils/locales';
 
 import { useFeesQuery } from '@modules/Institute/Fees/api/hooks';
 import { FeesMoreDeatilsResponse } from '@modules/Institute/Fees/types';
+import { Divider, Grid } from '@mui/material';
 
 type Props = {
   collegeID: string | undefined;
@@ -51,6 +52,7 @@ const DeatilsView = withDataModal<FeesMoreDeatilsResponse[]>(({ data }) => {
             key={item.FeesID}
             label={item.FeesHeadTitle!}
             value={fNumber(item.HeadWiseFees)}
+            containerSize={{ xs: 12, sm: 12, md: 6 }}
             gridSize={{
               labelSize: { xs: 9, sm: 9, md: 9 },
               valueSize: { xs: 3, sm: 3, md: 3 },
@@ -59,15 +61,19 @@ const DeatilsView = withDataModal<FeesMoreDeatilsResponse[]>(({ data }) => {
         ))}
 
         {semesterFees && semesterFees.length > 0 && (
-          <LabelText
-            label={t('Institute.Fees.TotalSemesterFees.Label')}
-            value={fNumber(semesterFees[0].SemesterWiseTotalFees)}
-            labelSx={{ fontWeight: 'bold' }}
-            gridSize={{
-              labelSize: { xs: 9, sm: 9, md: 9 },
-              valueSize: { xs: 3, sm: 3, md: 3 },
-            }}
-          />
+          <>
+            <Grid size={{ xs: 12, md: 6 }} />
+            <LabelText
+              label={t('Institute.Fees.TotalSemesterFees.Label')}
+              value={fNumber(semesterFees[0].SemesterWiseTotalFees)}
+              labelSx={{ fontWeight: 'bold' }}
+              containerSize={{ xs: 6, sm: 6, md: 6 }}
+              gridSize={{
+                labelSize: { xs: 9, sm: 9, md: 9 },
+                valueSize: { xs: 3, sm: 3, md: 3 },
+              }}
+            />
+          </>
         )}
       </SectionBox>
 
@@ -76,6 +82,7 @@ const DeatilsView = withDataModal<FeesMoreDeatilsResponse[]>(({ data }) => {
           <LabelText
             key={item.FeesID}
             label={item.FeesHeadTitle!}
+            containerSize={{ xs: 12, sm: 12, md: 6 }}
             value={fNumber(item.HeadWiseFees)}
             gridSize={{
               labelSize: { xs: 9, sm: 9, md: 9 },
@@ -89,6 +96,7 @@ const DeatilsView = withDataModal<FeesMoreDeatilsResponse[]>(({ data }) => {
             label={t('Institute.Fees.TotalAnnualFees.Label')}
             value={fNumber(yearFees[0].YearWiseTotalFees)}
             labelSx={{ fontWeight: 'bold' }}
+            containerSize={{ xs: 12, sm: 12, md: 6 }}
             gridSize={{
               labelSize: { xs: 9, sm: 9, md: 9 },
               valueSize: { xs: 3, sm: 3, md: 3 },

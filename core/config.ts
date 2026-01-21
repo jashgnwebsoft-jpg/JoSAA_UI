@@ -5,8 +5,8 @@ export type ConfigValue = {
 
 export const Config: ConfigValue = {
   defaultPageSize: 100,
-  apiBaseUrl: 'http://localhost:5143',
-  // apiBaseUrl: 'https://api.all-india-admission.com',
+  // apiBaseUrl: 'http://localhost:5143',
+  apiBaseUrl: 'https://api.all-india-admission.com',
 };
 
 export const dateTimePatterns = {

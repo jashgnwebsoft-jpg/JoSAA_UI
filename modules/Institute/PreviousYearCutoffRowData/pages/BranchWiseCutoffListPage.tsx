@@ -26,7 +26,16 @@ import { GridColDef } from '@mui/x-data-grid';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
 import { Field } from '@gnwebsoft/ui';
-import { Grid, Card, CardHeader, CardContent, Box, Button, Typography } from '@mui/material';
+import {
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+  Box,
+  Button,
+  Typography,
+  Tooltip,
+} from '@mui/material';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { fNumber } from '@core/utils/format-number';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -39,9 +48,13 @@ import {
 import { useCSABBranchWiseCutOffListStore } from '@modules/Institute/CSABPreviousYearCutoffRowData/api/store';
 import { useCSABBranchWiseCutOffQuery } from '@modules/Institute/CSABPreviousYearCutoffRowData/api/hooks';
 import { useCSABRoundOptions, useRoundOptions } from '@modules/Institute/Round/api/hooks';
+import { josaaDataGridStyles } from '@core/components/Styles';
+import { useNavigate } from 'react-router';
+import { paths } from '@/paths';
 
 const BranchWiseCutoffListPage = () => {
   const { t } = useTranslate();
+  const navigate = useNavigate();
   const [josaaInitialized, setJosaaInitialized] = useState(false);
   const [csabInitialized, setCsabInitialized] = useState(false);
   const [activeTab, setActiveTab] = useState<number>(1);
@@ -54,6 +67,19 @@ const BranchWiseCutoffListPage = () => {
         flex: 2,
         minWidth: 120,
         sortable: true,
+        cellClassName: 'first-column',
+        renderCell: params => (
+          <Tooltip title={params.row.CollegeName}>
+            <Typography
+              variant='body2'
+              width='100%'
+              // onClick={() => navigate(paths.josaa.collegeinformation.root(params.row.CollegeID))}
+              sx={{ '&:hover': { cursor: 'pointer' } }}
+            >
+              {params.row.CollegeShortName}
+            </Typography>
+          </Tooltip>
+        ),
       },
       {
         field: 'BranchProperName',
@@ -61,6 +87,22 @@ const BranchWiseCutoffListPage = () => {
         flex: 2,
         minWidth: 120,
         sortable: true,
+        cellClassName: 'first-column',
+        renderCell: params => (
+          <Tooltip title={params.row.BranchWebName}>
+            <Typography
+              variant='body2'
+              width='100%'
+              onClick={e => {
+                e.stopPropagation();
+                navigate(paths.josaa.branchWiseCollege.root(params.row.BranchID));
+              }}
+              sx={{ '&:hover': { cursor: 'pointer' } }}
+            >
+              {params.row.BranchProperName}
+            </Typography>
+          </Tooltip>
+        ),
       },
       {
         field: 'CollegeTypeShortName',
@@ -109,6 +151,19 @@ const BranchWiseCutoffListPage = () => {
         flex: 2,
         minWidth: 120,
         sortable: true,
+        cellClassName: 'first-column',
+        renderCell: params => (
+          <Tooltip title={params.row.CollegeName}>
+            <Typography
+              variant='body2'
+              width='100%'
+              // onClick={() => navigate(paths.josaa.collegeinformation.root(params.row.CollegeID))}
+              sx={{ '&:hover': { cursor: 'pointer' } }}
+            >
+              {params.row.CollegeShortName}
+            </Typography>
+          </Tooltip>
+        ),
       },
       {
         field: 'BranchProperName',
@@ -116,6 +171,22 @@ const BranchWiseCutoffListPage = () => {
         flex: 2,
         minWidth: 120,
         sortable: true,
+        cellClassName: 'first-column',
+        renderCell: params => (
+          <Tooltip title={params.row.BranchWebName}>
+            <Typography
+              variant='body2'
+              width='100%'
+              onClick={e => {
+                e.stopPropagation();
+                navigate(paths.josaa.branchWiseCollege.root(params.row.BranchID));
+              }}
+              sx={{ '&:hover': { cursor: 'pointer' } }}
+            >
+              {params.row.BranchProperName}
+            </Typography>
+          </Tooltip>
+        ),
       },
       {
         field: 'CollegeTypeShortName',
@@ -621,6 +692,9 @@ const BranchWiseCutoffListPage = () => {
                 sortingMode='server'
                 localeText={{ noRowsLabel: 'No Data' }}
                 disableColumnMenu={true}
+                onRowClick={params =>
+                  navigate(paths.josaa.collegeinformation.root(params.row.CollegeID))
+                }
                 initialState={{
                   pagination: {
                     paginationModel: {
@@ -663,24 +737,24 @@ const BranchWiseCutoffListPage = () => {
                   footer: footerProps,
                 }}
                 sx={{
-                  // ...dataGridStyles,
-                  '& .MuiDataGrid-row:nth-of-type(even)': {
-                    backgroundColor: theme => theme.palette.action.hover,
-                  },
-                  '& .MuiDataGrid-cell': {
-                    padding: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                  },
-                  '& .MuiTablePagination-root': {
-                    justifyContent: { xs: 'flex-start', md: 'flex-end' },
-                  },
-                  '& .MuiTablePagination-toolbar': {
-                    paddingLeft: { xs: 0 },
-                  },
-                  '& .MuiBox-root .css-1shozee': {
-                    display: 'none',
-                  },
+                  ...josaaDataGridStyles,
+                  // '& .MuiDataGrid-row:nth-of-type(even)': {
+                  //   backgroundColor: theme => theme.palette.action.hover,
+                  // },
+                  // '& .MuiDataGrid-cell': {
+                  //   padding: 1,
+                  //   display: 'flex',
+                  //   alignItems: 'center',
+                  // },
+                  // '& .MuiTablePagination-root': {
+                  //   justifyContent: { xs: 'flex-start', md: 'flex-end' },
+                  // },
+                  // '& .MuiTablePagination-toolbar': {
+                  //   paddingLeft: { xs: 0 },
+                  // },
+                  // '& .MuiBox-root .css-1shozee': {
+                  //   display: 'none',
+                  // },
                 }}
               />
             </CardContent>

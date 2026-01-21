@@ -14,6 +14,7 @@ import {
   CardContent,
   FormControl,
   Tooltip,
+  alpha,
 } from '@mui/material';
 
 import { paths } from '@/paths';
@@ -158,56 +159,113 @@ const MotherBranchListPageView = () => {
             <Card
               key={item.SystemBranchID}
               sx={{
+                cursor: 'pointer',
+                borderRadius: 2,
+                transition: theme => theme.transitions.create(['transform', 'box-shadow']),
                 '&:hover': {
-                  cursor: 'pointer',
+                  boxShadow: theme => theme.customShadows.card,
                 },
               }}
               onClick={() => {
                 navigate(paths.josaa.systemBranchWiseCollege.root(item.SystemBranchID));
               }}
             >
-              <CardContent>
+              <Box sx={{ p: 3 }}>
+                {/* Branch Title */}
                 <Typography
-                  variant='h6'
-                  align='center'
-                  pb={2}
-                  color='primary'
+                  variant='subtitle1'
                   sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    mb: 2,
+                    fontWeight: 'bold',
+                    color: 'text.primary',
                   }}
                 >
                   {item.SystemBranchProperName}
                 </Typography>
 
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
-                  <Tooltip title='Intake'>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column-reverse',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Iconify icon='bx:chair' color='#00a76f' />
-                      <Typography variant='subtitle1'>{item.Intake}</Typography>
+                <Box>
+                  {/* Total Intake Row */}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      p: 1.5,
+                      mb: 1.5,
+                      borderRadius: 1.5,
+                      bgcolor: theme => alpha(theme.palette.primary.main, 0.08),
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Box
+                        sx={{
+                          width: 32,
+                          height: 32,
+                          display: 'flex',
+                          borderRadius: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'common.white',
+                          bgcolor: 'primary.main',
+                          mr: 1.5,
+                        }}
+                      >
+                        <Iconify icon='bx:chair' width={20} />
+                      </Box>
+                      <Typography
+                        variant='body2'
+                        sx={{ color: 'text.secondary', fontWeight: 'medium' }}
+                      >
+                        Total Intake
+                      </Typography>
                     </Box>
-                  </Tooltip>
-                  <Tooltip title='Colleges'>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column-reverse',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Iconify icon='uil:university' color='#00a76f' />
-                      <Typography variant='subtitle1'>{item.Colleges}</Typography>
+
+                    <Typography variant='h6' sx={{ color: 'primary.darker' }}>
+                      {item.Intake?.toLocaleString()}
+                    </Typography>
+                  </Box>
+
+                  {/* Total Institutes Row */}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      p: 1.5,
+                      borderRadius: 1.5,
+                      bgcolor: theme => alpha(theme.palette.secondary.main, 0.08),
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Box
+                        sx={{
+                          width: 32,
+                          height: 32,
+                          display: 'flex',
+                          borderRadius: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'common.white',
+                          bgcolor: 'secondary.main',
+                          mr: 1.5,
+                        }}
+                      >
+                        <Iconify icon='uil:university' width={20} />
+                      </Box>
+                      <Typography
+                        variant='body2'
+                        sx={{ color: 'text.secondary', fontWeight: 'medium' }}
+                      >
+                        Total Institutes
+                      </Typography>
                     </Box>
-                  </Tooltip>
+
+                    <Typography variant='h6' sx={{ color: 'secondary.darker' }}>
+                      {item.Colleges?.toLocaleString()}
+                    </Typography>
+                  </Box>
                 </Box>
-              </CardContent>
+              </Box>
             </Card>
           ))}
         </Box>

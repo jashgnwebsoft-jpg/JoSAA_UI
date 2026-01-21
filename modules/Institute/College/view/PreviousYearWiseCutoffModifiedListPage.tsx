@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { DataGridFooterProps, DataGridToolbarProps } from '@core/components/SimpleDataGrid/types';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
 import { DataGridPro } from '@mui/x-data-grid-pro';
-import { Box, Card, CardContent, CardHeader } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { useParams } from 'react-router';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
 import { Field } from '@gnwebsoft/ui';
@@ -16,6 +16,7 @@ import {
   PreviousYearWiseCutoffRow,
   PreviousYearWiseCutoffListRequest,
 } from '@modules/Institute/PreviousYearCutoffRowData/types';
+import { josaaDataGridStyles } from '@core/components/Styles';
 
 const PreviousYearWiseCutoffModifiedListPage = () => {
   const { collegeID } = useParams();
@@ -96,7 +97,15 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
       <Card>
         <Box component='form'>
           <CardHeader
-            title={'JoSAA : ' + t('Institute.PreviousYearCutoffRow.List.Title')}
+            title={
+              <Typography variant='h6'>
+                <Typography component='span' color='primary' fontWeight={600}>
+                  JoSAA
+                </Typography>
+                {' : '}
+                {t('Institute.PreviousYearCutoffRow.List.Title')}
+              </Typography>
+            }
             action={
               <Box
                 sx={{
@@ -193,30 +202,30 @@ const PreviousYearWiseCutoffModifiedListPage = () => {
             }}
             getRowHeight={() => 'auto'}
             sx={{
-              // ...dataGridStyles,
-              '& .MuiDataGrid-columnHeaderTitle': {
-                whiteSpace: 'nowrap',
-                textOverflow: 'unset',
-                overflow: 'visible',
-              },
-              '& .MuiDataGrid-cell': {
-                padding: 1,
-              },
-              '& .MuiDataGrid-main': {
-                overflowX: 'auto',
-              },
-              '& .MuiDataGrid-row:nth-of-type(even)': {
-                backgroundColor: theme => theme.palette.action.hover,
-              },
-              '& .MuiTablePagination-root': {
-                justifyContent: { xs: 'flex-start', md: 'flex-end' },
-              },
-              '& .MuiTablePagination-toolbar': {
-                paddingLeft: { xs: 0 },
-              },
-              '& .MuiBox-root .css-1shozee': {
-                display: 'none',
-              },
+              ...josaaDataGridStyles,
+              // '& .MuiDataGrid-columnHeaderTitle': {
+              //   whiteSpace: 'nowrap',
+              //   textOverflow: 'unset',
+              //   overflow: 'visible',
+              // },
+              // '& .MuiDataGrid-cell': {
+              //   padding: 1,
+              // },
+              // '& .MuiDataGrid-main': {
+              //   overflowX: 'auto',
+              // },
+              // '& .MuiDataGrid-row:nth-of-type(even)': {
+              //   backgroundColor: theme => theme.palette.action.hover,
+              // },
+              // '& .MuiTablePagination-root': {
+              //   justifyContent: { xs: 'flex-start', md: 'flex-end' },
+              // },
+              // '& .MuiTablePagination-toolbar': {
+              //   paddingLeft: { xs: 0 },
+              // },
+              // '& .MuiBox-root .css-1shozee': {
+              //   display: 'none',
+              // },
             }}
           />
         </CardContent>

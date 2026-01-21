@@ -9,6 +9,9 @@ export const endpoints = {
   SystemBranchWiseCollegeList: `${apiBase}/api/Institute/Branch/systemBranchWiseCollegeList`,
   BranchWiseCollegeList: `${apiBase}/api/Institute/Branch/branchWiseCollegeList`,
   CollegeComparePreviousYearsOpenCloseRankList: `${apiBase}/api/Institute/Branch/collegeComparePreviousYearsOpenCloseRankList`,
+  BranchInformation: (id: EntityId) => `${apiBase}/api/Institute/Branch/branchInformation/${id}`,
+  MotherBranchInformation: (id: EntityId) =>
+    `${apiBase}/api/Institute/Branch/motherBranchInformation/${id}`,
   CollegeWiseBranchOptions: (id: EntityId) =>
     `${apiBase}/api/Institute/Branch/collegeWiseBranchOptions/${id}`,
 };

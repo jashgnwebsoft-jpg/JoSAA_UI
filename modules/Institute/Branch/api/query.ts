@@ -15,9 +15,11 @@ import {
   BranchWiseCollegeListRequest,
   BranchWiseCollegeistResponse,
   CollegeComparePreviousYearsOpenCloseRankListResponse,
+  MotherBranchInformation,
+  BranchInformation,
 } from '../types';
 import { EntityId } from '@core/hooks/useListView';
-import { CollegeCompareRequest } from '@modules/Institute/College/types';
+import { CollegeCompareRequest, CollegeListResponse } from '@modules/Institute/College/types';
 
 const apiClient = getGlobalApiClient();
 
@@ -49,7 +51,7 @@ export const systemBranchWiseCollegeQueries = createQueryKeys('systemBranchWiseC
   List: (postModel: PostModel<SystemBranchWiseCollegeListRequest>) => ({
     queryKey: [postModel],
     queryFn: () =>
-      apiClient.filter<SystemBranchWiseCollegeistResponse, SystemBranchWiseCollegeListRequest>(
+      apiClient.filter<CollegeListResponse, SystemBranchWiseCollegeListRequest>(
         endpoints.SystemBranchWiseCollegeList!,
         postModel,
         {
@@ -71,7 +73,7 @@ export const branchWiseCollegeQueries = createQueryKeys('branchWiseCollege', {
   List: (postModel: PostModel<BranchWiseCollegeListRequest>) => ({
     queryKey: [postModel],
     queryFn: () =>
-      apiClient.filter<BranchWiseCollegeistResponse, BranchWiseCollegeListRequest>(
+      apiClient.filter<CollegeListResponse, BranchWiseCollegeListRequest>(
         endpoints.BranchWiseCollegeList!,
         postModel,
         {
@@ -97,3 +99,17 @@ export const collegeComparePreviousYearsOpenCloseRankListQueries = createQueryKe
     }),
   }
 );
+
+export const motherBranchInformationQueries = createQueryKeys('motherBranchInformation', {
+  MotherBranchInformation: (id: EntityId) => ({
+    queryKey: [id],
+    queryFn: () => apiClient.get<MotherBranchInformation>(endpoints.MotherBranchInformation!(id)),
+  }),
+});
+
+export const branchInformationQueries = createQueryKeys('branchInformation', {
+  BranchInformation: (id: EntityId) => ({
+    queryKey: [id],
+    queryFn: () => apiClient.get<BranchInformation>(endpoints.BranchInformation!(id)),
+  }),
+});

@@ -3,7 +3,15 @@ import { useSelectBranchByCollegeIDQuery } from '@modules/Institute/Branch/api/h
 import { useCategoryOptions } from '@modules/Master/Category/api/hooks';
 import { useQuotaOptions } from '@modules/Master/Quota/api/hooks';
 import { useReservationTypeOptions } from '@modules/Master/ReservationType/api/hooks';
-import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
@@ -17,6 +25,8 @@ import { useTranslate } from '@minimal/utils/locales';
 const RoundWiseChart = () => {
   const { collegeID } = useParams();
   const { t } = useTranslate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { postModel, handleFiltering } = useRoundWiseChartStore();
 
@@ -80,15 +90,25 @@ const RoundWiseChart = () => {
 
   const roundWiseChart = {
     grid: {
-      top: 40,
-      left: 60,
-      right: 20,
-      bottom: 40,
+      top: '10%',
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
       containLabel: true,
     },
+    tooltip: {
+      trigger: 'axis',
+      confine: true,
+    },
+    dataZoom: isMobile ? [{ show: false }] : [],
     xAxis: {
       type: 'category',
       data: roundTitles,
+      axisLabel: {
+        rotate: 45,
+        fontSize: 10,
+        interval: 0,
+      },
     },
     yAxis: {
       type: 'value',
@@ -97,9 +117,12 @@ const RoundWiseChart = () => {
       {
         type: 'bar',
         data: roundClosingRank,
+        barMaxWidth: 40,
+        itemStyle: {
+          borderRadius: [4, 4, 0, 0],
+        },
         label: {
-          show: true,
-          position: 'top',
+          show: false,
         },
       },
     ],

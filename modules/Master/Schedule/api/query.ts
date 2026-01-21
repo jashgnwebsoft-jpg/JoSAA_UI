@@ -13,3 +13,10 @@ export const keyDateQueries = createQueryKeys('keyDate', {
     queryFn: () => apiClient.get<KeyDateResponse[]>(endpoints.KeyDate),
   }),
 });
+
+export const keyDateByYearQueries = createQueryKeys('keyDateByYear', {
+  Get: (id: number) => ({
+    queryKey: ['keyDateByYear', id],
+    queryFn: () => apiClient.get<KeyDateResponse[]>(endpoints.KeyDateByYear(id)),
+  }),
+});

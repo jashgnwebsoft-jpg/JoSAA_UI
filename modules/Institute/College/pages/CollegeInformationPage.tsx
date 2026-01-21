@@ -2,23 +2,12 @@ import { DashboardContent } from '@minimal/layouts/dashboard';
 import ProfileCollegeHeroSection from '../view/ProfileCover';
 import { Helmet } from 'react-helmet-async';
 import { SimpleBreadcrumbs } from '@minimal/components/SimpleBreadCrumbs';
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Grid, IconButton, Typography } from '@mui/material';
 import { Iconify } from '@minimal/components/iconify';
 import IntakeListPage from '@modules/Institute/IntakeCutoff/pages/IntakeListPage';
 import { useParams } from 'react-router';
 import { useGetQuery } from '../api/hooks';
 import { fNumber } from '@core/utils/format-number';
-import CurrentYearWiseCutoffList from '@modules/Institute/PreviousYearCutoffRowData/pages/CurrentYearWiseCutoffListPage';
-import PreviousYearWiseCutoffListPage from '@modules/Institute/PreviousYearCutoffRowData/pages/PreviousYearWiseCutoffListPage';
 import RoundWiseChart from '@modules/Institute/PreviousYearCutoffRowData/pages/RoundWiseChart';
 import { useTranslate } from '@minimal/utils/locales';
 import { CONFIG } from '@/global-config';
@@ -126,7 +115,7 @@ const CollegeInformationPage = () => {
                         View More
                       </Button> */}
                       <IconButton onClick={() => setOpen(true)} color='primary'>
-                        <Iconify icon='solar:eye-closed-bold' />
+                        <Iconify icon='solar:eye-bold' />
                       </IconButton>
                     </Box>
                   </Box>

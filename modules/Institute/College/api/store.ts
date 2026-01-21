@@ -7,6 +7,7 @@ import { calculateFilterCount } from '@core/utils';
 import type {
   CollegeCompareCollegeDetailsResponse,
   CollegeCompareRequest,
+  CollegeListByStateIDListPageRequest,
   CollegeListRequest,
   HomeStateListPageRequest,
 } from '../types';
@@ -124,14 +125,16 @@ export const useCollegeListStore = create<CollegeListState & CollegeListAction>(
 type CollegeCompareState = {
   open: boolean;
   activeIndex: number | null;
+  defaultFormValues: CollegeCompareRequest | null;
   requests: (CollegeCompareRequest | null)[];
   saveCollegeDetailsData: (CollegeCompareCollegeDetailsResponse | null)[];
   saveCollegeRankData: (CollegeComparePreviousYearsOpenCloseRankFormateListResponse[] | null)[];
 };
 
 type CollegeCompareAction = {
-  openDialog: (index: number) => void;
+  openDialog: (index: number, defaults?: CollegeCompareRequest) => void;
   closeDialog: () => void;
+  setDefaultFormValues: (data: CollegeCompareRequest) => void;
   saveRequest: (
     requestData: CollegeCompareRequest,
     detailsData: CollegeCompareCollegeDetailsResponse,
@@ -145,14 +148,23 @@ export const useCollegeCompareStore = create<CollegeCompareState & CollegeCompar
     (set, get) => ({
       open: false,
       activeIndex: null,
+
+      defaultFormValues: null,
+
       requests: [null, null, null, null],
       saveCollegeDetailsData: [null, null, null, null],
       saveCollegeRankData: [null, null, null, null],
 
-      openDialog: index => {
+      setDefaultFormValues: data => {
+        set({ defaultFormValues: data });
+      },
+
+      openDialog: (index: number, defaults?: CollegeCompareRequest) => {
+        const { requests } = get();
         set({
           open: true,
           activeIndex: index,
+          defaultFormValues: defaults || requests[index] || null,
         });
       },
 
@@ -160,6 +172,7 @@ export const useCollegeCompareStore = create<CollegeCompareState & CollegeCompar
         set({
           open: false,
           activeIndex: null,
+          defaultFormValues: null,
         }),
 
       saveRequest: (requestData, detailsData, rankData) => {
@@ -179,6 +192,7 @@ export const useCollegeCompareStore = create<CollegeCompareState & CollegeCompar
           requests: copy,
           open: false,
           activeIndex: null,
+          defaultFormValues: null,
           saveCollegeDetailsData: copyDetailsData,
           saveCollegeRankData: copyRankData,
         });
@@ -209,6 +223,155 @@ export const useCollegeCompareStore = create<CollegeCompareState & CollegeCompar
         requests: state.requests,
         saveCollegeDetailsData: state.saveCollegeDetailsData,
         saveCollegeRankData: state.saveCollegeRankData,
+      }),
+    }
+  )
+);
+
+// type CollegeCompareState = {
+//   open: boolean;
+//   activeIndex: number | null;
+//   requests: (CollegeCompareRequest | null)[];
+//   saveCollegeDetailsData: (CollegeCompareCollegeDetailsResponse | null)[];
+//   saveCollegeRankData: (CollegeComparePreviousYearsOpenCloseRankFormateListResponse[] | null)[];
+// };
+
+// type CollegeCompareAction = {
+//   openDialog: (index: number) => void;
+//   closeDialog: () => void;
+//   saveRequest: (
+//     requestData: CollegeCompareRequest,
+//     detailsData: CollegeCompareCollegeDetailsResponse,
+//     rankData: CollegeComparePreviousYearsOpenCloseRankFormateListResponse[]
+//   ) => void;
+//   removeDataRequest: (index: number) => void;
+// };
+
+// export const useCollegeCompareStore = create<CollegeCompareState & CollegeCompareAction>()(
+//   persist(
+//     (set, get) => ({
+//       open: false,
+//       activeIndex: null,
+//       requests: [null, null, null, null],
+//       saveCollegeDetailsData: [null, null, null, null],
+//       saveCollegeRankData: [null, null, null, null],
+
+//       openDialog: index => {
+//         set({
+//           open: true,
+//           activeIndex: index,
+//         });
+//       },
+
+//       closeDialog: () =>
+//         set({
+//           open: false,
+//           activeIndex: null,
+//         }),
+
+//       saveRequest: (requestData, detailsData, rankData) => {
+//         const { activeIndex, requests, saveCollegeDetailsData, saveCollegeRankData } = get();
+//         if (activeIndex === null) return;
+
+//         const copy = [...requests];
+//         copy[activeIndex] = requestData;
+
+//         const copyDetailsData = [...saveCollegeDetailsData];
+//         copyDetailsData[activeIndex] = detailsData;
+
+//         const copyRankData = [...saveCollegeRankData];
+//         copyRankData[activeIndex] = rankData;
+
+//         set({
+//           requests: copy,
+//           open: false,
+//           activeIndex: null,
+//           saveCollegeDetailsData: copyDetailsData,
+//           saveCollegeRankData: copyRankData,
+//         });
+//       },
+
+//       removeDataRequest: index => {
+//         const { saveCollegeDetailsData, saveCollegeRankData, requests } = get();
+
+//         const copy = [...requests];
+//         copy[index] = null;
+
+//         const copyDetailsData = [...saveCollegeDetailsData];
+//         copyDetailsData[index] = null;
+
+//         const copyRankData = [...saveCollegeRankData];
+//         copyRankData[index] = null;
+
+//         set({
+//           requests: copy,
+//           saveCollegeDetailsData: copyDetailsData,
+//           saveCollegeRankData: copyRankData,
+//         });
+//       },
+//     }),
+//     {
+//       name: Institute.CollegeCompare,
+//       partialize: state => ({
+//         requests: state.requests,
+//         saveCollegeDetailsData: state.saveCollegeDetailsData,
+//         saveCollegeRankData: state.saveCollegeRankData,
+//       }),
+//     }
+//   )
+// );
+
+type CollegeListByStateIDListState = {
+  filterCount: number;
+  postModel: PostModel<CollegeListByStateIDListPageRequest>;
+};
+
+type CollegeListByStateIDListAction = {
+  handleFiltering: (filterModel: CollegeListByStateIDListPageRequest) => void;
+  handlePagination: (pageModel: GridPaginationModel) => void;
+  handleSorting: (sortModel: GridSortModel) => void;
+};
+
+export const useCollegeListByStateIDListStore = create<
+  CollegeListByStateIDListState & CollegeListByStateIDListAction
+>()(
+  persist(
+    set => ({
+      postModel: {
+        pageOffset: 0,
+        pageSize: CONFIG.defaultPageSize,
+        sortField: null,
+        sortOrder: null,
+      },
+      filterCount: 0,
+      handleFiltering: (filterModel: CollegeListByStateIDListPageRequest) =>
+        set(state => ({
+          filterCount: filterModel ? calculateFilterCount(filterModel) : 0,
+          postModel: { ...state.postModel, filterModel: { ...filterModel } },
+        })),
+      handlePagination: (pageModel: GridPaginationModel) =>
+        set(state => ({
+          postModel: {
+            ...state.postModel,
+            pageOffset: pageModel.page,
+            pageSize: pageModel.pageSize,
+          },
+        })),
+      handleSorting: (sortModel: GridSortModel) =>
+        set(state => ({
+          postModel: {
+            ...state.postModel,
+            sortField: sortModel.length > 0 ? sortModel[0].field : null,
+            sortOrder: sortModel.length > 0 ? (sortModel[0].sort as 'asc' | 'desc' | null) : null,
+            sortModel: sortModel.length > 0 ? sortModel : [],
+          },
+        })),
+    }),
+    {
+      name: Institute.CollegeListByStateIDList,
+      partialize: state => ({
+        postModel: state.postModel,
+        filterCount: state.filterCount,
       }),
     }
   )

@@ -2,7 +2,10 @@ import { useTranslate } from '@minimal/utils/locales';
 import { Box, Card, CardContent, CardHeader } from '@mui/material';
 import { useParams } from 'react-router';
 import { useBranchWisePlacementListStore } from '../api/store';
-import { useAdmissionOptions } from '@modules/Master/AdmissionYear/api/hooks';
+import {
+  useAdmissionOptions,
+  useBranchWisePlacementAdmissionYearOptionsByCollegeID,
+} from '@modules/Master/AdmissionYear/api/hooks';
 import { useForm } from 'react-hook-form';
 import { BranchWisePlacementListPageRequest, BranchWisePlacementListPageResponse } from '../types';
 import { useBranchWisePlacementListQuery } from '../api/hooks';
@@ -14,7 +17,7 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 import { CONFIG } from '@/global-config';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
-import { dataGridStyles } from '@core/components/Styles';
+import { dataGridStyles, josaaDataGridStyles } from '@core/components/Styles';
 import { Field } from '@gnwebsoft/ui';
 
 const BranchWisePlacementListPage = () => {
@@ -252,7 +255,7 @@ const BranchWisePlacementListPage = () => {
     },
   });
 
-  const yearOptions = useAdmissionOptions();
+  const yearOptions = useBranchWisePlacementAdmissionYearOptionsByCollegeID(collegeID!);
 
   useEffect(() => {
     if (!yearOptions.data?.length) return;
@@ -395,24 +398,24 @@ const BranchWisePlacementListPage = () => {
             footer: footerProps,
           }}
           sx={{
-            // ...dataGridStyles,
-            '& .MuiDataGrid-row:nth-of-type(even)': {
-              backgroundColor: theme => theme.palette.action.hover,
-            },
-            '& .MuiDataGrid-cell': {
-              padding: 1,
-              display: 'flex',
-              alignItems: 'center',
-            },
-            '& .MuiTablePagination-root': {
-              justifyContent: { xs: 'flex-start', md: 'flex-end' },
-            },
-            '& .MuiTablePagination-toolbar': {
-              paddingLeft: { xs: 0 },
-            },
-            '& .MuiBox-root .css-1shozee': {
-              display: 'none',
-            },
+            ...josaaDataGridStyles,
+            // '& .MuiDataGrid-row:nth-of-type(even)': {
+            //   backgroundColor: theme => theme.palette.action.hover,
+            // },
+            // '& .MuiDataGrid-cell': {
+            //   padding: 1,
+            //   display: 'flex',
+            //   alignItems: 'center',
+            // },
+            // '& .MuiTablePagination-root': {
+            //   justifyContent: { xs: 'flex-start', md: 'flex-end' },
+            // },
+            // '& .MuiTablePagination-toolbar': {
+            //   paddingLeft: { xs: 0 },
+            // },
+            // '& .MuiBox-root .css-1shozee': {
+            //   display: 'none',
+            // },
           }}
         />
       </CardContent>

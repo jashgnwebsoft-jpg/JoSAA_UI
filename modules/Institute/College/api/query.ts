@@ -4,10 +4,13 @@ import { createQueryKeys } from '@lukemorales/query-key-factory';
 import { getGlobalApiClient } from '@core/api/createApiClient';
 
 import type {
+  CollegeCardListResponse,
   CollegeCompareCollegeDetailsResponse,
+  CollegeCompareForPlacementByCollegeIDResponse,
   CollegeCompareRequest,
-  CollegeCompareResponse,
   CollegeDetailsResponse,
+  CollegeListByStateIDListPageRequest,
+  CollegeListByStateIDListPageResponse,
   CollegeListRequest,
   CollegeListResponse,
   HomeStateListPageRequest,
@@ -24,7 +27,7 @@ export const homestateQueries = createQueryKeys('homestate', {
   List: (postModel: PostModel<HomeStateListPageRequest>) => ({
     queryKey: [postModel],
     queryFn: () =>
-      apiClient.filter<HomeStateListPageResponse, HomeStateListPageRequest>(
+      apiClient.filter<CollegeListResponse, HomeStateListPageRequest>(
         endpoints.HomeStateList!,
         postModel,
         {
@@ -45,6 +48,23 @@ export const collegeQueries = createQueryKeys('college', {
       apiClient.filter<CollegeListResponse, CollegeListRequest>(endpoints.CollegeList!, postModel, {
         throwErrors: false,
       }),
+  }),
+
+  CollegeCardList: () => ({
+    queryKey: ['collegeCardList'],
+    queryFn: () => apiClient.get<CollegeCardListResponse[]>(endpoints.CollegeCardList),
+  }),
+
+  ListByStateID: (postModel: PostModel<CollegeListByStateIDListPageRequest>) => ({
+    queryKey: [postModel],
+    queryFn: () =>
+      apiClient.filter<CollegeListResponse, CollegeListByStateIDListPageRequest>(
+        endpoints.CollegeListByStateID!,
+        postModel,
+        {
+          throwErrors: false,
+        }
+      ),
   }),
 
   Get: (id: EntityId) => ({
@@ -74,5 +94,13 @@ export const collegeCompareQueries = createQueryKeys('collegeCompare', {
   CollegeCompareOptions: () => ({
     queryKey: ['collegeCompareCollegeDetails'],
     queryFn: () => apiClient.get<OptionsResponse[]>(endpoints.CollegeCompareOptions),
+  }),
+
+  CollegeCompareForPlacementByCollegeID: (id: EntityId) => ({
+    queryKey: [id],
+    queryFn: () =>
+      apiClient.get<CollegeCompareForPlacementByCollegeIDResponse[]>(
+        endpoints.CollegeCompareForPlacementByCollegeID!(id)
+      ),
   }),
 });

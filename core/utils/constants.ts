@@ -60,6 +60,7 @@ export const Institute = {
   CSABPreviousYearWiseCutoffList: 'CSABPreviousYearWiseCutoffList',
   CSABBranchWiseCutOffList: 'CSABBranchWiseCutOffList',
   CSABCollegeWiseCutOffList: 'CSABCollegeWiseCutOffList',
+  CollegeListByStateIDList: 'CollegeListByStateIDList',
 };
 
 export const Master = {

@@ -2,8 +2,8 @@ import { lazy } from 'react';
 import type { RouteObject } from 'react-router';
 
 const BranchListPage = lazy(() => import('../pages/BranchListPage'));
-// const MotherBranchListPage = lazy(() => import('../pages/MotherBranchListPage'));
-const MotherBranchListPage = lazy(() => import('../view/MotherBranchListPageView'));
+const MotherBranchListPage = lazy(() => import('../pages/MotherBranchListPage'));
+// const MotherBranchListPage = lazy(() => import('../view/MotherBranchListPageView'));
 const MotherBranchWiseCollegeListPage = lazy(
   () => import('../pages/MotherBranchWiseCollegeListPage')
 );

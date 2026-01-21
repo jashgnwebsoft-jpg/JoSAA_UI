@@ -8,6 +8,7 @@ import {
   CollegeRoutes,
   HomeStateRoutes,
   CollegeCompareRoutes,
+  CollegeByStateIDRoutes,
   CollegeInformationRoutes,
 } from '@modules/Institute/College/routes';
 import { VisitorsLayout } from '@minimal/layouts/dashboard/visitorsLayout';
@@ -153,6 +154,11 @@ export const visitorsRoutes: RouteObject[] = [
     path: 'josaa/collegeinformation/:collegeID',
     element: visitorLayout(),
     children: [CollegeInformationRoutes],
+  },
+  {
+    path: 'josaa/state/:stateID',
+    element: visitorLayout(),
+    children: [CollegeByStateIDRoutes],
   },
   {
     path: 'josaa/news/:newsID',

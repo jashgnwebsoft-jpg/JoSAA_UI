@@ -30,7 +30,8 @@ const HeroSection = ({ sx, ...other }: BoxProps) => {
           ...theme.mixins.bgGradient({
             images: [
               `linear-gradient(0deg, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.8)}, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.8)})`,
-              `url(https://www.shutterstock.com/image-photo/roorkee-india-july-12-administrative-260nw-2495641377.jpg)`,
+              `url(/assets/background/background-IIT.png)`,
+              // `url(https://www.shutterstock.com/image-photo/roorkee-india-july-12-administrative-260nw-2495641377.jpg)`,
             ],
           }),
           overflow: 'hidden',

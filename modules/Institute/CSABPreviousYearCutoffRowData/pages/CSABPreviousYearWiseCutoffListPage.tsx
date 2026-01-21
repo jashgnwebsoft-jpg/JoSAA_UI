@@ -14,11 +14,12 @@ import { DataGridFooterProps, DataGridToolbarProps } from '@core/components/Simp
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
 import ExtendedDataGridToolbar from '@core/components/SimpleDataGrid/ExtendedDataGridToolbar';
 import { Field } from '@gnwebsoft/ui';
-import { Card, Box, CardHeader, CardContent } from '@mui/material';
+import { Card, Box, CardHeader, CardContent, Typography } from '@mui/material';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { LoadingScreen } from '@minimal/components/loading-screen';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCategoryOptions } from '@modules/Master/Category/api/hooks';
+import { josaaDataGridStyles } from '@core/components/Styles';
 
 const CSABPreviousYearWiseCutoffListPage = () => {
   const { collegeID } = useParams();
@@ -104,7 +105,15 @@ const CSABPreviousYearWiseCutoffListPage = () => {
     <Card>
       <Box component='form'>
         <CardHeader
-          title={'CSAB : ' + t('Institute.PreviousYearCutoffRow.List.Title')}
+          title={
+            <Typography variant='h6'>
+              <Typography component='span' color='primary' fontWeight={600}>
+                CSAB
+              </Typography>
+              {' : '}
+              {t('Institute.PreviousYearCutoffRow.List.Title')}
+            </Typography>
+          }
           action={
             <Box
               sx={{
@@ -201,31 +210,32 @@ const CSABPreviousYearWiseCutoffListPage = () => {
             footer: footerProps,
           }}
           sx={{
-            '& .MuiDataGrid-columnHeaderTitle': {
-              whiteSpace: 'nowrap',
-              textOverflow: 'unset',
-              overflow: 'visible',
-            },
-            '& .MuiDataGrid-cell': {
-              padding: 1,
-              display: 'flex',
-              alignItems: 'center',
-            },
-            '& .MuiDataGrid-main': {
-              overflowX: 'auto',
-            },
-            '& .MuiDataGrid-row:nth-of-type(even)': {
-              backgroundColor: theme => theme.palette.action.hover,
-            },
-            '& .MuiTablePagination-root': {
-              justifyContent: { xs: 'flex-start', md: 'flex-end' },
-            },
-            '& .MuiTablePagination-toolbar': {
-              paddingLeft: { xs: 0 },
-            },
-            '& .MuiBox-root .css-1shozee': {
-              display: 'none',
-            },
+            ...josaaDataGridStyles,
+            // '& .MuiDataGrid-columnHeaderTitle': {
+            //   whiteSpace: 'nowrap',
+            //   textOverflow: 'unset',
+            //   overflow: 'visible',
+            // },
+            // '& .MuiDataGrid-cell': {
+            //   padding: 1,
+            //   display: 'flex',
+            //   alignItems: 'center',
+            // },
+            // '& .MuiDataGrid-main': {
+            //   overflowX: 'auto',
+            // },
+            // '& .MuiDataGrid-row:nth-of-type(even)': {
+            //   backgroundColor: theme => theme.palette.action.hover,
+            // },
+            // '& .MuiTablePagination-root': {
+            //   justifyContent: { xs: 'flex-start', md: 'flex-end' },
+            // },
+            // '& .MuiTablePagination-toolbar': {
+            //   paddingLeft: { xs: 0 },
+            // },
+            // '& .MuiBox-root .css-1shozee': {
+            //   display: 'none',
+            // },
           }}
         />
       </CardContent>

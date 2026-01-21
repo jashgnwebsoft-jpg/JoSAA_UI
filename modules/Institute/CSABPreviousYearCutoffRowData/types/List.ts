@@ -49,6 +49,9 @@ export type CSABBranchWiseCutoffListResponse = {
   CutoffID: string;
   CollegeShortName: string;
   CollegeTypeShortName: string;
+  CollegeID: string;
+  BranchID: string;
+  BranchWebName: string;
   BranchProperName: string;
   CategoryName: string;
   ReservationType: string;

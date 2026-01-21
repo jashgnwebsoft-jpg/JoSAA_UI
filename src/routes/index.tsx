@@ -2,7 +2,7 @@ import type { RouteObject } from 'react-router';
 
 import { lazy } from 'react';
 
-import { authRoutes } from './auth';
+// import { authRoutes } from './auth';
 import { visitorsRoutes } from './visitorsRoutes';
 
 // ----------------------------------------------------------------------
@@ -17,7 +17,7 @@ export const routesSection: RouteObject[] = [
   ...visitorsRoutes,
 
   // Auth
-  ...authRoutes,
+  // ...authRoutes,
 
   // Dashboard
   // ...adminRoutes,

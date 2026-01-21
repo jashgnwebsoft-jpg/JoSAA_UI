@@ -2,9 +2,11 @@ import { lazy } from 'react';
 import type { RouteObject } from 'react-router';
 
 const HomeStateListPage = lazy(() => import('../pages/HomeStateListPage'));
+// const CollegeListPage = lazy(() => import('../pages/CollegeListModificationPage'));
 const CollegeListPage = lazy(() => import('../pages/CollegeListPage'));
 const CollegeInformationPage = lazy(() => import('../pages/CollegeInformationPage'));
 const CollegeComparePage = lazy(() => import('../pages/CollegeComparePage'));
+const CollegeByStateIDListPage = lazy(() => import('../pages/CollegeListByStateIDListPage'));
 
 export const HomeStateRoutes: RouteObject = {
   index: true,
@@ -24,4 +26,9 @@ export const CollegeInformationRoutes: RouteObject = {
 export const CollegeCompareRoutes: RouteObject = {
   index: true,
   element: <CollegeComparePage />,
+};
+
+export const CollegeByStateIDRoutes: RouteObject = {
+  index: true,
+  element: <CollegeByStateIDListPage />,
 };

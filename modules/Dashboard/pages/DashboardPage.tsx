@@ -43,8 +43,14 @@ const DashboardPage = () => {
             <Cutoff />
             <Card sx={{ height: 550 }}>
               <CardHeader title='Latest News' />
-              <CardContent sx={{ height: '100%', overflowY: 'scroll' }}>
-                <LatestNewsView />
+              <CardContent
+                sx={{
+                  height: '100%',
+                  overflowY: 'scroll',
+                  '&::-webkit-scrollbar': { display: 'none' },
+                }}
+              >
+                <LatestNewsView sx={{ pb: 5 }} />
               </CardContent>
             </Card>
           </Box>

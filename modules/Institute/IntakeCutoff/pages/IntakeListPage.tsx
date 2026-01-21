@@ -6,7 +6,7 @@ import { IntakeCutoffListRequest, IntakeCutoffListResponse } from '../types';
 import { DataGridFooterProps, DataGridToolbarProps } from '@core/components/SimpleDataGrid/types';
 import { CONFIG } from '@/global-config';
 import ExtendedDataGridFooter from '@core/components/SimpleDataGrid/ExtendedDataGridFooter';
-import { dataGridStyles } from '@core/components/Styles';
+import { dataGridStyles, josaaDataGridStyles } from '@core/components/Styles';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { useParams } from 'react-router';
@@ -84,7 +84,7 @@ const IntakeListPage = () => {
         field: 'IntakeOpen',
         headerName: t('Institute.IntakeCutoff.Open.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -106,7 +106,7 @@ const IntakeListPage = () => {
         field: 'IntakeOpenPWD',
         headerName: t('Institute.IntakeCutoff.OpenPWD.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -128,7 +128,7 @@ const IntakeListPage = () => {
         field: 'IntakeGENEWS',
         headerName: t('Institute.IntakeCutoff.GENEWS.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -150,7 +150,7 @@ const IntakeListPage = () => {
         field: 'IntakeGENEWSPWD',
         // headerName: t('Institute.IntakeCutoff.GENEWSPWD.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -162,6 +162,7 @@ const IntakeListPage = () => {
               lineBreak: 'auto',
               textAlign: 'center',
               fontWeight: 600,
+              fontSize: 13,
             }}
           >
             {t('Institute.IntakeCutoff.GENEWSPWD.Label')}
@@ -172,7 +173,7 @@ const IntakeListPage = () => {
         field: 'IntakeSC',
         headerName: t('Institute.IntakeCutoff.Sc.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -194,7 +195,7 @@ const IntakeListPage = () => {
         field: 'IntakeSCPWD',
         headerName: t('Institute.IntakeCutoff.ScPWD.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -216,7 +217,7 @@ const IntakeListPage = () => {
         field: 'IntakeST',
         headerName: t('Institute.IntakeCutoff.St.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -238,7 +239,7 @@ const IntakeListPage = () => {
         field: 'IntakeSTPWD',
         headerName: t('Institute.IntakeCutoff.StPWD.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -260,7 +261,7 @@ const IntakeListPage = () => {
         field: 'IntakeOBCNCL',
         headerName: t('Institute.IntakeCutoff.OBCNCL.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -282,7 +283,7 @@ const IntakeListPage = () => {
         field: 'IntakeOBCNCLPWD',
         // headerName: t('Institute.IntakeCutoff.OBCNCLPWD.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -293,6 +294,7 @@ const IntakeListPage = () => {
               whiteSpace: 'break-spaces',
               lineBreak: 'auto',
               textAlign: 'center',
+              fontSize: 13,
               fontWeight: 600,
             }}
           >
@@ -304,7 +306,7 @@ const IntakeListPage = () => {
         field: 'IntakeTotal',
         headerName: t('Institute.IntakeCutoff.Total.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         type: 'number',
         align: 'right',
@@ -328,7 +330,7 @@ const IntakeListPage = () => {
         field: 'IntakeSeatCapacity',
         // headerName: t('Institute.IntakeCutoff.SeatCapacity.Label'),
         minWidth: 90,
-        flex: 0.5,
+        flex: 0.7,
         sortable: true,
         align: 'right',
         headerAlign: 'right',
@@ -547,29 +549,30 @@ const IntakeListPage = () => {
             footer: footerProps,
           }}
           sx={{
+            ...josaaDataGridStyles,
             '& .intake-total-row': {
               fontWeight: 700,
               '& .MuiDataGrid-cell': {
                 borderTop: '2px solid #00A76F',
               },
             },
-            '& .MuiDataGrid-cell': {
-              padding: 1,
-              display: 'flex',
-              alignItems: 'center',
-            },
-            '& .MuiDataGrid-row:nth-of-type(even)': {
-              backgroundColor: theme => theme.palette.action.hover,
-            },
-            '& .MuiTablePagination-root': {
-              justifyContent: { xs: 'flex-start', md: 'flex-end' },
-            },
-            '& .MuiTablePagination-toolbar': {
-              paddingLeft: { xs: 0 },
-            },
-            '& .MuiBox-root .css-1shozee': {
-              display: 'none',
-            },
+            // '& .MuiDataGrid-cell': {
+            //   padding: 1,
+            //   display: 'flex',
+            //   alignItems: 'center',
+            // },
+            // '& .MuiDataGrid-row:nth-of-type(even)': {
+            //   backgroundColor: theme => theme.palette.action.hover,
+            // },
+            // '& .MuiTablePagination-root': {
+            //   justifyContent: { xs: 'flex-start', md: 'flex-end' },
+            // },
+            // '& .MuiTablePagination-toolbar': {
+            //   paddingLeft: { xs: 0 },
+            // },
+            // '& .MuiBox-root .css-1shozee': {
+            //   display: 'none',
+            // },
           }}
         />
       </CardContent>
